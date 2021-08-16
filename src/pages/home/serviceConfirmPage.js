@@ -116,7 +116,7 @@ export default class ServiceConfirmPage extends React.Component
         const errCallback = (responseData)=>{
             if (responseData.errno == 501){
                 alert(responseData.errmsg)
-                this.props.navigation.navigate('MyInfo')
+                this.props.navigation.navigate('login')
             }
         }
         fetchData(url,param,callback,errCallback);
@@ -137,7 +137,13 @@ export default class ServiceConfirmPage extends React.Component
                 info:responseData.data.info,
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
     render() {
@@ -203,7 +209,6 @@ export default class ServiceConfirmPage extends React.Component
 
                             <View style={{
                                 height:60,
-                                flexDirection: 'column',
                                 // justifyContent: 'center',
                                 flexDirection:'row',
                                 backgroundColor:'white',
@@ -233,7 +238,7 @@ export default class ServiceConfirmPage extends React.Component
                                 <Image style={{ width: 10, height: 20 ,marginTop: 20}} source={require('../../assets/images/goto.png')} />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{backgroundColor:'white',marginTop: 10,backgroundColor:'gray'}}>
+                            <View style={{marginTop: 10,backgroundColor:'gray'}}>
                                 <Text style={{textAlign: 'center',fontWeight:'bold',fontSize:15,marginTop: 20 ,color: '#666666'}}>{'---商品详情---'}</Text>
                                 <View style={{height:500}}>
                                 {/* todo*/}
@@ -313,7 +318,6 @@ export default class ServiceConfirmPage extends React.Component
                                             height:38,
                                             width:width*0.8,
                                             backgroundColor:'#00BEAF',
-                                            marginTop:8,
                                             marginBottom:20,
                                             justifyContent:'center',
                                             alignItems:'center',

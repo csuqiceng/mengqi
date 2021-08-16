@@ -86,7 +86,13 @@ export default class ServiceMainPage extends React.Component{
                 hoteServiceList:responseData.data.hoteServiceList,
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
     render() {

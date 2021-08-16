@@ -66,7 +66,13 @@ export default class ServiceOrderPage extends React.Component{
                 this.props.navigation.navigate('ServicePayPage', { data:responseData.data })
             }
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
     componentDidMount() {
         let cartId = this.props.route.params.data;
@@ -84,7 +90,13 @@ export default class ServiceOrderPage extends React.Component{
                 orderData:responseData.data
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
     render(){

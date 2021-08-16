@@ -34,7 +34,13 @@ export  default  class HeaderView extends React.Component{
                 info:responseData.data.info
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
     render() {

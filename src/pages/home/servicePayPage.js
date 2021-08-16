@@ -101,7 +101,13 @@ export default class ServicePayPage extends React.Component{
             }
 
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
 
@@ -122,7 +128,13 @@ export default class ServicePayPage extends React.Component{
                 orderData:responseData.data
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
     render(){

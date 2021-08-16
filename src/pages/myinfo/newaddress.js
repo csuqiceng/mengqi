@@ -105,7 +105,13 @@ export default class MyNewAddressView extends React.Component {
                 this.props.navigation.goBack();
             }
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
     render() {
          return (

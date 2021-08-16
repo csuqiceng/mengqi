@@ -138,7 +138,12 @@ class AccoutLoginView extends React.Component{
             window.token =  responseData.data.token;
             window.isLogin = true;
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
     componentDidMount(){
@@ -289,7 +294,12 @@ class VerificationcodeView extends React.Component{
             window.token =  responseData.data.token;
             window.isLogin = true;
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+            }
+        }
+        fetchData(url,param,callback,errCallback);
         // console.log(JSON.stringify(token))
     }
     //发送验证码
@@ -331,7 +341,12 @@ class VerificationcodeView extends React.Component{
                 },
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
             }
-            fetchData(url,param,callback)
+            const errCallback = (responseData)=>{
+                if (responseData.errno == 501){
+                    alert(responseData.errmsg)
+                }
+            }
+            fetchData(url,param,callback,errCallback);
         }
 
     }

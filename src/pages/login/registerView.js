@@ -86,7 +86,12 @@ export default class RegisterView extends React.Component {
             },
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
         }
-        fetchData(url,param,callback)
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+            }
+        }
+        fetchData(url,param,callback,errCallback);
         // this.props.navigation.navigate('login')
     }
 
@@ -129,7 +134,12 @@ export default class RegisterView extends React.Component {
                 },
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
             }
-            fetchData(url,param,callback)
+            const errCallback = (responseData)=>{
+                if (responseData.errno == 501){
+                    alert(responseData.errmsg)
+                }
+            }
+            fetchData(url,param,callback,errCallback);
         }
 
     }

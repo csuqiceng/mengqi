@@ -28,11 +28,11 @@ export default class Classify extends React.Component {
     renderPage=()=>{
         if (this.state.selected == 1){
             return(
-               <ClassifyMall/>
+               <ClassifyMall navigation={this.props.navigation}/>
             );
         }else {
             return(
-                <ClassifyService/>
+                <ClassifyService navigation={this.props.navigation}/>
             )
         }
     }

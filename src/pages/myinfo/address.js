@@ -89,7 +89,13 @@ export default class MyAddressView extends React.Component {
                 AddressData:responseData.data.list
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
     onEditAddress=(e)=>{
         console.log(e)
@@ -134,9 +140,21 @@ export default class MyAddressView extends React.Component {
                     AddressData:responseData.data.list
                 })
             }
-            fetchData(url,param,callback);
+            const errCallback = (responseData)=>{
+                if (responseData.errno == 501){
+                    alert(responseData.errmsg)
+                    this.props.navigation.navigate('login')
+                }
+            }
+            fetchData(url,param,callback,errCallback);
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
 
     }
     onChangeDefault=(e)=>{
@@ -178,10 +196,22 @@ export default class MyAddressView extends React.Component {
                         AddressData:responseData.data.list
                     })
                 }
-                fetchData(url,param,callback);
+                const errCallback = (responseData)=>{
+                    if (responseData.errno == 501){
+                        alert(responseData.errmsg)
+                        this.props.navigation.navigate('login')
+                    }
+                }
+                fetchData(url,param,callback,errCallback);
             }
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
     render() {
         console.log(window.token)

@@ -9,10 +9,10 @@ import {fetchData} from '../../../common/fetch'
 // const firstLvData = yiji.data;
 // const secondLvData = erji.data;
 export default class ClassifyMall extends React.Component {
-    constructor() {
+    constructor(props) {
         super();
         this.state = {
-            LeftToolbar: '1036005',
+            LeftToolbar: '1036018',
             firstLvData: {},
         }
     }
@@ -22,7 +22,7 @@ export default class ClassifyMall extends React.Component {
         })
     }
     renderRightView = () => {
-        return <RightSecondLvView firstLvData={this.state.LeftToolbar}></RightSecondLvView>
+        return <RightSecondLvView firstLvData={this.state.LeftToolbar} navigation={this.props.navigation}></RightSecondLvView>
     }
     componentDidMount(){
         let param = {
@@ -34,11 +34,19 @@ export default class ClassifyMall extends React.Component {
         }
         let url = `http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?goodsType=01`;
         const  callback =(responseData)=>{
+            console.log(responseData.data)
             this.setState({
-                firstLvData:responseData.data
+                firstLvData:responseData.data,
+                LeftToolbar:responseData.data[0].id
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
     render() {
         const { firstLvData } = this.state;
@@ -88,7 +96,7 @@ class RightSecondLvView extends React.Component {
     }
 
     renderGoodsView = (e) => {
-        return <RightGoodsView secondLvId={e}></RightGoodsView>
+        return <RightGoodsView secondLvId={e} navigation={this.props.navigation}></RightGoodsView>
     }
     componentDidMount(){
         let param = {
@@ -104,7 +112,13 @@ class RightSecondLvView extends React.Component {
                 secondLvData:responseData.data
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
 
@@ -122,7 +136,13 @@ class RightSecondLvView extends React.Component {
                 secondLvData:responseData.data
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
 
     render() {
@@ -165,8 +185,8 @@ class RightGoodsView extends React.Component {
             goodsData: {},
         }
     }
-    onChooseGoods = (e) => {
-
+    onChooseGoods = (id,name) => {
+        this.props.navigation.navigate('ServiceConfirmPage', { name: name , id:id })
     }
     componentDidMount() {
         let param = {
@@ -182,7 +202,13 @@ class RightGoodsView extends React.Component {
                 goodsData:responseData.data.list
             })
         }
-        fetchData(url,param,callback);
+        const errCallback = (responseData)=>{
+            if (responseData.errno == 501){
+                alert(responseData.errmsg)
+                this.props.navigation.navigate('login')
+            }
+        }
+        fetchData(url,param,callback,errCallback);
     }
     UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.secondLvId&&nextProps.secondLvId != this.props.secondLvId){
@@ -200,7 +226,13 @@ class RightGoodsView extends React.Component {
                     goodsData:responseData.data.list
                 })
             }
-            fetchData(url,param,callback);
+            const errCallback = (responseData)=>{
+                if (responseData.errno == 501){
+                    alert(responseData.errmsg)
+                    this.props.navigation.navigate('login')
+                }
+            }
+            fetchData(url,param,callback,errCallback);
         }
 
     }
@@ -214,9 +246,9 @@ class RightGoodsView extends React.Component {
                         {
                             goodsData.map((item, i) => {
                                 return (
-                                    <TouchableOpacity key={item.id} activeOpacity={0.5} onPress={() => { this.onChooseGoods(item.id) }}
+                                    <TouchableOpacity key={item.id} activeOpacity={0.5} onPress={() => { this.onChooseGoods(item.id,item.name) }}
                                     >
-                                        <ImageBackground style={{ width: 100, height: 100 }}
+                                        <ImageBackground style={{ width: 100, height: 100,marginLeft:10,opacity:0.9 }}
                                                          source={{ uri: item.picUrl }}>
                                             <Text style={styles.text}>{item.name}</Text>
                                         </ImageBackground>
@@ -246,7 +278,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: "white",
-        fontSize: 15,
+        fontSize: 12,
         lineHeight: 100,
         fontWeight: "bold",
         textAlign: "center",
