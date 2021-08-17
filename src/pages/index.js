@@ -93,8 +93,9 @@ export default class MainPage extends React.Component {
         }
     }
     render(){
+        console.log("xxxx"+window.isLogin)
         let initialRouteName = "Guide"
-        if (1){
+        if (!window.isLogin){
             initialRouteName = "Home"
         }
         return(

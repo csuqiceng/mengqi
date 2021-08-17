@@ -248,7 +248,7 @@ class RightGoodsView extends React.Component {
                                 return (
                                     <TouchableOpacity key={item.id} activeOpacity={0.5} onPress={() => { this.onChooseGoods(item.id,item.name) }}
                                     >
-                                        <ImageBackground style={{ width: 100, height: 100,marginLeft:10,opacity:0.9 }}
+                                        <ImageBackground style={{ width: 100, height: 100,marginLeft:10,opacity:0.9,backgroundColor: "transparent"}}
                                                          source={{ uri: item.picUrl }}>
                                             <Text style={styles.text}>{item.name}</Text>
                                         </ImageBackground>

@@ -12,17 +12,27 @@ export default class ClassifyService extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            LeftToolbar: '1036005',
+            LeftToolbar:'1036005',
             firstLvData: {},
         }
+        this.LeftToolbar = '1036005'
     }
     onLeftToolbarClick = (e) => {
         this.setState({
             LeftToolbar: e
         })
+        this.LeftToolbar = e
     }
     renderRightView = () => {
         return <RightSecondLvView firstLvData={this.state.LeftToolbar} navigation={this.props.navigation}></RightSecondLvView>
+    }
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+        if(nextProps.LeftToolbar){
+            this.setState({
+                LeftToolbar:nextProps.LeftToolbar
+            })
+            this.LeftToolbar = nextProps.LeftToolbar
+        }
     }
     componentDidMount(){
         let param = {
@@ -46,8 +56,10 @@ export default class ClassifyService extends React.Component {
         }
         fetchData(url,param,callback,errCallback);
     }
+
     render() {
         const { firstLvData } = this.state;
+        console.log(this.LeftToolbar)
         if (firstLvData.length >0){
             return (
                 <View style={{ flexDirection: 'row' }}>
@@ -57,7 +69,7 @@ export default class ClassifyService extends React.Component {
                                 return (
                                     <TouchableOpacity key={item.id} activeOpacity={0.5} onPress={() => { this.onLeftToolbarClick(item.id) }}
                                     >
-                                        <View style={{ height: 80, backgroundColor: (this.state.LeftToolbar == item.id) ? "#00BEAF" : "#F9F9F7" }}>
+                                        <View style={{ height: 80, backgroundColor: (this.LeftToolbar == item.id) ? "#00BEAF" : "#F9F9F7" }}>
                                             <Text style={{ textAlign: 'center', textAlignVertical: 'center', flex: 1 }}>{item.name}</Text>
                                         </View>
                                     </TouchableOpacity>

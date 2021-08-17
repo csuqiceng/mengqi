@@ -5,9 +5,9 @@
 
     <application
       android:name=".MainApplication"
-      android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
-      android:roundIcon="@mipmap/ic_launcher_round"
+      android:label="梦奇佳园"
+      android:icon="@mipmap/mengqi"
+      android:roundIcon="@mipmap/mengqi"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
       <activity

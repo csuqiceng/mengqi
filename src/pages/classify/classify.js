@@ -6,14 +6,17 @@ import SegmentedControl  from '@ant-design/react-native/lib/segmented-control';
 import ClassifyMall from "./mall/mall";
 import ClassifyService from "./service/service";
 export default class Classify extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             selectId:0,
-            searchValue:''
+            searchValue:'',
+            LeftToolbar:''
         }
+        this.selectId = 0;
     }
     onChange =(e)=>{
+        this.selectId =e.nativeEvent.selectedSegmentIndex;
         this.setState({
             selected:e.nativeEvent.selectedSegmentIndex
         })
@@ -26,16 +29,33 @@ export default class Classify extends React.Component {
         this.setState({ searchValue: '' })
     }
     renderPage=()=>{
-        if (this.state.selected == 1){
+        if (this.selectId == 1){
             return(
-               <ClassifyMall navigation={this.props.navigation}/>
+               <ClassifyMall navigation={this.props.navigation} />
             );
         }else {
             return(
-                <ClassifyService navigation={this.props.navigation}/>
+                <ClassifyService navigation={this.props.navigation} LeftToolbar={this.state.LeftToolbar}/>
             )
         }
     }
+    UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+        console.log("UNSAFE_componentWillReceiveProps"+JSON.stringify(nextProps.route))
+        if(nextProps.route.params){
+            if(nextProps.route.params.selectId == 0){
+                    this.setState({
+                        selectId:nextProps.route.params.selectId,
+                        LeftToolbar:nextProps.route.params.id
+                    })
+                  this.selectId=nextProps.route.params.selectId
+            }
+        }
+    }
+
+    componentDidMount() {
+        console.log(JSON.stringify(this.props.route))
+    }
+
     render() {
         return (
             <View style={{flex:1}}>
@@ -45,7 +65,7 @@ export default class Classify extends React.Component {
                         values={['服务', '商城']}
                         style={{width:200,backgroundColor:'white',borderColor:'gray',height:40,borderRadius:20}}
                         tintColor={'#00BEAF'}
-                        selectedIndex={this.state.selectId}
+                        selectedIndex={this.selectId}
                         onChange={this.onChange}
                     />
                     <View style={{flex:1}}></View>

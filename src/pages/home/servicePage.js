@@ -25,11 +25,15 @@ export default class ServiceMainPage extends React.Component{
         }
     }
 
-    onCardClick = (data,id) =>{
-        if(data){
-            // this.props.navigation.navigate('ServiceConfirmPage', { name: data , id:id })
-            this.props.navigation.navigate('Classify', { name: data , id:id })
+    onMainServiceCardClick = (data,id) =>{
+        if(id){
+            this.props.navigation.navigate('Classify',{ name: data , id:id,selectId:0})
         }
+    }
+    onHotServiceCardClick = (data,id) =>{
+      if(id){
+        this.props.navigation.navigate('ServiceConfirmPage', { name: data , id:id })
+      }
     }
     onServiceOrder=(id,name)=>{
         this.props.navigation.navigate('ServiceConfirmPage', { name: name , id:id })
@@ -155,7 +159,7 @@ export default class ServiceMainPage extends React.Component{
                         <View style={{flex:1,flexDirection:'row',marginLeft:15,marginTop:15}}>
                             {
                                 this.state.categoriesList.map((item,i)=>{
-                                    return <BottomMainCard text={item.name} key={item.name} id={item.id} onCardClick={this.onCardClick} image={item.iconUrl}></BottomMainCard>
+                                    return <BottomMainCard text={item.name} key={item.name} id={item.id} onCardClick={this.onMainServiceCardClick} image={item.iconUrl}></BottomMainCard>
                                 })
                             }
                         </View>
@@ -171,7 +175,7 @@ export default class ServiceMainPage extends React.Component{
                                     this.state.hoteServiceList.map((item,i)=>{
                                         return(
                                             <View key={item.id} style={{paddingRight:10}}>
-                                                <BottomHotCard text={item.name} key={item.name} id={item.id} subtitle={item.brief} onCardClick={this.onCardClick} image={item.picUrl}></BottomHotCard>
+                                                <BottomHotCard text={item.name} key={item.name} id={item.id} subtitle={item.brief} onCardClick={this.onHotServiceCardClick} image={item.picUrl}></BottomHotCard>
                                             </View>
                                         )
                                     })
