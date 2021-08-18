@@ -15,7 +15,7 @@ async function fetchData(url, param, callback,errCallback){
                     callback(responseData)
                 }
             }else {
-                console.log(responseData)
+                console.log('responseData'+JSON.stringify(responseData))
                 if (typeof errCallback =='function'){
                     errCallback(responseData)
                 }
@@ -23,7 +23,7 @@ async function fetchData(url, param, callback,errCallback){
         })
         .catch(error => {
             // console.error('Error:', error)
-            console.log(error)
+            console.log("error"+error)
         })
         .done()
 

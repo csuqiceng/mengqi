@@ -86,6 +86,7 @@ class MinePage extends React.Component {
          this.props.navigation.navigate('address')
      }
     render() {
+      console.log("renderMyinfoPage")
         const {navigation} = this.props;
         return (
             <View style={styles.container}>

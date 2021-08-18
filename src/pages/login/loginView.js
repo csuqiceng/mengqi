@@ -86,8 +86,8 @@ class AccoutLoginView extends React.Component{
   constructor() {
       super();
       this.state={
-          loginName:'',
-          passWord:'',
+          loginName:'lihonghao',
+          passWord:'123456',
           token:'otfdtvohut0r30unlxl8fwqwrt1na9iz'
       }
   }
@@ -124,7 +124,6 @@ class AccoutLoginView extends React.Component{
         }
         let url = 'http://lhh.natapp1.cc/api/wx/auth/login';
         const  callback =(responseData)=>{
-            this.props.onLoginCallback()
 
             AsyncStorage.setItem('loginType','mainPgae')
                 .then(()=> console.log("update"))
@@ -134,13 +133,14 @@ class AccoutLoginView extends React.Component{
                 .then(()=> console.log("update"))
                 .catch(e=>console.log("e: ",e))
 
-
             window.token =  responseData.data.token;
+            console.log("yjcao_token"+window.token)
             window.isLogin = true;
+            this.props.onLoginCallback()
         }
         const errCallback = (responseData)=>{
             if (responseData.errno == 501){
-                console.log(responseData.errmsg)
+                // alert(responseData.errmsg)
             }
         }
         fetchData(url,param,callback,errCallback);
@@ -295,11 +295,12 @@ class VerificationcodeView extends React.Component{
             window.isLogin = true;
         }
         const errCallback = (responseData)=>{
+            console.log("ssdasffas")
             if (responseData.errno == 501){
                 console.log(responseData.errmsg)
             }
         }
-        fetchData(url,param,callback,errCallback);
+        fetchData(url,param,callback);
         // console.log(JSON.stringify(token))
     }
     //发送验证码

@@ -213,71 +213,111 @@ export default class MyAddressView extends React.Component {
         }
         fetchData(url,param,callback,errCallback);
     }
+    onSelectAddressCallback=(e)=>{
+        if (this.props.route.params.onSelectAddress){
+            this.props.navigation.goBack();
+            this.props.route.params.onSelectAddress(e);
+        }
+    }
     render() {
         console.log(window.token)
         const { AddressData } = this.state;
         if (AddressData.length > 0){
-            return (
-                <View style={{flex:1 }}>
-                    <NavBar
+            if (this.props.route.params){
+                return (
+                  <View style={{flex:1 }}>
+                      <NavBar
                         titleItem={() => this.renderTitleItem()}
                         leftItem={() => this.renderLeftItem()}
-                    />
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                      />
+                      <ScrollView showsVerticalScrollIndicator={false}>
 
-                    <View style={{ flex: 1,backgroundColor: '#F1F1F1' }}>
-                        {
-                            AddressData.map((item, i) => {
-                                return (
-                                    <View key={i} style={{ height: 100,marginTop:10}}>
-                                        <View style={{height:60,backgroundColor:'white',padding:10,borderBottomWidth:1,borderBottomColor:'gray'}}>
-                                            <View style={{flexDirection:'row'}}>
-                                                <Text style={{fontSize: 15}}>{item.name}</Text>
-                                                <Text style={{marginLeft:10,fontSize: 16}}>{item.tel}</Text>
-                                            </View>
-                                            <Text style={{color:'gray'}}>{item.province + item.city + item.county +item.addressDetail}</Text>
-                                        </View>
-                                        <View style={{height:40,flexDirection:'row',backgroundColor:'white',alignItems: 'center',paddingRight:15,paddingLeft:15}}>
-                                            <TouchableOpacity activeOpacity={0.5} onPress={() => {this.onChangeDefault(item.id)}}>
+                          <View style={{ flex: 1,backgroundColor: '#F1F1F1' }}>
+                              {
+                                  AddressData.map((item, i) => {
+                                      return (
+                                        <View key={i} style={{ height: 60,marginTop:10}}>
+                                            <TouchableOpacity activeOpacity={0.5} onPress={() => {this.onSelectAddressCallback(item)}}>
+                                            <View style={{height:60,backgroundColor:'white',padding:10,borderBottomWidth:1,borderBottomColor:'gray'}}>
                                                 <View style={{flexDirection:'row'}}>
-                                                    <CheckBox
-                                                        style={{flex:1}}
-                                                        // onClick={()=>this.onChangeDefault(item.id)}
-                                                        isChecked={item.isDefault}
-                                                        checkBoxColor={'#00BEAF'}
-                                                    />
-                                                    <Text style={{marginLeft:23,marginTop:1}}>设为默认</Text>
+                                                    <Text style={{fontSize: 15}}>{item.name}</Text>
+                                                    <Text style={{marginLeft:10,fontSize: 16}}>{item.tel}</Text>
                                                 </View>
+                                                <Text style={{color:'gray'}}>{item.province + item.city + item.county +item.addressDetail}</Text>
+                                            </View>
                                             </TouchableOpacity>
-                                            <View style={{flex:1}}></View>
-                                            <View style={{flexDirection:'row'}}>
-                                                <TouchableOpacity activeOpacity={0.5} onPress={() => {this.onEditAddress(item.id)}}>
+                                        </View>
+                                      )
+                                  })
+                              }
+                          </View>
+                      </ScrollView>
+                  </View>
+                )
+            }else{
+                return (
+                  <View style={{flex:1 }}>
+                      <NavBar
+                        titleItem={() => this.renderTitleItem()}
+                        leftItem={() => this.renderLeftItem()}
+                      />
+                      <ScrollView showsVerticalScrollIndicator={false}>
+
+                          <View style={{ flex: 1,backgroundColor: '#F1F1F1' }}>
+                              {
+                                  AddressData.map((item, i) => {
+                                      return (
+                                        <View key={i} style={{ height: 100,marginTop:10}}>
+                                            <View style={{height:60,backgroundColor:'white',padding:10,borderBottomWidth:1,borderBottomColor:'gray'}}>
+                                                <View style={{flexDirection:'row'}}>
+                                                    <Text style={{fontSize: 15}}>{item.name}</Text>
+                                                    <Text style={{marginLeft:10,fontSize: 16}}>{item.tel}</Text>
+                                                </View>
+                                                <Text style={{color:'gray'}}>{item.province + item.city + item.county +item.addressDetail}</Text>
+                                            </View>
+                                            <View style={{height:40,flexDirection:'row',backgroundColor:'white',alignItems: 'center',paddingRight:15,paddingLeft:15}}>
+                                                <TouchableOpacity activeOpacity={0.5} onPress={() => {this.onChangeDefault(item.id)}}>
                                                     <View style={{flexDirection:'row'}}>
-                                                        <Image source={require('../../assets/images/myinfo/icon_edit.png')} style={{ width: 20, height: 20}}></Image>
-                                                        <Text>编辑</Text>
+                                                        <CheckBox
+                                                          style={{flex:1}}
+                                                          // onClick={()=>this.onChangeDefault(item.id)}
+                                                          isChecked={item.isDefault}
+                                                          checkBoxColor={'#00BEAF'}
+                                                        />
+                                                        <Text style={{marginLeft:23,marginTop:1}}>设为默认</Text>
                                                     </View>
                                                 </TouchableOpacity>
-                                                <TouchableOpacity activeOpacity={0.5} onPress={() => {this.onDelAddress(item.id)}}>
-                                                    <View style={{flexDirection:'row'}}>
-                                                        <Image source={require('../../assets/images/myinfo/icon_delete.png')} style={{ width: 20, height: 20, marginLeft: 10 }}></Image>
-                                                        <Text>删除</Text>
-                                                    </View>
-                                                </TouchableOpacity>
+                                                <View style={{flex:1}}></View>
+                                                <View style={{flexDirection:'row'}}>
+                                                    <TouchableOpacity activeOpacity={0.5} onPress={() => {this.onEditAddress(item.id)}}>
+                                                        <View style={{flexDirection:'row'}}>
+                                                            <Image source={require('../../assets/images/myinfo/icon_edit.png')} style={{ width: 20, height: 20}}></Image>
+                                                            <Text>编辑</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity activeOpacity={0.5} onPress={() => {this.onDelAddress(item.id)}}>
+                                                        <View style={{flexDirection:'row'}}>
+                                                            <Image source={require('../../assets/images/myinfo/icon_delete.png')} style={{ width: 20, height: 20, marginLeft: 10 }}></Image>
+                                                            <Text>删除</Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                </View>
                                             </View>
                                         </View>
-                                    </View>
-                                )
-                            })
-                        }
-                    </View>
-                    </ScrollView>
-                    <TouchableOpacity activeOpacity={0.5} onPress={() => {this.props.navigation.navigate('newaddress')}}>
-                        <View style={styles.tgLoginBtnStyle}>
-                            <Text style={{ color: 'black', textAlign: 'center', justifyContent: 'center',fontSize: 16 }}>{"添加新收货人"}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            )
+                                      )
+                                  })
+                              }
+                          </View>
+                      </ScrollView>
+                      <TouchableOpacity activeOpacity={0.5} onPress={() => {this.props.navigation.navigate('newaddress')}}>
+                          <View style={styles.tgLoginBtnStyle}>
+                              <Text style={{ color: 'black', textAlign: 'center', justifyContent: 'center',fontSize: 16 }}>{"添加新收货人"}</Text>
+                          </View>
+                      </TouchableOpacity>
+                  </View>
+                )
+            }
+
         }else{
             return (
                 <View style={{flex: 1, alignItems:'center'}}>

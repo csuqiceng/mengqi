@@ -18,7 +18,8 @@ export default class ServiceOrderPage extends React.Component{
     constructor() {
         super();
         this.state={
-            orderData:''
+            orderData:'',
+            address:'',
         }
     }
     // 返回中间按钮
@@ -37,10 +38,20 @@ export default class ServiceOrderPage extends React.Component{
             </TouchableOpacity>
         );
     }
+    onSelectAddress=(e)=>{
+        console.log(e)
+        this.setState({
+            address:e
+        })
+    }
+    onChooseAddress=()=>{
+        this.props.navigation.navigate('address', { onSelectAddress: this.onSelectAddress })
+    }
     onConfirmPay=()=>{
         let cartId = this.props.route.params.data;
+        console.log('addressId'+this.state.address.id)
         let data ={
-            addressId: "22",
+            addressId: this.state.address.id,
             cartId: cartId,
             coordinate: "",
             couponId: "0",
@@ -75,33 +86,52 @@ export default class ServiceOrderPage extends React.Component{
         fetchData(url,param,callback,errCallback);
     }
     componentDidMount() {
-        let cartId = this.props.route.params.data;
-        let param = {
+        let param1 = {
             headers: {
-                'X-Litemall-Token': window.token?window.token: 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
-                'content-type': 'application/x-www-form-urlencoded'
+                'X-Litemall-Token':window.token?window.token: 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+                'content-type': 'application/json'
             },
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            method: 'GET',
         }
-        let url = `http://lhh.natapp1.cc/api/wx/cart/checkout?cartId=${cartId}&addressId=22&couponId=0&integral=&balance=`;
-        const  callback =(responseData)=>{
-             console.log(responseData)
-            this.setState({
-                orderData:responseData.data
-            })
+        let url1 = `http://lhh.natapp1.cc/api/wx/address/list`;
+        const  callback1 =(responseData)=>{
+            let addressId = responseData.data.list[0].id;
+            let address = responseData.data.list[0];
+
+            let cartId = this.props.route.params.data;
+            let param = {
+                headers: {
+                    'X-Litemall-Token': window.token?window.token: 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            }
+            let url = `http://lhh.natapp1.cc/api/wx/cart/checkout?cartId=${cartId}&addressId=${addressId}&couponId=0&integral=&balance=`;
+            const  callback =(responseData)=>{
+                console.log(responseData)
+                this.setState({
+                    orderData:responseData.data,
+                    address:address
+                })
+            }
+            const errCallback = (responseData)=>{
+                if (responseData.errno == 501){
+                    alert(responseData.errmsg)
+                    this.props.navigation.navigate('login')
+                }
+            }
+            fetchData(url,param,callback,errCallback);
         }
-        const errCallback = (responseData)=>{
+        const errCallback1 = (responseData)=>{
             if (responseData.errno == 501){
-                alert(responseData.errmsg)
                 this.props.navigation.navigate('login')
             }
         }
-        fetchData(url,param,callback,errCallback);
+        fetchData(url1,param1,callback1,errCallback1);
     }
 
     render(){
-        console.log(this.props.route.params)
-        const  {orderData} = this.state;
+        const  {orderData,address} = this.state;
         return (
             <View style={styles.container}>
                 <NavBar
@@ -110,40 +140,52 @@ export default class ServiceOrderPage extends React.Component{
                 />
                 <ScrollView  showsVerticalScrollIndicator ={false}>
 
-                <View style={{height:150,backgroundColor:'white',marginTop:20,justifyContent:'flex-start'}}>
+                <View style={{height:150,backgroundColor:'white',marginTop:20}}>
                     <View style={{ height: 40, width:width,flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'}} >
                         <View  style={{ width: 2, height: 20,backgroundColor: 'black'}}></View>
                         <Text style={{  fontSize: 17,marginLeft:10}}>商品信息</Text>
                     </View>
-                    <View style={{flex:1,flexDirection:'row',margin:10}}>
-                            <Image source={require('../../assets/images/home_nav_wash.png')} style={{
-                                width:50,
-                                height:50,
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center',margin:20}}>
+                            <Image source={{uri:orderData.checkedGoodsList?orderData.checkedGoodsList[0].picUrl:
+                                  'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png'}}
+                                   style={{
+                                width:60,
+                                height:60,
                             }}/>
                             <View style={{flex:1,marginLeft:20}}>
                                 <View style={{flexDirection:'row'}}>
-                                    <Text style={{fontSize:15, color:'black',marginLeft:10}}>{orderData.checkedGoodsList?orderData.checkedGoodsList[0].goodsName:''}</Text>
-                                    <Text  numberOfLines={3} style={{fontSize: 15,color:'#ff6600',paddingTop:10}}>¥ </Text>
-                                    <Text  numberOfLines={3} style={{fontSize: 25,color:'#ff6600'}}>{orderData.checkedGoodsList?orderData.checkedGoodsList[0].price:''}</Text>
+                                    <Text style={{fontSize:15, color:'black'}}>{orderData.checkedGoodsList?orderData.checkedGoodsList[0].goodsName:''}</Text>
+                                    <View style={{flex:1}}/>
+                                    <View style={{flex:1}}>
+                                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                                            <Text  numberOfLines={3} style={{fontSize: 19,color:'#ff6600'}}>¥ </Text>
+                                            <Text  numberOfLines={3} style={{fontSize: 19,color:'#ff6600'}}>{orderData.checkedGoodsList?orderData.checkedGoodsList[0].price:''}</Text>
+                                        </View>
+                                        <Text  numberOfLines={3} style={{fontSize: 15,color: 'gray',marginTop: 10}}>×{orderData.checkedGoodsList?orderData.checkedGoodsList[0].number:''}</Text>
+                                    </View>
                                 </View>
-                                <Text  numberOfLines={3} style={{fontSize: 15}}>数量：{orderData.checkedGoodsList?orderData.checkedGoodsList[0].number:''}</Text>
                             </View>
 
                     </View>
                 </View>
 
-                <View style={{height:150,backgroundColor:'white',marginTop:20,justifyContent:'flex-start'}}>
+                <View style={{height:150,backgroundColor:'white',marginTop:10,justifyContent:'flex-start'}}>
                     <View style={{ height: 40, width:width,flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'}} >
                         <View  style={{ width: 2, height: 20,backgroundColor: 'black'}}></View>
                         <Text style={{  fontSize: 17,marginLeft:10}}>地址</Text>
                     </View>
-                    <View style={{flex:1,flexDirection:'row',margin:10}}>
-                        <View style={{marginTop:25}}>
-                            <Text style={{fontSize:13, color:'black',marginLeft:10,marginTop:5}}>{orderData.checkedAddress?orderData.checkedAddress.tel:''}</Text>
-                            <Text style={{fontSize:13, color:'black',marginLeft:10,marginTop:5}}>{orderData.checkedAddress?orderData.checkedAddress.addressDetail:''}</Text>
-                        </View>
+                    <TouchableOpacity style={{flex:1,flexDirection:'row',margin:15,alignItems:'center'}} activeOpacity={0.5} onPress={() => {this.onChooseAddress()}}>
+                            <View>
+                                <View style={{flexDirection:'row',alignItems:'center'}}>
+                                    <Text style={{fontSize:18, color:'black',marginLeft:10,marginTop:5}}>{address?address.name:''}</Text>
+                                    <Text style={{fontSize:15, color:'black',marginLeft:10,marginTop:5}}>{address?address.tel:''}</Text>
+                                </View>
+                                <Text style={{fontSize:15, color:'black',marginLeft:10,marginTop:5}}>{address?address.addressDetail:''}</Text>
+                            </View>
+                            <View style={{flex:1}}/>
+                            <Image source={require('../../assets/images/goto.png')} style={{ width: 20, height: 20 ,marginLeft: 10}}/>
+                    </TouchableOpacity>
 
-                    </View>
                 </View>
 
                 </ScrollView>

@@ -20,10 +20,11 @@ export  default  class HeaderView extends React.Component{
         }
     }
     componentDidMount() {
+        console.log("yjcao_token1"+window.token)
         let param = {
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {
-                'X-Litemall-Token': window.token?window.token: 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+                'X-Litemall-Token': window.token?window.token:'otfdtvohut0r30unlxl8fwqwrt1na9iz',
                 'content-type': 'application/x-www-form-urlencoded'
             },
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -36,7 +37,6 @@ export  default  class HeaderView extends React.Component{
         }
         const errCallback = (responseData)=>{
             if (responseData.errno == 501){
-                alert(responseData.errmsg)
                 this.props.navigation.navigate('login')
             }
         }
