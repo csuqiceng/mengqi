@@ -7,25 +7,40 @@ import {
     StyleSheet,
     Platform,
     Dimensions,
-    SafeAreaView,
+    Modal,
     ScrollView,
-    TouchableOpacity
-} from 'react-native';
+    TouchableOpacity, TextInput,
+} from "react-native";
 import NavBar from "../../common/navBar";
 import {fetchData} from '../../common/fetch'
+import RadioModal from 'react-native-radio-master';
 var {width} = Dimensions.get('window');
 export default class ServiceOrderPage extends React.Component{
     constructor() {
         super();
         this.state={
+            modalVisible:false,
             orderData:'',
             address:'',
+            initItem:'送货上门(默认)',
+            initId:'01',
+            balance: false,//是否使用余额支付
+            couponId: "0",//优惠券ID
+            goodsType: "",//购物车
+            grouponLinkId: 0,//参数值
+            grouponRulesId: 0,//团购规则ID
+            message: "",//备注
+            subscribeTime:"",//预约时间
+            serviceStaff: "",//员工编号
+            userCouponId: "0",//购物车
+            integral:0,//使用积分
+            distributionType:'01'//配送方式01送货02自提03快递
         }
     }
     // 返回中间按钮
     renderTitleItem=()=> {
         return(
-            <Text style={{textAlign:'center',justifyContent:'center',marginLeft:-50}}>订单支付</Text>
+            <Text style={{textAlign:'center',justifyContent:'center',marginLeft:-50}}>确认订单</Text>
         );
     }
 
@@ -44,24 +59,36 @@ export default class ServiceOrderPage extends React.Component{
             address:e
         })
     }
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
+    onModelClose=(e)=>{
+        this.setState({
+            modalVisible:false,
+            serviceItemName:'标准'
+        })
+    }
     onChooseAddress=()=>{
         this.props.navigation.navigate('address', { onSelectAddress: this.onSelectAddress })
     }
     onConfirmPay=()=>{
         let cartId = this.props.route.params.data;
-        console.log('addressId'+this.state.address.id)
         let data ={
-            addressId: this.state.address.id,
-            cartId: cartId,
-            coordinate: "",
-            couponId: "0",
-            goodsType: "",
-            grouponLinkId: 0,
-            grouponRulesId: 0,
-            message: "",
-            serviceStaff: "",
-            userCouponId: "0",
+            addressId: this.state.address.id, //地址
+            cartId: cartId, //购物车
+            balance: false,//是否使用余额支付
+            couponId: "0",//优惠券ID
+            goodsType: "",//购物车
+            grouponLinkId: 0,//参数值
+            grouponRulesId: 0,//团购规则ID
+            message: "",//备注
+            subscribeTime:"",//预约时间
+            serviceStaff: "",//员工编号
+            userCouponId: "0",//购物车
+            integral:0,//使用积分
+            distributionType:'01'//配送方式01送货02自提03快递
         }
+        console.log('onConfirmPayData'+JSON.stringify(data))
         let param = {
             body: JSON.stringify(data), // must match 'Content-Type' header
             headers: {
@@ -131,15 +158,15 @@ export default class ServiceOrderPage extends React.Component{
     }
 
     render(){
-        const  {orderData,address} = this.state;
+        const  {orderData,address,modalVisible,initItem} = this.state;
         return (
-            <View style={styles.container}>
+            <View style={styles.container} onPress={()=>{this.setModalVisible(!modalVisible)}}>
                 <NavBar
                     titleItem = {() => this.renderTitleItem()}
                     leftItem = {() => this.renderLeftItem()}
                 />
                 <ScrollView  showsVerticalScrollIndicator ={false}>
-
+                    {/*商品信息*/}
                 <View style={{height:150,backgroundColor:'white',marginTop:20}}>
                     <View style={{ height: 40, width:width,flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'}} >
                         <View  style={{ width: 2, height: 20,backgroundColor: 'black'}}></View>
@@ -168,7 +195,7 @@ export default class ServiceOrderPage extends React.Component{
 
                     </View>
                 </View>
-
+                {/*地址*/}
                 <View style={{height:150,backgroundColor:'white',marginTop:10,justifyContent:'flex-start'}}>
                     <View style={{ height: 40, width:width,flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'}} >
                         <View  style={{ width: 2, height: 20,backgroundColor: 'black'}}></View>
@@ -185,8 +212,43 @@ export default class ServiceOrderPage extends React.Component{
                             <View style={{flex:1}}/>
                             <Image source={require('../../assets/images/goto.png')} style={{ width: 20, height: 20 ,marginLeft: 10}}/>
                     </TouchableOpacity>
-
                 </View>
+                    {/*配送方式*/}
+                    <View style={{height:100,backgroundColor:'white',marginTop:10,justifyContent:'flex-start'}}>
+                        <View style={{ height: 40, width:width,flexDirection: 'row', alignItems: 'center',borderBottomWidth:1,borderBottomColor:'lightgray'}} >
+                            <View  style={{ width: 2, height: 20,backgroundColor: 'black'}}></View>
+                            <Text style={{  fontSize: 17,marginLeft:10}}>配送方式</Text>
+                        </View>
+                        <TouchableOpacity style={{flex:1,flexDirection:'row',margin:15,alignItems:'center'}} activeOpacity={0.5} onPress={()=>this.setModalVisible(!modalVisible)}>
+                            <View>
+                                <View style={{flexDirection:'row',alignItems:'center'}}>
+                                    <Text style={{fontSize:15, color:'black',marginLeft:10,marginTop:5}}>{initItem}</Text>
+                                </View>
+                            </View>
+                            <View style={{flex:1}}/>
+                            <Image source={require('../../assets/images/goto.png')} style={{ width: 20, height: 20 ,marginLeft: 10}}/>
+                        </TouchableOpacity>
+                    </View>
+                    {/*订单备注*/}
+                    <View style={{height:40,backgroundColor:'white',marginTop:10,justifyContent:'flex-start'}}>
+                            <View>
+                                <View style={{flexDirection:'row',alignItems:'center'}}>
+                                    <Text style={{fontSize:15, color:'black',marginLeft:10,marginTop:5}}>{initItem}</Text>
+                                </View>
+                            </View>
+                            <View style={{flex:1}}>
+                                <TextInput
+                                  value={this.state.loginName}
+                                  underlineColorAndroid='transparent'
+                                  placeholder={' 请输入登录名'}
+                                  // onChangeText={this.onLoginNameChanged}  //添加值改变事件
+                                  // style={{ ...styles.tgTextInputStyle}}
+                                />
+                            </View>
+                    </View>
+
+
+
 
                 </ScrollView>
                 <View style={{flexDirection:'row'}}>
@@ -202,6 +264,67 @@ export default class ServiceOrderPage extends React.Component{
                     </TouchableOpacity>
                 </View>
 
+
+                {/*下方弹出*/}
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  hardwareAccelerated={true}
+                  onRequestClose={() => {
+                      this.setModalVisible(!modalVisible);
+                  }}
+                >
+                    <View  style={styles.centeredView}>
+                        <TouchableOpacity
+                          activeOpacity={.8}
+                          style={{flex:1}}
+                          onPress={() => this.setModalVisible(!modalVisible)}
+                        >
+                        </TouchableOpacity>
+
+                        <View style={styles.modalView}>
+                            <View style={{flex:1,marginTop:7,justifyContent:'center',alignItems:'center'}}>
+                                <Text>配送方式</Text>
+                                <View style={{flex:1}}>
+                                    <RadioModal
+                                      selectedValue={this.state.initId}
+                                      onValueChange={(id,item) => this.setState({initId: id,initItem:item})}
+                                      style={{
+                                          flexDirection:'column',
+                                          // flexWrap:'wrap',
+                                          // justifyContent:'flex-start',
+                                          // alignItems:'center',
+                                          width:width*0.7,
+                                          backgroundColor:'white',
+                                          margin:30,
+                                      }}
+                                    >
+                                        <Text value="01" >送货上门(默认)</Text>
+                                        <Text value="02" >网点自提货物</Text>
+                                        <Text value="03" >快递</Text>
+                                    </RadioModal>
+                                </View>
+                            </View>
+                            <TouchableOpacity activeOpacity={0.5} style={{flex:1}} onPress={() => this.onModelClose()}>
+                                <View style={{height:40,flexDirection:'row',justifyContent:'flex-end',margin: 10}}>
+                                    <View style={{
+                                        height:38,
+                                        width:width*0.8,
+                                        backgroundColor:'#00BEAF',
+                                        marginBottom:20,
+                                        justifyContent:'center',
+                                        alignItems:'center',
+                                        borderRadius:4,
+                                        marginTop:30
+                                    }}>
+                                        <Text style={{color:'white',textAlign:'center',justifyContent:'center'}}>{"确定"}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         );
     }
@@ -273,5 +396,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#00BEAF'
+    },
+    centeredView: {
+        flex:1,
+        justifyContent: "flex-end",
+        // alignItems: "center",
+    },
+    modalView: {
+        backgroundColor: "white",
+        height:300,
+        width:width,
+        borderRadius: 10,
+        padding: 15,
+        // alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
     },
 });

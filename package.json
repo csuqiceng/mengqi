@@ -10,8 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "17.0.1",
-    "react-native": "0.64.2",
     "@ant-design/icons-react-native": "^2.3.1",
     "@ant-design/react-native": "^4.2.0",
     "@react-native-async-storage/async-storage": "^1.15.5",
@@ -26,10 +24,13 @@
     "deprecated-react-native-listview": "^0.0.7",
     "global": "^4.4.0",
     "install": "^0.13.0",
+    "react": "17.0.1",
     "react-dom": "^17.0.2",
+    "react-native": "0.64.2",
     "react-native-check-box": "^2.1.7",
     "react-native-cli": "^2.0.1",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-radio-master": "^1.0.1",
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",

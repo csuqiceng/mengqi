@@ -6012,6 +6012,11 @@ react-native-modal-popover@^2.0.1:
     lodash "^4.17.20"
     prop-types "^15.7.2"
 
+react-native-radio-master@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.nlark.com/react-native-radio-master/download/react-native-radio-master-1.0.1.tgz#a3c375875e5d1130682a3ac72610713e5da163ea"
+  integrity sha1-o8N1h15dETBoKjrHJhBxPl2hY+o=
+
 react-native-reanimated@^2.2.0:
   version "2.2.0"
   resolved "https://registry.nlark.com/react-native-reanimated/download/react-native-reanimated-2.2.0.tgz#a6412c56b4e591d1f00fac949f62d0c72c357c78"
