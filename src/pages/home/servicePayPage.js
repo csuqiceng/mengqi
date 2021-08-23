@@ -14,6 +14,7 @@ import {
 import NavBar from "../../common/navBar";
 import {fetchData} from '../../common/fetch'
 import * as WeChat from 'react-native-wechat-lib';
+import CheckBox from "react-native-check-box";
 var {width} = Dimensions.get('window');
 
 
@@ -56,7 +57,6 @@ export default class ServicePayPage extends React.Component{
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
         }
         let url = `http://lhh.natapp1.cc/api/wx/order/apppay`;
-        // let url = 'http://lhh.natapp1.cc/api/wx/order/qrcode'
         const  callback =(responseData)=>{
 
             console.log(responseData);
@@ -67,13 +67,6 @@ export default class ServicePayPage extends React.Component{
                 WeChat.isWXAppInstalled()
                     .then((isInstalled) => {
                         if (isInstalled) {
-                            // WeChat.shareMusic({
-                            //     title: 'Good music.',
-                            //     musicUrl: 'https://google.com/music.mp3',
-                            //     thumbImageUrl: 'https://google.com/1.jpg',
-                            //     scene: 0,
-                            // });
-                            // let sign =`wx52e485127a9724a5\n${responseData.data.timeStamp}\n${responseData.data.nonceStr}\n${responseData.data.prepayId}\n`
                             WeChat.pay({
                                 partnerId: responseData.data.partnerId,  // 商家向财付通申请的商家id
                                 prepayId: responseData.data.prepayId,   // 预支付订单
@@ -94,7 +87,6 @@ export default class ServicePayPage extends React.Component{
                             console.log(isInstalled)
                             alert('请安装微信');
                         }
-                        // WeChat.openWXApp();
                     });
 
 
@@ -147,14 +139,48 @@ export default class ServicePayPage extends React.Component{
                     leftItem = {() => this.renderLeftItem()}
                 />
                 <ScrollView  showsVerticalScrollIndicator ={false}>
-                    <View>
-                        <View style={{flex:1,flexDirection:'row'}}>
+                    <View >
+                        <View style={{flexDirection:'row',height:30,alignItems:'center',paddingLeft:15}}>
+                            <Text >请在</Text>
+                            <Text style={{color: 'red'}}> 半小时内 </Text>
+                            <Text >完成付款，否则系统自动取消订单</Text>
+                        </View>
+                        <View style={{flex:1,flexDirection:'row',height:50,alignItems:'center',backgroundColor:'white',paddingLeft:20,paddingRight:20,paddingTop: 20,paddingBottom:10}}>
                             <Text>订单编号：</Text>
+                            <View style={{flex:1}}></View>
                             <Text>{orderData.orderInfo?orderData.orderInfo.orderSn:''}</Text>
                         </View>
-                        <View style={{flex:1,flexDirection:'row'}}>
+                        <View style={{flex:1,flexDirection:'row',height:50,alignItems:'center',backgroundColor:'white',paddingLeft:20,paddingRight:20,borderColor:'gray',borderTopWidth:0.3}}>
                             <Text>实付金额：</Text>
-                            <Text>{orderData.orderInfo?orderData.orderInfo.actualPrice:''}</Text>
+                            <View style={{flex:1}}></View>
+                            <Text style={{color:'red'}}>¥ {orderData.orderInfo?orderData.orderInfo.actualPrice:''}</Text>
+                        </View>
+                    </View>
+                    <View style={{backgroundColor:'white',marginTop: 20,}}>
+                        <View style={{flexDirection:'row',height:30,alignItems:'center',paddingLeft:15}}>
+                            <Text>请选择支付方式</Text>
+                        </View>
+                        <View>
+                            <View style={{flex:1,flexDirection:'row',height:50,alignItems:'center',backgroundColor:'white',paddingLeft:15,paddingRight:15,paddingTop: 10,paddingBottom:10}}>
+                                <Image resizeMode={'contain'} source={require('../../assets/images/ali_pay.png')} style={{ width: 100, height: 30}}/>
+                                <View style={{flex:1}}></View>
+                                <CheckBox
+                                  style={{width:30}}
+                                  onClick={()=>{console.log("微信支付尚未支持")}}
+                                  isChecked={true}
+                                  checkBoxColor={'#00BEAF'}
+                                />
+                            </View>
+                            <View style={{flex:1,flexDirection:'row',height:50,alignItems:'center',backgroundColor:'white',paddingLeft:15,paddingRight:15,borderColor:'gray',borderTopWidth:0.3}}>
+                                <Image resizeMode={'contain'} source={require('../../assets/images/wx_pay.png')} style={{ width: 120, height: 30,marginLeft: 5}}/>
+                                <View style={{flex:1}}></View>
+                                <CheckBox
+                                  style={{width:30}}
+                                  onClick={()=>{alert("微信支付尚未支持")}}
+                                  isChecked={false}
+                                  checkBoxColor={'#00BEAF'}
+                                />
+                            </View>
                         </View>
                     </View>
 

@@ -15,7 +15,10 @@ import CheckBox from 'react-native-check-box'
 import NavBar from '../../common/navBar';
 import {fetchData} from '../../common/fetch';
 import CityPicker from '../../components/CityPicker'
-
+// import {
+//     AreaPicker,
+// } from '../../components/pickers';
+// import AreaJson from '../../components/pickers/Area.json';
 const {width} = Dimensions.get('window');
 
 export default class MyNewAddressView extends React.Component {
@@ -160,6 +163,7 @@ export default class MyNewAddressView extends React.Component {
                         <View style={{height:60,backgroundColor:'white',marginTop:10,flexDirection:'row',alignItems: 'center',paddingLeft:15}}>
                             <Text style={{fontSize: 15,width:100}}>所在区域</Text>
                             <CityPicker onCityPickerCallback={this.onCityPickerCallback}></CityPicker>
+                            {/*<Text onPress={()=>{this.AreaPicker.show()}}>踩踩踩</Text>*/}
 
                         </View>
                         <View style={{height:60,backgroundColor:'white',marginTop:10,flexDirection:'row',alignItems: 'center',paddingLeft:15}}>
@@ -189,6 +193,15 @@ export default class MyNewAddressView extends React.Component {
                         </View>
                     </TouchableOpacity>
 
+
+                     {/*<AreaPicker*/}
+                     {/*  areaJson={AreaJson}*/}
+                     {/*  onPickerCancel={() => { }}*/}
+                     {/*  onPickerConfirm={(value) => {*/}
+                     {/*      alert(JSON.stringify(value));*/}
+                     {/*      this.onCityPickerCallback(value)*/}
+                     {/*  }}*/}
+                     {/*  ref={ref => this.AreaPicker = ref} />*/}
                  </View>
 
     </KeyboardAvoidingView>

@@ -14,9 +14,9 @@ import {
     StatusBar,
     Alert,
     Modal,
-    Pressable,
     TouchableHighlight
 } from 'react-native';
+import { WebView } from 'react-native-webview';
 import Swiper from 'react-native-swiper';
 import NavBar from "../../common/navBar";
 import Stepper from '@ant-design/react-native/lib/stepper';
@@ -132,6 +132,7 @@ export default class ServiceConfirmPage extends React.Component
         }
         let url = `http://lhh.natapp1.cc/api/wx/goods/detail?id=${id}`;
         const  callback =(responseData)=>{
+            console.log(JSON.stringify(responseData))
             this.setState({
                 productList:responseData.data.productList,
                 info:responseData.data.info,
@@ -152,6 +153,8 @@ export default class ServiceConfirmPage extends React.Component
         if (serviceItemName.length > 0 && serviceItemCount){
             chooseMeg =  `已选 ${serviceItemName}  数量${serviceItemCount}`
         }
+        var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
+
         return (
             <View style={styles.container} onPress={()=>{this.setModalVisible(!modalVisible)}}>
                 {/*自定义导航栏*/}
@@ -176,7 +179,6 @@ export default class ServiceConfirmPage extends React.Component
                                 swiperData.map((item,i)=>{
                                     return (
                                         <View style={styles.slide} key={i}>
-                                            {/*<Text numberOfLines={1}>Learn from Kim K to land that job</Text>*/}
                                             <Image resizeMode='stretch' style={styles.image} source={item.image} />
                                         </View>
                                     )
@@ -241,7 +243,15 @@ export default class ServiceConfirmPage extends React.Component
                             <View style={{marginTop: 10,backgroundColor:'gray'}}>
                                 <Text style={{textAlign: 'center',fontWeight:'bold',fontSize:15,marginTop: 20 ,color: '#666666'}}>{'---商品详情---'}</Text>
                                 <View style={{height:500}}>
-                                {/* todo*/}
+                                    <WebView
+                                      // automaticallyAdjustContentInsets={true}
+                                      // 关键在这里
+                                      source={{ html: '<h1>Hello world</h1>' }}
+                                      // javaScriptEnabled={true}
+                                      // domStorageEnabled={true}
+                                      // decelerationRate="normal"
+                                      // startInLoadingState={true}
+                                    />
                                 </View>
                             </View>
                         </View>
@@ -337,170 +347,6 @@ export default class ServiceConfirmPage extends React.Component
 
 }
 
-
-
-function TopView(props) {
-    return(
-        <View style={{flexDirection:'column'}}>
-            <View style={{flexDirection:'row'}}>
-                <Image source={require('../../assets/favicon.png')} style={{
-                    width:12,
-                    height:12}}/>
-                <Text style={{fontSize:10, color:'black',marginLeft:10}}>{"恒大幸福家园3号楼1单元第11层1102"}</Text>
-            </View>
-
-            <View style={styles.topViewStyle}>
-                <Image source={require('../../assets/favicon.png')} style={styles.leftIconStyle}/>
-                <View style={styles.centerViewStyle}>
-                    <View style={{flexDirection:'row',marginTop:5}}>
-                        <Text style={{fontSize:14, color:'black', fontWeight:'bold'}}>{"李素芬"}</Text>
-                        <Text style={{fontSize:10, color:'black', fontWeight:'normal',marginLeft:10,marginTop:3}}>{"46岁 山东省"}</Text>
-                    </View>
-
-                    <Image source={require('../../assets/favicon.png')} style={{width:17, height:17}}/>
-                    <Text style={{fontSize:10, color:'black', fontWeight:'normal',marginTop:3}}>{"已服务2753次"}</Text>
-                </View>
-                <Text  style={styles.button} onPress={()=>{props.onOrderClick('预约')}}>{"联系Ta"}</Text>
-            </View>
-        </View>
-
-    )
-}
-
-
-function BottomView(props)
-{
-    let [data,setData] = useState({
-        name:"ServiceOrder",
-    });
-    const onClick =(e)=>{
-        setData({
-            name:e,
-        })
-    }
-
-    useEffect(() => {
-        return () => {
-            console.log("卸载了")
-        }
-    }, [data]);
-
-    function renderView(data) {
-        switch (data.name) {
-            case 'ServiceOrder':
-                return <ServiceOrderView/>
-                break;
-            case 'CustomerReviews':
-                return <CustomerReviewsView/>
-                break;
-            case 'CleanersInfo':
-                return <CleanersInfoView/>
-                break;
-            default:
-                return <ServiceOrderView/>
-                break;
-        }
-    }
-
-
-    return(
-        <View style={{flex:1,flexDirection:'column'}}>
-            <Toolbar onClick={onClick} data={data.name}/>
-            {renderView(data)}
-        </View>
-    );
-
-}
-
-function Toolbar(props) {
-    let [data] = useState({
-        infos:
-            [
-                {'title':'服务订单','key':'ServiceOrder'},
-                {'title':'保洁员信息','key':'CleanersInfo'},
-                {'title':'客户评价','key':'CustomerReviews'},
-            ]
-    });
-    return(
-        <View style={{height:40,flexDirection:'row'}}>
-            {
-                data.infos.map((item,index)=>(
-                    <Text style={{
-                        flex:1,textAlign:'center',
-                        marginTop:10,
-                        color:props.data === item.key?'orange':'black',
-                    }}
-                    onPress={()=>{props.onClick(item.key)}}>{item.title}</Text>
-                ))
-            }
-        </View>
-    )
-}
-
-function ServiceOrderView(props)
-{
-    let [data] = useState({
-        infos:
-        [
-            {'title':'优质保洁','time':'2020年10月3日-2020年10月10日','assess':'待派送','button':'改约'},
-            {'title':'优质保洁','time':'2020年10月3日-2020年10月10日','assess':'待评价','button':'去评价'},
-            {'title':'优质保洁','time':'2020年10月3日-2020年10月10日','assess':'已评价','button':'追评'},
-            {'title':'优质保洁','time':'2020年10月3日-2020年10月10日','assess':'已评价','button':'追评'},
-            {'title':'优质保洁','time':'2020年10月3日-2020年10月10日','assess':'已评价','button':'追评'},
-            {'title':'优质保洁','time':'2020年10月3日-2020年10月10日','assess':'已评价','button':'追评'},
-            {'title':'优质保洁','time':'2020年10月3日-2020年10月10日','assess':'已评价','button':'追评'},
-
-        ]
-    });
-    return(
-        <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
-            <ScrollView>
-                <View>
-                    {
-                        data.infos.map((item,index)=>(
-                            <View style={{flexDirection:'row',borderTopWidth:0.5,borderColor:'gray',paddingTop:20}}>
-                                <View style={{height:100}}>
-                                    <Text style={{fontSize:13,fontWeight:'bold'}}>{item.title}</Text>
-                                    <Text style={{fontSize:10,paddingTop:10}}>{`预约上门时间：${item.time}`}</Text>
-                                    <Text style={{fontSize:10}}>{`订单状态：${item.assess}`}</Text>
-                                </View>
-                                <Text  style={{
-                                    color:'gray',
-                                    width:50,
-                                    height:20,
-                                    fontSize:13,
-                                    marginLeft:60,
-                                    marginTop:30,
-                                    borderColor: 'gray',
-                                    borderWidth: 1,
-                                    borderRadius: 3,
-                                    paddingTop:2,
-                                    textAlign:'center'}} onPress={()=>{alert("联系Ta")}}>{item.button}</Text>
-                            </View>
-                        ))
-                    }
-                </View>
-
-            </ScrollView>
-        </SafeAreaView>
-    )
-}
-function CleanersInfoView(props)
-{
-    return(
-        <View style={{borderTopWidth:0.5,borderColor:'gray'}}>
-            <Text>保洁员信息</Text>
-        </View>
-    )
-}
-function CustomerReviewsView(props)
-{
-    return(
-        <View style={{borderTopWidth:0.5,borderColor:'gray'}}>
-            <Text>客户评价</Text>
-        </View>
-    )
-}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
