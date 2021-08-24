@@ -36,10 +36,12 @@ export default class ServiceConfirmPage extends React.Component
         this.state={
             modalVisible:false,
             choose:true,
+            chooseItem:'',
             serviceItemName:'标准',
             serviceItemCount:1,
             productList:'',
-            info:''
+            info:'',
+            webHeight:500,
         }
     }
     // 返回中间按钮
@@ -84,19 +86,21 @@ export default class ServiceConfirmPage extends React.Component
     onModelClose=(e)=>{
         this.setState({
             modalVisible:false,
-            serviceItemName:'标准'
+            serviceItemName:this.state.chooseItem?this.state.chooseItem.specifications[0]:'标准'
         })
     }
     onServiceOrder=()=>{
         let productId = this.state.productList?this.state.productList[0].id:0.00;
         let goodsId = this.state.productList?this.state.productList[0].goodsId:0.00;
-
+        if(this.state.chooseItem){
+            productId = this.state.chooseItem.id;
+        }
         let data ={
             'goodsId':goodsId,
             'productId':productId,
             'number':this.state.serviceItemCount,
         }
-        console.log(data)
+        console.log("谢谢谢谢"+JSON.stringify(data))
         let param = {
             body: JSON.stringify(data), // must match 'Content-Type' header
             headers: {
@@ -146,6 +150,21 @@ export default class ServiceConfirmPage extends React.Component
         }
         fetchData(url,param,callback,errCallback);
     }
+    webViewLoaded=()=>{
+        console.log("ddddd")
+        this.webView.injectJavaScript =`
+          let webHeight = document.body.scrollHeight;
+          window.ReactNativeWebView.postMessage(webHeight);
+        `
+    }
+    onWebViewMessage=(msg)=>{
+        if (msg.nativeEvent.data !== undefined && msg.nativeEvent.data !== null){
+            console.log("dddddee")
+            this.setState({
+                webHeight:parseInt(msg.nativeEvent.data)
+            })
+        }
+    }
 
     render() {
         const { modalVisible ,serviceItemCount,serviceItemName,productList,info } = this.state;
@@ -153,8 +172,25 @@ export default class ServiceConfirmPage extends React.Component
         if (serviceItemName.length > 0 && serviceItemCount){
             chooseMeg =  `已选 ${serviceItemName}  数量${serviceItemCount}`
         }
-        var html = '<!DOCTYPE html><html><body><h1>This is a heading!</body></html>';
-
+        let defaultproductList=[
+            {
+                "id": 245,
+                "goodsId": 1181001,
+                "specifications": [
+                    " 圆柱机"
+                ],
+                "price": 200,
+                "number": 99983,
+                "url": "",
+                "addTime": "2021-07-28 14:09:21",
+                "updateTime": "2021-08-23 22:46:29",
+                "deleted": false
+            }
+        ]
+        if (productList){
+            defaultproductList = productList;
+        }
+        console.log("嘻嘻嘻"+productList)
         return (
             <View style={styles.container} onPress={()=>{this.setModalVisible(!modalVisible)}}>
                 {/*自定义导航栏*/}
@@ -187,26 +223,26 @@ export default class ServiceConfirmPage extends React.Component
                         </Swiper>
                         {/*  服务介绍  */}
                         <View style={{flex:1,backgroundColor:'#F1F1F1'}}>
-                            <View style={{height:150,backgroundColor:'white',paddingLeft:15,paddingRight:15,paddingTop:20 }}>
+                            <View style={{height:100,backgroundColor:'white',paddingLeft:15,paddingRight:15,paddingTop:20 }}>
                                 <Text style={{color: '#333333',fontSize:20}}>{this.props.route.params.name}</Text>
 
                                 <View style={{flexDirection:'row',marginTop:10}}>
                                     <View style={{flexDirection:'row'}}>
                                         <Text  numberOfLines={3} style={{fontSize: 15,color:'#ff6600',paddingTop:10}}>¥ </Text>
-                                        <Text  numberOfLines={3} style={{fontSize: 25,color:'#ff6600'}}>{productList?productList[0].price:0.00}</Text>
+                                        <Text  numberOfLines={3} style={{fontSize: 25,color:'#ff6600'}}>{this.state.chooseItem?this.state.chooseItem.price:productList?productList[0].price:0.00}</Text>
                                     </View>
-                                    <Text  numberOfLines={3} style={{fontSize: 13,textDecorationLine:'line-through',color:'gray',paddingTop:10,paddingLeft:10}}>¥ {info?info.counterPrice:0.00}</Text>
+                                    {/*<Text  numberOfLines={3} style={{fontSize: 13,textDecorationLine:'line-through',color:'gray',paddingTop:10,paddingLeft:10}}>¥ {info?info.counterPrice:0.00}</Text>*/}
                                 </View>
 
-                                <View style={{flexDirection:'row',marginTop: 10}}>
-                                    <Text style={{width:100,height:20,borderColor:'#A38705',color: '#A38705',borderRadius:2,borderWidth:1,textAlign: 'center'}}>满200减20</Text>
-                                    <Text style={{width:100,height:20,borderColor:'#A38705',color: '#A38705',borderRadius:2,borderWidth:1,textAlign: 'center',marginLeft: 10}}>购买得积分</Text>
-                                    <View style={{flex:1}}></View>
-                                    <TouchableOpacity onPress={() => { dismissKeyboard() }} style={{flexDirection:'row' ,marginRight:10}}>
-                                        <Text style={{ color: '#333333', fontSize: 15,fontWeight:'bold',marginRight:10}}>领券</Text>
-                                        <Image style={{ width: 10, height: 20 }} source={require('../../assets/images/goto.png')} />
-                                    </TouchableOpacity>
-                                </View>
+                                {/*<View style={{flexDirection:'row',marginTop: 10}}>*/}
+                                {/*    <Text style={{width:100,height:20,borderColor:'#A38705',color: '#A38705',borderRadius:2,borderWidth:1,textAlign: 'center'}}>满200减20</Text>*/}
+                                {/*    <Text style={{width:100,height:20,borderColor:'#A38705',color: '#A38705',borderRadius:2,borderWidth:1,textAlign: 'center',marginLeft: 10}}>购买得积分</Text>*/}
+                                {/*    <View style={{flex:1}}></View>*/}
+                                {/*    <TouchableOpacity onPress={() => { dismissKeyboard() }} style={{flexDirection:'row' ,marginRight:10}}>*/}
+                                {/*        <Text style={{ color: '#333333', fontSize: 15,fontWeight:'bold',marginRight:10}}>领券</Text>*/}
+                                {/*        <Image style={{ width: 10, height: 20 }} source={require('../../assets/images/goto.png')} />*/}
+                                {/*    </TouchableOpacity>*/}
+                                {/*</View>*/}
                             </View>
 
                             <View style={{
@@ -241,18 +277,22 @@ export default class ServiceConfirmPage extends React.Component
                                 </TouchableOpacity>
                             </View>
                             <View style={{marginTop: 10,backgroundColor:'gray'}}>
-                                <Text style={{textAlign: 'center',fontWeight:'bold',fontSize:15,marginTop: 20 ,color: '#666666'}}>{'---商品详情---'}</Text>
-                                <View style={{height:500}}>
-                                    <WebView
-                                      // automaticallyAdjustContentInsets={true}
-                                      // 关键在这里
-                                      source={{ html: '<h1>Hello world</h1>' }}
-                                      // javaScriptEnabled={true}
-                                      // domStorageEnabled={true}
-                                      // decelerationRate="normal"
-                                      // startInLoadingState={true}
-                                    />
-                                </View>
+                                <Text style={{textAlign: 'center',fontWeight:'bold',fontSize:15,color: '#666666',backgroundColor:'white'}}>{'---商品详情---'}</Text>
+                                    {/*<WebView*/}
+                                    {/*  ref={ref => this.webView = ref}*/}
+                                    {/*  style={{width:width,height:this.state.webHeight}}*/}
+                                    {/*  source={{ html: info.detail }}*/}
+                                    {/*  onLoadEnd={this.webViewLoaded}*/}
+                                    {/*  onMessage={(event)=>{*/}
+                                    {/*      this.onWebViewMessage(event)*/}
+                                    {/*  }}*/}
+                                    {/*  // javaScriptEnabled={true}*/}
+                                    {/*  // scalesPageToFit={true}*/}
+                                    {/*  // scrollEnabled={true}*/}
+                                    {/*  // domStorageEnabled={true}*/}
+                                    {/*  // decelerationRate="normal"*/}
+                                    {/*  // startInLoadingState={true}*/}
+                                    {/*/>*/}
                             </View>
                         </View>
                     </ScrollView>
@@ -296,9 +336,9 @@ export default class ServiceConfirmPage extends React.Component
                                         <View style={{flexDirection:'row'}}>
                                             <View style={{flexDirection:'row'}}>
                                                 <Text  numberOfLines={3} style={{fontSize: 15,color:'#ff6600',paddingTop:10}}>¥ </Text>
-                                                <Text  numberOfLines={3} style={{fontSize: 25,color:'#ff6600'}}>{"118.00"}</Text>
+                                                <Text  numberOfLines={3} style={{fontSize: 25,color:'#ff6600'}}>{this.state.chooseItem?this.state.chooseItem.price:"118.00"}</Text>
                                             </View>
-                                            <Text  numberOfLines={3} style={{fontSize: 13,textDecorationLine:'line-through',color:'gray',paddingTop:10,paddingLeft:10}}>¥ {"200.00"}</Text>
+                                            {/*<Text  numberOfLines={3} style={{fontSize: 13,textDecorationLine:'line-through',color:'gray',paddingTop:10,paddingLeft:10}}>¥ {"200.00"}</Text>*/}
                                         </View>
                                     </View>
                                 </View>
@@ -306,8 +346,22 @@ export default class ServiceConfirmPage extends React.Component
                                 <View>
                                     <Text style={{fontSize:20,fontWeight:"bold"}}>服务项目</Text>
                                     <View style={{flexDirection:'row',marginTop: 10}}>
-                                        <Text style={{width:100,height:30,borderColor:this.state.choose?'#00BEAF':'gray',color: 'black',borderRadius:2,borderWidth:1,textAlign: 'center',textAlignVertical: 'center'}}>{productList?productList[0].specifications[0]:0.00}</Text>
-                                        {/*<Text style={{width:100,height:30,borderColor:'gray',color: 'black',borderRadius:2,borderWidth:1,textAlign: 'center',marginLeft: 10,textAlignVertical: 'center',}}>新居开荒</Text>*/}
+                                        {
+                                            defaultproductList.map((item,i)=>{
+                                                console.log(item)
+                                                return (
+                                                  <TouchableOpacity activeOpacity={0.5}  onPress={() => this.setState({chooseItem:item})}>
+                                                      <View>
+                                                          <Text style={{width:100,height:30,color: 'black',backgroundColor:this.state.chooseItem.id==item.id?'#00BEAF':'white',
+                                                              borderRadius:2,borderWidth:0.5,
+                                                              textAlign: 'center',textAlignVertical: 'center',marginRight:10}}>{item.specifications[0]}</Text>
+                                                      </View>
+                                                  </TouchableOpacity>
+                                                )
+                                            })
+                                        }
+                                        {/*<Text style={{width:100,height:30,borderColor:this.state.choose?'#00BEAF':'gray',color: 'black',borderRadius:2,borderWidth:1,textAlign: 'center',textAlignVertical: 'center'}}>{productList?productList[0].specifications[0]:0.00}</Text>*/}
+                                        {/*/!*<Text style={{width:100,height:30,borderColor:'gray',color: 'black',borderRadius:2,borderWidth:1,textAlign: 'center',marginLeft: 10,textAlignVertical: 'center',}}>新居开荒</Text>*!/*/}
                                     </View>
                                     <View style={{flexDirection:'row',height:50,marginTop: 20}}>
                                         <Text style={{fontSize:20,fontWeight:"bold",flex:2,marginTop: 10}}>购买数量</Text>
@@ -435,7 +489,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         backgroundColor: "white",
-        height:410,
+        height:360,
         width:width,
         borderRadius: 10,
         padding: 15,
