@@ -37,7 +37,7 @@ export default class ServiceConfirmPage extends React.Component
             modalVisible:false,
             choose:true,
             chooseItem:'',
-            serviceItemName:'标准',
+            serviceItemName:'',
             serviceItemCount:1,
             productList:'',
             info:'',
@@ -86,7 +86,7 @@ export default class ServiceConfirmPage extends React.Component
     onModelClose=(e)=>{
         this.setState({
             modalVisible:false,
-            serviceItemName:this.state.chooseItem?this.state.chooseItem.specifications[0]:'标准'
+            serviceItemName:this.state.chooseItem?this.state.chooseItem.specifications[0]:''
         })
     }
     onServiceOrder=()=>{
@@ -100,7 +100,6 @@ export default class ServiceConfirmPage extends React.Component
             'productId':productId,
             'number':this.state.serviceItemCount,
         }
-        console.log("谢谢谢谢"+JSON.stringify(data))
         let param = {
             body: JSON.stringify(data), // must match 'Content-Type' header
             headers: {
@@ -120,7 +119,7 @@ export default class ServiceConfirmPage extends React.Component
         const errCallback = (responseData)=>{
             if (responseData.errno == 501){
                 alert(responseData.errmsg)
-                this.props.navigation.navigate('login')
+                // this.props.navigation.navigate('login')
             }
         }
         fetchData(url,param,callback,errCallback);
@@ -154,16 +153,26 @@ export default class ServiceConfirmPage extends React.Component
         console.log("ddddd")
         this.webView.injectJavaScript =`
           let webHeight = document.body.scrollHeight;
+          alert(webHeight)
           window.ReactNativeWebView.postMessage(webHeight);
         `
     }
     onWebViewMessage=(msg)=>{
+        console.log("dddddee")
         if (msg.nativeEvent.data !== undefined && msg.nativeEvent.data !== null){
             console.log("dddddee")
             this.setState({
                 webHeight:parseInt(msg.nativeEvent.data)
             })
         }
+    }
+    onMessage( event ) {
+        console.log( "On Message", event.nativeEvent.data );
+    }
+
+    sendPostMessage() {
+        console.log( "Sending post message,this is RN" );
+        this.webView.postMessage( "Post message from react native " );
     }
 
     render() {
@@ -284,15 +293,50 @@ export default class ServiceConfirmPage extends React.Component
                                     {/*  source={{ html: info.detail }}*/}
                                     {/*  onLoadEnd={this.webViewLoaded}*/}
                                     {/*  onMessage={(event)=>{*/}
+                                    {/*      console.log("dddww")*/}
                                     {/*      this.onWebViewMessage(event)*/}
                                     {/*  }}*/}
-                                    {/*  // javaScriptEnabled={true}*/}
-                                    {/*  // scalesPageToFit={true}*/}
-                                    {/*  // scrollEnabled={true}*/}
-                                    {/*  // domStorageEnabled={true}*/}
-                                    {/*  // decelerationRate="normal"*/}
-                                    {/*  // startInLoadingState={true}*/}
                                     {/*/>*/}
+
+                                <WebView
+                                  ref={ref => this.webView = ref}
+                                  style={{ width:width,height:this.state.webHeight}}
+                                  scalesPageToFit={false} //布尔值，控制网页内容是否自动适配视图的大小，同时启用用户缩放功能。默认为true
+                                  scrollEnabled={true} //控制是否在 WebView中启用滑动。默认为 true
+                                  javaScriptEnabled={true} //布尔值，控制是否启用 JavaScript。仅在安卓下使用，因为 IOS 默认为启用 JavaScript。默认值为true
+                                  //在 WebView 中载入一段静态的 html 代码或是一个 url（还可以附带一些 header 选项）
+                                  source={{
+                                      html: `<!doctype html>
+                                        <html>
+                                        <head>
+                                        <meta charset="utf-8"/>
+                                        <style>
+                                               *{
+                                                   margin:0;
+                                                   padding:0;
+                                               }
+                                               html,body{
+                                                   width:100%;
+                                                   height:100%;
+                                               }
+                                               div{
+                                                   width:100%;
+                                                   height:100%;
+                                                   background-color:white;
+                                                    }
+                                            </style>
+                                        </head>
+                                        <body>
+                                        <div>${info.detail}</div>
+                                        </body>
+                                        </html>`}}
+                                  //injectedJavaScript={INJECTEDJAVASCRIPT} //设置 js 字符串，在网页加载之前注入的一段 JS 代码
+                                  onLoadEnd={this.webViewLoaded} // webview加载完毕后执行
+                                  onMessage={(event) => {
+                                      console.log('测试onMessage参数列表'+JSON.stringify(event.nativeEvent.data))
+                                      this.onMessage1(event)
+                                  }}
+                                />
                             </View>
                         </View>
                     </ScrollView>

@@ -61,17 +61,17 @@ export default class MyOrderView extends React.Component {
     renderMianView=()=>{
         switch (this.state.itemType) {
             case 'allorder':
-                return <AllorderView></AllorderView>
+                return <AllorderView navigation={this.props.navigation}></AllorderView>
             case 'pay':
-                return <PayView></PayView>
+                return <PayView navigation={this.props.navigation}></PayView>
             case 'deliver':
-                return <DeliverView></DeliverView>
+                return <DeliverView navigation={this.props.navigation}></DeliverView>
             case 'receive':
-                return <ReceiveView></ReceiveView>
+                return <ReceiveView navigation={this.props.navigation}></ReceiveView>
             case 'accomplish':
-                return <AccomplishView></AccomplishView>
+                return <AccomplishView navigation={this.props.navigation}></AccomplishView>
             default:
-                return <AllorderView></AllorderView>
+                return <AllorderView navigation={this.props.navigation}></AllorderView>
         }
     }
     render() {
@@ -113,11 +113,14 @@ export default class MyOrderView extends React.Component {
 
 //全部订单
 class AllorderView extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state={
             AllorderData:'',
         }
+    }
+    onOrderdetails=(id)=>{
+        this.props.navigation.navigate('orderdetails',{"id":id})
     }
 
     componentDidMount() {
@@ -175,7 +178,7 @@ class AllorderView extends React.Component {
                                             </View>
                                         </View>
                                         <View style={{flexDirection:'row',height: 50,justifyContent:'flex-end',alignItems: 'center'}}>
-                                            <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>查看订单详情</Text>
+                                            <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{this.onOrderdetails(item.id)}}>查看订单详情</Text>
                                             <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('修改地址')}}>修改地址</Text>
                                         </View>
                                     </View>
@@ -209,7 +212,9 @@ class PayView extends React.Component {
             AllorderData:'',
         }
     }
-
+    onOrderdetails=(id)=>{
+        this.props.navigation.navigate('orderdetails',{"id":id})
+    }
     componentDidMount() {
         let param = {
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -265,7 +270,7 @@ class PayView extends React.Component {
                                                 </View>
                                             </View>
                                             <View style={{flexDirection:'row',height: 50,justifyContent:'flex-end',alignItems: 'center'}}>
-                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>查看订单详情</Text>
+                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{this.onOrderdetails(item.id)}}>查看订单详情</Text>
                                                 <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>修改地址</Text>
                                             </View>
                                         </View>
@@ -298,7 +303,9 @@ class DeliverView extends React.Component {
             AllorderData:'',
         }
     }
-
+    onOrderdetails=(id)=>{
+        this.props.navigation.navigate('orderdetails',{"id":id})
+    }
     componentDidMount() {
         let param = {
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -354,7 +361,7 @@ class DeliverView extends React.Component {
                                                 </View>
                                             </View>
                                             <View style={{flexDirection:'row',height: 50,justifyContent:'flex-end',alignItems: 'center'}}>
-                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>查看订单详情</Text>
+                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{this.onOrderdetails(item.id)}}>查看订单详情</Text>
                                                 <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>修改地址</Text>
                                             </View>
                                         </View>
@@ -387,7 +394,9 @@ class ReceiveView extends React.Component {
             AllorderData:'',
         }
     }
-
+    onOrderdetails=(id)=>{
+        this.props.navigation.navigate('orderdetails',{"id":id})
+    }
     componentDidMount() {
         let param = {
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -443,7 +452,7 @@ class ReceiveView extends React.Component {
                                                 </View>
                                             </View>
                                             <View style={{flexDirection:'row',height: 50,justifyContent:'flex-end',alignItems: 'center'}}>
-                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>查看订单详情</Text>
+                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{this.onOrderdetails(item.id)}}>查看订单详情</Text>
                                                 <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>修改地址</Text>
                                             </View>
                                         </View>
@@ -476,7 +485,9 @@ class AccomplishView extends React.Component {
             AllorderData:'',
         }
     }
-
+    onOrderdetails=(id)=>{
+        this.props.navigation.navigate('orderdetails',{"id":id})
+    }
     componentDidMount() {
         let param = {
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -532,7 +543,7 @@ class AccomplishView extends React.Component {
                                                 </View>
                                             </View>
                                             <View style={{flexDirection:'row',height: 50,justifyContent:'flex-end',alignItems: 'center'}}>
-                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>查看订单详情</Text>
+                                                <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{this.onOrderdetails(item.id)}}>查看订单详情</Text>
                                                 <Text style={{borderWidth:1,borderColor:'gray',padding:5,borderRadius:2,marginRight:15}} onPress={()=>{alert('详情')}}>修改地址</Text>
                                             </View>
                                         </View>

@@ -20,6 +20,7 @@ import ServicePayPage from "./home/servicePayPage";
 
 import SystemPage from "./myinfo/system";
 import MyOrderView from "./myinfo/orderView";
+import MyOrderDetails from "./myinfo/orderDetails";
 import MyBalanceView from "./myinfo/balance";
 import Changepassword from "./myinfo/changepassword";
 import MyAddressView from "./myinfo/address";
@@ -118,6 +119,7 @@ export default class MainPage extends React.Component {
                     <Stack.Screen name="system" options={{}} component={SystemPage} />
                     <Stack.Screen name="changepassword" options={{}} component={Changepassword} />
                     <Stack.Screen name="myorder" options={{}} component={MyOrderView} />
+                    <Stack.Screen name="orderdetails" options={{}} component={MyOrderDetails} />
                     <Stack.Screen name="balance" options={{}} component={MyBalanceView} />
                     <Stack.Screen name="address" options={{}} component={MyAddressView} />
                     <Stack.Screen name="newaddress" options={{}} component={MyNewAddressView} />
