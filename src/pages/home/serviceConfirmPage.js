@@ -224,7 +224,7 @@ export default class ServiceConfirmPage extends React.Component
                                 swiperData.map((item,i)=>{
                                     return (
                                         <View style={styles.slide} key={i}>
-                                            <Image resizeMode='stretch' style={styles.image} source={item.image} />
+                                            <Image key={i} resizeMode='stretch' style={styles.image} source={item.image} />
                                         </View>
                                     )
                                 })
@@ -392,9 +392,8 @@ export default class ServiceConfirmPage extends React.Component
                                     <View style={{flexDirection:'row',marginTop: 10}}>
                                         {
                                             defaultproductList.map((item,i)=>{
-                                                console.log(item)
                                                 return (
-                                                  <TouchableOpacity activeOpacity={0.5}  onPress={() => this.setState({chooseItem:item})}>
+                                                  <TouchableOpacity activeOpacity={0.5} key={i} onPress={() => this.setState({chooseItem:item})}>
                                                       <View>
                                                           <Text style={{width:100,height:30,color: 'black',backgroundColor:this.state.chooseItem.id==item.id?'#00BEAF':'white',
                                                               borderRadius:2,borderWidth:0.5,
