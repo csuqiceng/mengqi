@@ -23,16 +23,16 @@ import DownloadDialog from './view/DownloadDialog';
 import ToastComponent from './view/ToastComponent';
 
 export {
-    BaseComponent,
-    BaseDialog,
-    AreaPicker,
-    CustomPicker,
-    DatePicker,
-    InputDialog,
-    PickerView,
-    SimpleChooseDialog,
-    SimpleItemsDialog,
-    AlertDialog,
-    DownloadDialog,
-    ToastComponent
+  BaseComponent,
+  BaseDialog,
+  AreaPicker,
+  CustomPicker,
+  DatePicker,
+  InputDialog,
+  PickerView,
+  SimpleChooseDialog,
+  SimpleItemsDialog,
+  AlertDialog,
+  DownloadDialog,
+  ToastComponent,
 };
