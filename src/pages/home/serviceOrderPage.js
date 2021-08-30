@@ -115,7 +115,7 @@ export default class ServiceOrderPage extends React.Component {
     };
     let url = 'http://lhh.natapp1.cc/api/wx/order/submit';
     const callback = responseData => {
-      console.log(responseData);
+      console.log("ServicePayPage————"+JSON.stringify(responseData));
       if (responseData.data) {
         this.props.navigation.navigate('ServicePayPage', {
           data: responseData.data,

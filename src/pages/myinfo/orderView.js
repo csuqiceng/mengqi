@@ -191,7 +191,7 @@ class AllorderView extends React.Component {
                   key={i}
                   activeOpacity={0.5}
                   onPress={() => {
-                    alert('详情');
+                    this.onOrderdetails(item.id);
                   }}>
                   <View
                     style={{
@@ -358,7 +358,7 @@ class PayView extends React.Component {
                   key={i}
                   activeOpacity={0.5}
                   onPress={() => {
-                    alert('详情');
+                    this.onOrderdetails(item.id);
                   }}>
                   <View
                     style={{
@@ -443,7 +443,7 @@ class PayView extends React.Component {
                           marginRight: 15,
                         }}
                         onPress={() => {
-                          alert('详情');
+                          alert('修改地址');
                         }}>
                         修改地址
                       </Text>
@@ -524,7 +524,7 @@ class DeliverView extends React.Component {
                   key={i}
                   activeOpacity={0.5}
                   onPress={() => {
-                    alert('详情');
+                    this.onOrderdetails(item.id);
                   }}>
                   <View
                     style={{
@@ -600,19 +600,19 @@ class DeliverView extends React.Component {
                         }}>
                         查看订单详情
                       </Text>
-                      <Text
-                        style={{
-                          borderWidth: 1,
-                          borderColor: 'gray',
-                          padding: 5,
-                          borderRadius: 2,
-                          marginRight: 15,
-                        }}
-                        onPress={() => {
-                          alert('详情');
-                        }}>
-                        修改地址
-                      </Text>
+                      {/*<Text*/}
+                      {/*  style={{*/}
+                      {/*    borderWidth: 1,*/}
+                      {/*    borderColor: 'gray',*/}
+                      {/*    padding: 5,*/}
+                      {/*    borderRadius: 2,*/}
+                      {/*    marginRight: 15,*/}
+                      {/*  }}*/}
+                      {/*  onPress={() => {*/}
+                      {/*    alert('详情');*/}
+                      {/*  }}>*/}
+                      {/*  修改地址*/}
+                      {/*</Text>*/}
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -690,7 +690,7 @@ class ReceiveView extends React.Component {
                   key={i}
                   activeOpacity={0.5}
                   onPress={() => {
-                    alert('详情');
+                    this.onOrderdetails(item.id);
                   }}>
                   <View
                     style={{
@@ -766,19 +766,19 @@ class ReceiveView extends React.Component {
                         }}>
                         查看订单详情
                       </Text>
-                      <Text
-                        style={{
-                          borderWidth: 1,
-                          borderColor: 'gray',
-                          padding: 5,
-                          borderRadius: 2,
-                          marginRight: 15,
-                        }}
-                        onPress={() => {
-                          alert('详情');
-                        }}>
-                        修改地址
-                      </Text>
+                      {/*<Text*/}
+                      {/*  style={{*/}
+                      {/*    borderWidth: 1,*/}
+                      {/*    borderColor: 'gray',*/}
+                      {/*    padding: 5,*/}
+                      {/*    borderRadius: 2,*/}
+                      {/*    marginRight: 15,*/}
+                      {/*  }}*/}
+                      {/*  onPress={() => {*/}
+                      {/*    alert('详情');*/}
+                      {/*  }}>*/}
+                      {/*  修改地址*/}
+                      {/*</Text>*/}
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -856,7 +856,7 @@ class AccomplishView extends React.Component {
                   key={i}
                   activeOpacity={0.5}
                   onPress={() => {
-                    alert('详情');
+                    this.onOrderdetails(item.id);
                   }}>
                   <View
                     style={{
@@ -941,7 +941,7 @@ class AccomplishView extends React.Component {
                           marginRight: 15,
                         }}
                         onPress={() => {
-                          alert('详情');
+                          alert('修改地址');
                         }}>
                         修改地址
                       </Text>

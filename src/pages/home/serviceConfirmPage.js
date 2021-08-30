@@ -198,6 +198,11 @@ export default class ServiceConfirmPage extends React.Component {
   }
 
   render() {
+    let INJECTEDJAVASCRIPT =`
+          let webHeight = document.body.scrollHeight;
+          console.log(webHeight)
+          window.ReactNativeWebView.postMessage(webHeight);
+        `;
     const {modalVisible, serviceItemCount, serviceItemName, productList, info} =
       this.state;
     let chooseMeg = '请选择  服务项目';
@@ -369,16 +374,16 @@ export default class ServiceConfirmPage extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={{marginTop: 10, backgroundColor: 'gray'}}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                    fontSize: 15,
-                    color: '#666666',
-                    backgroundColor: 'white',
-                  }}>
-                  {'---商品详情---'}
-                </Text>
+                {/*<Text*/}
+                {/*  style={{*/}
+                {/*    textAlign: 'center',*/}
+                {/*    fontWeight: 'bold',*/}
+                {/*    fontSize: 15,*/}
+                {/*    color: '#666666',*/}
+                {/*    backgroundColor: 'white',*/}
+                {/*  }}>*/}
+                {/*  {'---商品详情---'}*/}
+                {/*</Text>*/}
                 {/*<WebView*/}
                 {/*  ref={ref => this.webView = ref}*/}
                 {/*  style={{width:width,height:this.state.webHeight}}*/}
@@ -423,14 +428,16 @@ export default class ServiceConfirmPage extends React.Component {
                                         </body>
                                         </html>`,
                   }}
-                  //injectedJavaScript={INJECTEDJAVASCRIPT} //设置 js 字符串，在网页加载之前注入的一段 JS 代码
+                  injectedJavaScript={INJECTEDJAVASCRIPT} //设置 js 字符串，在网页加载之前注入的一段 JS 代码
                   onLoadEnd={this.webViewLoaded} // webview加载完毕后执行
                   onMessage={event => {
                     console.log(
                       '测试onMessage参数列表' +
                         JSON.stringify(event.nativeEvent.data),
                     );
-                    this.onMessage1(event);
+                    this.setState({
+                      webHeight:parseInt(event.nativeEvent.data)
+                    })
                   }}
                 />
               </View>

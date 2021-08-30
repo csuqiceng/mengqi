@@ -84,7 +84,151 @@ export default class OrderDetails extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
-
+  renderTopView=()=>{
+    const {detailsInfo} = this.state;
+    if (detailsInfo.orderInfo){
+      let orderStatus = detailsInfo.orderInfo.orderStatus;
+      let goodsType = detailsInfo.orderGoods[0].goodsType;
+      let msg =""
+      if (orderStatus == 102 ||orderStatus == 103||orderStatus == 202){
+        msg ="订单已取消";
+      }else if(orderStatus == 101){
+        msg ="等待买家付款";
+      }else if(orderStatus == 201){
+        msg ="待发货";
+      }else if(orderStatus == 401 ||orderStatus == 402){
+        msg ="订单已完成";
+      }else if(orderStatus == 301){
+        msg ="快递运输中";
+      }
+      if (goodsType =='01'){
+          return(
+            <View
+              style={{
+                flexDirection: 'row',
+                borderRadius: 5,
+                height: 80,
+                backgroundColor: '#007B73',
+                margin: 10,
+                flex: 1,
+                justifyContent:'center',
+                alignItems: 'center'
+              }}>
+              <Image
+                source={require('../../assets/images/myinfo/details_icon_pay.png')}
+                style={{width: 30, height: 30}}
+              />
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: 10,
+                }}>
+                <Text style={{color: 'white', fontSize: 16}}>
+                  {msg}
+                </Text>
+              </View>
+            </View>
+          )
+      }
+      else {
+        return (
+          <View
+            style={{
+              flexDirection: 'row',
+              borderRadius: 5,
+              height: 80,
+              backgroundColor: '#007B73',
+              margin: 10,
+              flex: 1,
+            }}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: 10,
+              }}>
+              <Text style={{color: 'white', fontSize: 16}}>
+                您预约的服务时间为
+              </Text>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 16,
+                  marginTop: 5,
+                  marginLeft: 5,
+                }}>
+                {detailsInfo.orderInfo ? detailsInfo.orderInfo.addTime : ''}
+              </Text>
+            </View>
+            <View style={{flex: 1}} />
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: 30,
+              }}>
+              <Image
+                source={require('../../assets/images/myinfo/details_icon_service.png')}
+                style={{width: 30, height: 30}}
+              />
+            </View>
+          </View>
+        )
+      }
+    }
+  }
+  renderBottomView=()=>{
+    const {detailsInfo} = this.state;
+    if (detailsInfo.orderInfo) {
+      let orderStatus = detailsInfo.orderInfo.orderStatus;
+      // let goodsType = detailsInfo.orderGoods[0].goodsType;
+      let fMsg, sMsg = "dd"
+      if (orderStatus == 102 || orderStatus == 103 || orderStatus == 202) {
+        sMsg = "确认付款";
+      } else if (orderStatus == 101) {
+        sMsg = "确认付款";
+        fMsg = "取消订单"
+      } else if (orderStatus == 201) {
+        sMsg = "待发货";
+      } else if (orderStatus == 401 || orderStatus == 402) {
+        sMsg = "订单已完成";
+      } else if (orderStatus == 301) {
+        sMsg = "快递运输中";
+      }
+      return (
+        <View
+          style={{
+            height: 50,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            marginRight: 10,
+          }}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              alert('联系商家');
+            }}>
+            <Text style={{ marginLeft: 20 }}>联系商家</Text>
+          </TouchableOpacity>
+          <View style={{flex:1}}/>
+          <Button
+            color="#00BEAF"
+            title={fMsg}
+            onPress={() => this.onServiceOrder()}
+          />
+          <View style={{width:10}}/>
+          <Button
+            color="#00BEAF"
+            title={sMsg}
+            onPress={() => this.onServiceOrder()}
+          />
+        </View>
+      )
+    }
+  }
   render() {
     const {detailsInfo} = this.state;
     return (
@@ -103,47 +247,9 @@ export default class OrderDetails extends React.Component {
               borderRadius: 10,
               justifyContent: 'center',
             }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                borderRadius: 5,
-                height: 80,
-                backgroundColor: '#007B73',
-                margin: 10,
-                flex: 1,
-              }}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 10,
-                }}>
-                <Text style={{color: 'white', fontSize: 16}}>
-                  您预约的服务时间为
-                </Text>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontSize: 16,
-                    marginTop: 5,
-                    marginLeft: 5,
-                  }}>
-                  {detailsInfo.orderInfo ? detailsInfo.orderInfo.addTime : ''}
-                </Text>
-              </View>
-              <View style={{flex: 1}} />
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginRight: 30,
-                }}>
-                <Image
-                  source={require('../../assets/images/myinfo/details_icon_service.png')}
-                  style={{width: 30, height: 30}}
-                />
-              </View>
-            </View>
+            {
+              this.renderTopView()
+            }
             <View
               style={{
                 flexDirection: 'row',
@@ -159,7 +265,7 @@ export default class OrderDetails extends React.Component {
                   style={{width: 35, height: 30}}
                 />
               </View>
-              <View>
+              <View style={{ justifyContent: 'center'}}>
                 <Text style={{color: 'black', fontSize: 13, marginLeft: 5}}>
                   {detailsInfo.orderInfo
                     ? detailsInfo.orderInfo.consignee +
@@ -310,28 +416,9 @@ export default class OrderDetails extends React.Component {
             </View>
           </View>
         </ScrollView>
-        <View
-          style={{
-            height: 50,
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            marginRight: 5,
-          }}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={() => {
-              alert('联系商家');
-            }}>
-            <Text style={{marginRight: 20}}>联系商家</Text>
-          </TouchableOpacity>
-          <Button
-            color="#00BEAF"
-            title="确认收货"
-            // onPress={() =>this.onServiceOrder()}
-          />
-        </View>
+        {
+          this.renderBottomView()
+        }
       </View>
     );
   }
