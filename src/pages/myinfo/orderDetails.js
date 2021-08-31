@@ -183,50 +183,132 @@ export default class OrderDetails extends React.Component {
     if (detailsInfo.orderInfo) {
       let orderStatus = detailsInfo.orderInfo.orderStatus;
       // let goodsType = detailsInfo.orderGoods[0].goodsType;
-      let fMsg, sMsg = "dd"
+
       if (orderStatus == 102 || orderStatus == 103 || orderStatus == 202) {
-        sMsg = "确认付款";
+        return null;
       } else if (orderStatus == 101) {
-        sMsg = "确认付款";
-        fMsg = "取消订单"
-      } else if (orderStatus == 201) {
-        sMsg = "待发货";
-      } else if (orderStatus == 401 || orderStatus == 402) {
-        sMsg = "订单已完成";
-      } else if (orderStatus == 301) {
-        sMsg = "快递运输中";
-      }
-      return (
-        <View
-          style={{
-            height: 50,
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            backgroundColor: 'white',
-            marginRight: 10,
-          }}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={() => {
-              alert('联系商家');
+        return (
+          <View
+            style={{
+              height: 50,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              marginRight: 10,
             }}>
-            <Text style={{ marginLeft: 20 }}>联系商家</Text>
-          </TouchableOpacity>
-          <View style={{flex:1}}/>
-          <Button
-            color="#00BEAF"
-            title={fMsg}
-            onPress={() => this.onServiceOrder()}
-          />
-          <View style={{width:10}}/>
-          <Button
-            color="#00BEAF"
-            title={sMsg}
-            onPress={() => this.onServiceOrder()}
-          />
-        </View>
-      )
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                alert('联系商家');
+              }}>
+              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+            </TouchableOpacity>
+            <View style={{flex:1}}/>
+            <Button
+              color="#00BEAF"
+              title="取消订单"
+              onPress={() => this.onServiceOrder()}
+            />
+            <View style={{width:10}}/>
+            <Button
+              color="#00BEAF"
+              title="确认付款"
+              onPress={() => this.onServiceOrder()}
+            />
+          </View>
+        )
+      } else if (orderStatus == 201) {
+        return (
+          <View
+            style={{
+              height: 50,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              marginRight: 10,
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                alert('联系商家');
+              }}>
+              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+            </TouchableOpacity>
+            <View style={{flex:1}}/>
+            <Button
+              color="#00BEAF"
+              title="取消订单"
+              onPress={() => this.onServiceOrder()}
+            />
+            <View style={{width:10}}/>
+            <Button
+              color="#00BEAF"
+              title="申请退款"
+              onPress={() => this.onServiceOrder()}
+            />
+          </View>
+        )
+      } else if (orderStatus == 401 || orderStatus == 402) {
+        return (
+          <View
+            style={{
+              height: 50,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              marginRight: 10,
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                alert('联系商家');
+              }}>
+              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+            </TouchableOpacity>
+            <View style={{flex:1}}/>
+            <Button
+              color="#00BEAF"
+              title="删除订单"
+              onPress={() => this.onServiceOrder()}
+            />
+            <View style={{width:10}}/>
+            <Button
+              color="#00BEAF"
+              title="评价商品"
+              onPress={() => this.onServiceOrder()}
+            />
+          </View>
+        )
+      } else if (orderStatus == 301) {
+        return (
+          <View
+            style={{
+              height: 50,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              marginRight: 10,
+            }}>
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                alert('联系商家');
+              }}>
+              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+            </TouchableOpacity>
+            <View style={{flex:1}}/>
+            <Button
+              color="#00BEAF"
+              title="确认收货"
+              onPress={() => this.onServiceOrder()}
+            />
+          </View>
+        )
+      }
     }
   }
   render() {

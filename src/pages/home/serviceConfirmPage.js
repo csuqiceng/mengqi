@@ -24,9 +24,8 @@ import {fetchData} from '../../common/fetch';
 var {width, height} = Dimensions.get('window');
 
 const swiperData = [
-  {title: '1', image: require('../../assets/images/home_banner.png')},
-  {title: '2', image: require('../../assets/images/home_banner.png')},
-  {title: '3', image: require('../../assets/images/home_banner.png')},
+  "https://mengqi-storg.oss-accelerate.aliyuncs.com/hwblw7ybrnhrg2oev6a5.png",
+  "https://mengqi-storg.oss-accelerate.aliyuncs.com/hwblw7ybrnhrg2oev6a5.png"
 ];
 
 export default class ServiceConfirmPage extends React.Component {
@@ -41,6 +40,7 @@ export default class ServiceConfirmPage extends React.Component {
       productList: '',
       info: '',
       webHeight: 500,
+      swiperData:swiperData
     };
   }
   // 返回中间按钮
@@ -105,6 +105,10 @@ export default class ServiceConfirmPage extends React.Component {
     });
   };
   onServiceOrder = () => {
+    if (!this.state.chooseItem) {
+      this.setModalVisible(true)
+      return;
+    }
     let productId = this.state.productList ? this.state.productList[0].id : 0.0;
     let goodsId = this.state.productList
       ? this.state.productList[0].goodsId
@@ -161,6 +165,7 @@ export default class ServiceConfirmPage extends React.Component {
       this.setState({
         productList: responseData.data.productList,
         info: responseData.data.info,
+        swiperData:responseData.data.info.gallery,
       });
     };
     const errCallback = responseData => {
@@ -225,7 +230,6 @@ export default class ServiceConfirmPage extends React.Component {
     if (productList) {
       defaultproductList = productList;
     }
-    console.log('嘻嘻嘻' + productList);
     return (
       <View
         style={styles.container}
@@ -242,7 +246,7 @@ export default class ServiceConfirmPage extends React.Component {
           <ScrollView showsVerticalScrollIndicator={false}>
             <Swiper
               style={styles.wrapper}
-              // autoplay
+              autoplay
               onMomentumScrollEnd={(e, state, context) => {}}
               dot={
                 <View
@@ -276,28 +280,25 @@ export default class ServiceConfirmPage extends React.Component {
                 top: 190,
               }}
               loop>
-              {swiperData.map((item, i) => {
+              {this.state.swiperData.map((item, i) => {
+                console.log(item)
                 return (
                   <View style={styles.slide} key={i}>
-                    <Image
-                      key={i}
-                      resizeMode="stretch"
-                      style={styles.image}
-                      source={item.image}
-                    />
+                    <Image source={{uri: item}}  style={{width:width,height:196}} />
                   </View>
                 );
               })}
             </Swiper>
             {/*  服务介绍  */}
-            <View style={{flex: 1, backgroundColor: '#F1F1F1'}}>
+            <View style={{flex: 1, backgroundColor: '#F1F1F1',borderTopStartRadius:30,borderTopEndRadius:30}}>
               <View
                 style={{
                   height: 100,
                   backgroundColor: 'white',
                   paddingLeft: 15,
                   paddingRight: 15,
-                  paddingTop: 20,
+                  paddingTop: 20
+                  ,borderTopStartRadius:30,borderTopEndRadius:30
                 }}>
                 <Text style={{color: '#333333', fontSize: 20}}>
                   {this.props.route.params.name}
@@ -384,21 +385,12 @@ export default class ServiceConfirmPage extends React.Component {
                 {/*  }}>*/}
                 {/*  {'---商品详情---'}*/}
                 {/*</Text>*/}
-                {/*<WebView*/}
-                {/*  ref={ref => this.webView = ref}*/}
-                {/*  style={{width:width,height:this.state.webHeight}}*/}
-                {/*  source={{ html: info.detail }}*/}
-                {/*  onLoadEnd={this.webViewLoaded}*/}
-                {/*  onMessage={(event)=>{*/}
-                {/*      console.log("dddww")*/}
-                {/*      this.onWebViewMessage(event)*/}
-                {/*  }}*/}
-                {/*/>*/}
+
 
                 <WebView
                   ref={ref => (this.webView = ref)}
                   style={{width: width, height: this.state.webHeight}}
-                  scalesPageToFit={false} //布尔值，控制网页内容是否自动适配视图的大小，同时启用用户缩放功能。默认为true
+                  scalesPageToFit={true} //布尔值，控制网页内容是否自动适配视图的大小，同时启用用户缩放功能。默认为true
                   scrollEnabled={true} //控制是否在 WebView中启用滑动。默认为 true
                   javaScriptEnabled={true} //布尔值，控制是否启用 JavaScript。仅在安卓下使用，因为 IOS 默认为启用 JavaScript。默认值为true
                   //在 WebView 中载入一段静态的 html 代码或是一个 url（还可以附带一些 header 选项）
@@ -455,9 +447,7 @@ export default class ServiceConfirmPage extends React.Component {
           <Button
             color="#272C2E"
             title="加入购物车"
-            onPress={() => {
-              Alert.alert('加入购物车');
-            }}
+            onPress={() => this.onServiceOrder()}
           />
           <Button
             color="#00BEAF"
@@ -482,12 +472,12 @@ export default class ServiceConfirmPage extends React.Component {
             />
 
             <View style={styles.modalView}>
-              <View style={{height: 90, flexDirection: 'row', marginTop: 7}}>
+              <View style={{height: 90, flexDirection: 'row', marginTop: 10}}>
                 <Image
                   style={{width: 60, height: 60}}
                   source={require('../../assets/images/home_banner.png')}
                 />
-                <View style={{marginLeft: 10}}>
+                <View style={{marginLeft: 20}}>
                   <Text style={{color: '#333333', fontSize: 20}}>
                     {this.props.route.params.name}
                   </Text>
@@ -507,7 +497,7 @@ export default class ServiceConfirmPage extends React.Component {
                         style={{fontSize: 25, color: '#ff6600'}}>
                         {this.state.chooseItem
                           ? this.state.chooseItem.price
-                          : '118.00'}
+                          : '0.00'}
                       </Text>
                     </View>
                     {/*<Text  numberOfLines={3} style={{fontSize: 13,textDecorationLine:'line-through',color:'gray',paddingTop:10,paddingLeft:10}}>¥ {"200.00"}</Text>*/}
@@ -516,7 +506,7 @@ export default class ServiceConfirmPage extends React.Component {
               </View>
 
               <View>
-                <Text style={{fontSize: 20, fontWeight: 'bold'}}>服务项目</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 10}}>服务项目</Text>
                 <View style={{flexDirection: 'row', marginTop: 10}}>
                   {defaultproductList.map((item, i) => {
                     return (
@@ -524,7 +514,7 @@ export default class ServiceConfirmPage extends React.Component {
                         activeOpacity={0.5}
                         key={i}
                         onPress={() => this.setState({chooseItem: item})}>
-                        <View>
+                        <View style={{marginTop: 10}}>
                           <Text
                             style={{
                               width: 100,
@@ -578,8 +568,7 @@ export default class ServiceConfirmPage extends React.Component {
                   style={{
                     height: 40,
                     flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    margin: 10,
+                    justifyContent: 'center',
                   }}>
                   <View
                     style={{
@@ -623,7 +612,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     height: 200,
-    backgroundColor: '#22DDDD',
+    backgroundColor: 'white',
   },
 
   slide: {
@@ -699,7 +688,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     backgroundColor: 'white',
-    height: 360,
+    height: 400,
     width: width,
     borderRadius: 10,
     padding: 15,

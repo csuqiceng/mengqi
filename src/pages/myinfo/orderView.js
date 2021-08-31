@@ -267,19 +267,19 @@ class AllorderView extends React.Component {
                         }}>
                         查看订单详情
                       </Text>
-                      <Text
-                        style={{
-                          borderWidth: 1,
-                          borderColor: 'gray',
-                          padding: 5,
-                          borderRadius: 2,
-                          marginRight: 15,
-                        }}
-                        onPress={() => {
-                          alert('修改地址');
-                        }}>
-                        修改地址
-                      </Text>
+                      {/*<Text*/}
+                      {/*  style={{*/}
+                      {/*    borderWidth: 1,*/}
+                      {/*    borderColor: 'gray',*/}
+                      {/*    padding: 5,*/}
+                      {/*    borderRadius: 2,*/}
+                      {/*    marginRight: 15,*/}
+                      {/*  }}*/}
+                      {/*  onPress={() => {*/}
+                      {/*    alert('修改地址');*/}
+                      {/*  }}>*/}
+                      {/*  修改地址*/}
+                      {/*</Text>*/}
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -364,7 +364,7 @@ class PayView extends React.Component {
                     style={{
                       margin: 10,
                       height: 200,
-                      borderColor: 'gray',
+                      borderColor: 'lightgray',
                       borderWidth: 1,
                       backgroundColor: 'white',
                       borderRadius: 5,
@@ -434,19 +434,19 @@ class PayView extends React.Component {
                         }}>
                         查看订单详情
                       </Text>
-                      <Text
-                        style={{
-                          borderWidth: 1,
-                          borderColor: 'gray',
-                          padding: 5,
-                          borderRadius: 2,
-                          marginRight: 15,
-                        }}
-                        onPress={() => {
-                          alert('修改地址');
-                        }}>
-                        修改地址
-                      </Text>
+                      {/*<Text*/}
+                      {/*  style={{*/}
+                      {/*    borderWidth: 1,*/}
+                      {/*    borderColor: 'gray',*/}
+                      {/*    padding: 5,*/}
+                      {/*    borderRadius: 2,*/}
+                      {/*    marginRight: 15,*/}
+                      {/*  }}*/}
+                      {/*  onPress={() => {*/}
+                      {/*    alert('修改地址');*/}
+                      {/*  }}>*/}
+                      {/*  修改地址*/}
+                      {/*</Text>*/}
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -530,7 +530,7 @@ class DeliverView extends React.Component {
                     style={{
                       margin: 10,
                       height: 200,
-                      borderColor: 'gray',
+                      borderColor: 'lightgray',
                       borderWidth: 1,
                       backgroundColor: 'white',
                       borderRadius: 5,
@@ -696,7 +696,7 @@ class ReceiveView extends React.Component {
                     style={{
                       margin: 10,
                       height: 200,
-                      borderColor: 'gray',
+                      borderColor: 'lightgray',
                       borderWidth: 1,
                       backgroundColor: 'white',
                       borderRadius: 5,
@@ -862,7 +862,7 @@ class AccomplishView extends React.Component {
                     style={{
                       margin: 10,
                       height: 200,
-                      borderColor: 'gray',
+                      borderColor: 'lightgray',
                       borderWidth: 1,
                       backgroundColor: 'white',
                       borderRadius: 5,

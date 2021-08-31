@@ -1,16 +1,16 @@
 //App 底部入口
 import * as React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image} from 'react-native';
-import ServicePage from './home/servicePage';
-import {MinePage} from './myinfo/mine';
-import MallPage from './news/mallPage';
-import Classify from './classify/classify';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
+import ServicePage from './home/servicePage';
+import {MinePage} from './myinfo/mine';
+import MallPage from './news/mallPage';
+import ShoppingCartPage from './shoppingcart/shoppingCartPage';
+import Classify from './classify/classify';
 import GuidePage from '../pages/guide/guidePage';
 import ServiceConfirmPage from './home/serviceConfirmPage';
 import ServiceOrderPage from './home/serviceOrderPage';
@@ -77,6 +77,23 @@ class MainTabPage extends React.Component {
               ),
             }}
           />
+          {/*<Tab.Screen*/}
+          {/*  name="ShoppingCart"*/}
+          {/*  component={ShoppingCartPage}*/}
+          {/*  options={{*/}
+          {/*    tabBarLabel: '购物车',*/}
+          {/*    tabBarIcon: ({focused, tintColor}) => (*/}
+          {/*      <Image*/}
+          {/*        source={*/}
+          {/*          focused*/}
+          {/*            ? require('../assets/images/tab_icon_news_sel.png')*/}
+          {/*            : require('../assets/images/tab_icon_news_nor.png')*/}
+          {/*        }*/}
+          {/*        style={{width: 26, height: 26, tintColor: tintColor}}*/}
+          {/*      />*/}
+          {/*    ),*/}
+          {/*  }}*/}
+          {/*/>*/}
           <Tab.Screen
             name="News"
             component={MallPage}
