@@ -40,7 +40,8 @@ export default class ServiceConfirmPage extends React.Component {
       productList: '',
       info: '',
       webHeight: 500,
-      swiperData:swiperData
+      swiperData:swiperData,
+      shoppingCount:0
     };
   }
   // 返回中间按钮
@@ -104,6 +105,55 @@ export default class ServiceConfirmPage extends React.Component {
         : '',
     });
   };
+
+  addShoppingCart=()=>{
+    if (!this.state.chooseItem) {
+      this.setModalVisible(true)
+      return;
+    }
+    let productId = this.state.productList ? this.state.productList[0].id : 0.0;
+    let goodsId = this.state.productList
+      ? this.state.productList[0].goodsId
+      : 0.0;
+    if (this.state.chooseItem) {
+      productId = this.state.chooseItem.id;
+    }
+    let data = {
+      goodsId: goodsId,
+      productId: productId,
+      number: this.state.serviceItemCount,
+    };
+    console.log(JSON.stringify(data))
+    let param = {
+      body: JSON.stringify(data), // must match 'Content-Type' header
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/json',
+      },
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/cart/add';
+    const callback = responseData => {
+      console.log(responseData);
+      if (responseData.data) {
+        this.setState({
+          shoppingCount:responseData.data
+        })
+        // this.props.navigation.navigate('ServiceOrderPage', {
+        //   data: responseData.data,
+        // });
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        // this.props.navigation.navigate('login')
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
   onServiceOrder = () => {
     if (!this.state.chooseItem) {
       this.setModalVisible(true)
@@ -175,6 +225,31 @@ export default class ServiceConfirmPage extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
+
+
+    let param1 = {
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url1 = `http://lhh.natapp1.cc/api/wx/cart/index`;
+    const callback1 = responseData => {
+      console.log(JSON.stringify(responseData));
+      this.setState({
+        shoppingCount:responseData.data.cartTotal.goodsCount
+      })
+    };
+    const errCallback1 = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        // this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url1, param1, callback1, errCallback1);
   }
   webViewLoaded = () => {
     console.log('ddddd');
@@ -201,7 +276,15 @@ export default class ServiceConfirmPage extends React.Component {
     console.log('Sending post message,this is RN');
     this.webView.postMessage('Post message from react native ');
   }
-
+  renderShoppingTip=()=>{
+     if(this.state.shoppingCount>0){
+       return(
+         <Text style={{color: 'white',backgroundColor:'red',borderRadius:10,marginTop:-10,marginLeft:-20,padding: 2}}>{this.state.shoppingCount}</Text>
+       )
+     }else{
+       return  null;
+     }
+  }
   render() {
     let INJECTEDJAVASCRIPT =`
           let webHeight = document.body.scrollHeight;
@@ -210,6 +293,37 @@ export default class ServiceConfirmPage extends React.Component {
         `;
     const {modalVisible, serviceItemCount, serviceItemName, productList, info} =
       this.state;
+
+    let scrollHeight = 0;
+    if (info.detail){
+      // let detail = info.detail;
+      // detail = detail.replace(/"\"/g,"")
+      // console.log("detail"+detail)
+      // let arrdetail = detail.split("<img");
+      // console.log("arrdetail——————"+arrdetail)
+      // for (let i = 0; i < arrdetail.length; i++) {
+      //   let img = arrdetail[i];
+      //   console.log("img——————"+img)
+      //   if(img.indexOf("height") !=-1){
+      //       let arrimg = img.split(" ");
+      //       for (let i = 0; i < arrimg.length; i++) {
+      //         let str = arrimg[i];
+      //
+      //         if (str.indexOf("height") !=-1){
+      //           console.log(str.split("=")[1])
+      //           let height = str.split("=")[1];
+      //           height = height.replace(/'"'/g,"")
+      //           height ="300";
+      //           console.log(height.length)
+      //           // height =parseInt("300");
+      //           console.log(parseInt(height))
+      //           scrollHeight = scrollHeight + (height);
+      //         }
+      //       }
+      //   }
+      // }
+    }
+
     let chooseMeg = '请选择  服务项目';
     if (serviceItemName.length > 0 && serviceItemCount) {
       chooseMeg = `已选 ${serviceItemName}  数量${serviceItemCount}`;
@@ -389,7 +503,7 @@ export default class ServiceConfirmPage extends React.Component {
 
                 <WebView
                   ref={ref => (this.webView = ref)}
-                  style={{width: width, height: this.state.webHeight}}
+                  style={{width: width, height: 3944}}
                   scalesPageToFit={true} //布尔值，控制网页内容是否自动适配视图的大小，同时启用用户缩放功能。默认为true
                   scrollEnabled={true} //控制是否在 WebView中启用滑动。默认为 true
                   javaScriptEnabled={true} //布尔值，控制是否启用 JavaScript。仅在安卓下使用，因为 IOS 默认为启用 JavaScript。默认值为true
@@ -416,7 +530,37 @@ export default class ServiceConfirmPage extends React.Component {
                                             </style>
                                         </head>
                                         <body>
-                                        <div>${info.detail}</div>
+                                          <div>${info.detail}</div>
+<!--                                <div>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/mlbixirlehaptzexch38.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/ccla21pq7smhmejzfptr.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/yq534s4m4ar1s8cuca7r.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/g601lf9l76pocnjio40a.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/k7fsu4ckx4ktrsa81ick.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/c4sj0ug9te27evgx4oc4.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                -->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/wsnv8ggb2aug8tnncmq1.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/icamolla0mu9fhq0hrj3.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                <p>-->
+<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/j7fai34p58euezywpxx1.png" width=100% height=100% </>-->
+<!--                                </p>-->
+<!--                                </div>-->
                                         </body>
                                         </html>`,
                   }}
@@ -442,12 +586,30 @@ export default class ServiceConfirmPage extends React.Component {
             height: 40,
             flexDirection: 'row',
             justifyContent: 'flex-end',
-            margin: 10,
+            margin: 5,
           }}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={{flex: 1}}
+              style={{justifyContent: 'center',alignItems:'center',flexDirection:'row'}}
+              onPress={() => this.props.navigation.navigate('ShoppingCart')}
+            >
+            <Image
+              source={require('../../assets/images/myinfo/payment_none.png')}
+              style={{
+                width: 40,
+                height: 40,
+              }}
+            />
+            {
+              this.renderShoppingTip()
+            }
+            </TouchableOpacity>
+          <View style={{flex:1}}/>
           <Button
             color="#272C2E"
             title="加入购物车"
-            onPress={() => this.onServiceOrder()}
+            onPress={() => this.addShoppingCart()}
           />
           <Button
             color="#00BEAF"
