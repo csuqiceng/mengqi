@@ -94,23 +94,23 @@ class MainTabPage extends React.Component {
               ),
             }}
           />
-          <Tab.Screen
-            name="News"
-            component={MallPage}
-            options={{
-              tabBarLabel: '新闻公告',
-              tabBarIcon: ({focused, tintColor}) => (
-                <Image
-                  source={
-                    focused
-                      ? require('../assets/images/tab_icon_news_sel.png')
-                      : require('../assets/images/tab_icon_news_nor.png')
-                  }
-                  style={{width: 26, height: 26, tintColor: tintColor}}
-                />
-              ),
-            }}
-          />
+          {/*<Tab.Screen*/}
+          {/*  name="News"*/}
+          {/*  component={MallPage}*/}
+          {/*  options={{*/}
+          {/*    tabBarLabel: '新闻公告',*/}
+          {/*    tabBarIcon: ({focused, tintColor}) => (*/}
+          {/*      <Image*/}
+          {/*        source={*/}
+          {/*          focused*/}
+          {/*            ? require('../assets/images/tab_icon_news_sel.png')*/}
+          {/*            : require('../assets/images/tab_icon_news_nor.png')*/}
+          {/*        }*/}
+          {/*        style={{width: 26, height: 26, tintColor: tintColor}}*/}
+          {/*      />*/}
+          {/*    ),*/}
+          {/*  }}*/}
+          {/*/>*/}
           <Tab.Screen
             name="MyInfo"
             component={MinePage}

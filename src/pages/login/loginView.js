@@ -137,8 +137,8 @@ class AccoutLoginView extends React.Component {
   constructor() {
     super();
     this.state = {
-      loginName: 'lihonghao',
-      passWord: '123456',
+      loginName: '',//lihonghao
+      passWord: '',//123456
       token: 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
     };
   }

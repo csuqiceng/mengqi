@@ -104,11 +104,17 @@ export default class ServiceConfirmPage extends React.Component {
         ? this.state.chooseItem.specifications[0]
         : '',
     });
+    if (this.chooseType=='addShoppingCart'){
+       this.addShoppingCart()
+    }else {
+      this.onServiceOrder()
+    }
   };
 
   addShoppingCart=()=>{
     if (!this.state.chooseItem) {
       this.setModalVisible(true)
+      this.chooseType='addShoppingCart'
       return;
     }
     let productId = this.state.productList ? this.state.productList[0].id : 0.0;
@@ -157,6 +163,7 @@ export default class ServiceConfirmPage extends React.Component {
   onServiceOrder = () => {
     if (!this.state.chooseItem) {
       this.setModalVisible(true)
+      this.chooseType='onServiceOrder'
       return;
     }
     let productId = this.state.productList ? this.state.productList[0].id : 0.0;
