@@ -1,12 +1,10 @@
-//App 底部入口
 import * as React from 'react';
-import {Image} from 'react-native';
+import {Image,SafeAreaView} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-import ServicePage from './home/servicePage';
 import {MinePage} from './myinfo/mine';
 import MallPage from './news/mallPage';
 import ShoppingCartPage from './shoppingcart/shoppingCartPage';
@@ -14,7 +12,7 @@ import Classify from './classify/classify';
 import GuidePage from '../pages/guide/guidePage';
 import ServiceConfirmPage from './home/serviceConfirmPage';
 import ServiceOrderPage from './home/serviceOrderPage';
-import ServiceMainPage from './home/servicePage';
+import HomePage from './home/home';
 import ServicePayPage from './home/servicePayPage';
 
 import SystemPage from './myinfo/system';
@@ -24,8 +22,12 @@ import MyBalanceView from './myinfo/balance';
 import Changepassword from './myinfo/changepassword';
 import MyAddressView from './myinfo/address';
 import MyNewAddressView from './myinfo/newaddress';
+import Localstorage from "../common/localStorage";
 
-class MainTabPage extends React.Component {
+
+//App 底部入口
+class MainTabPage extends React.Component
+{
   constructor() {
     super();
     this.state = {
@@ -38,6 +40,7 @@ class MainTabPage extends React.Component {
       return null;
     } else {
       return (
+
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
@@ -45,7 +48,7 @@ class MainTabPage extends React.Component {
           }}>
           <Tab.Screen
             name="Home"
-            component={ServicePage}
+            component={HomePage}
             options={{
               tabBarLabel: '首页',
               tabBarIcon: ({focused, tintColor}) => (
@@ -86,8 +89,8 @@ class MainTabPage extends React.Component {
                 <Image
                   source={
                     focused
-                      ? require('../assets/images/tab_icon_news_sel.png')
-                      : require('../assets/images/tab_icon_news_nor.png')
+                      ? require('../assets/images/tab_icon_shop_sel.png')
+                      : require('../assets/images/tab_icon_shop_nor.png')
                   }
                   style={{width: 26, height: 26, tintColor: tintColor}}
                 />
@@ -107,6 +110,7 @@ class MainTabPage extends React.Component {
           {/*            : require('../assets/images/tab_icon_news_nor.png')*/}
           {/*        }*/}
           {/*        style={{width: 26, height: 26, tintColor: tintColor}}*/}
+          {/*      />*/}
           {/*      />*/}
           {/*    ),*/}
           {/*  }}*/}
@@ -133,6 +137,9 @@ class MainTabPage extends React.Component {
     }
   }
 }
+
+
+//APP 导航
 export default class MainPage extends React.Component {
   constructor() {
     super();
@@ -140,13 +147,20 @@ export default class MainPage extends React.Component {
       showMarket: false,
     };
   }
+  componentDidMount() {
+    const storage = Localstorage.get('token');
+    storage.then((token) => {
+      window.token = token
+    });
+  }
+
   render() {
-    console.log('isLogin' + window.isLogin);
     let initialRouteName = 'Guide';
-    if (!window.isLogin) {
+    if (!window.token) {
       initialRouteName = 'Home';
     }
     return (
+      <SafeAreaView style={{flex: 1}}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName={initialRouteName}
@@ -157,9 +171,9 @@ export default class MainPage extends React.Component {
           <Stack.Screen name="Guide" component={GuidePage} />
           <Stack.Screen name="Home" component={MainTabPage} />
           <Stack.Screen
-            name="ServicePage"
+            name="HomePage"
             options={{}}
-            component={ServiceMainPage}
+            component={HomePage}
           />
           <Stack.Screen
             name="ServiceOrderPage"
@@ -198,6 +212,7 @@ export default class MainPage extends React.Component {
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </SafeAreaView>
     );
   }
 }

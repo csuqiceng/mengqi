@@ -12,14 +12,13 @@ import {fetchData} from '../../common/fetch';
 var {width} = Dimensions.get('window');
 
 export default class HeaderView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       info: '',
     };
   }
   componentDidMount() {
-    console.log('yjcao_token1' + window.token);
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: {

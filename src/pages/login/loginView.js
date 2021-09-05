@@ -1,6 +1,7 @@
-import React, {useState, useRef} from 'react';
+//登录页面
+
+import React  from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
   View,
@@ -13,11 +14,12 @@ import {
   Platform,
 } from 'react-native';
 import {fetchData} from '../../common/fetch';
-// import Localstorage from '../../common/localStorage'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Localstorage from '../../common/localStorage'
 
-var {width, height} = Dimensions.get('window');
+var {width} = Dimensions.get('window');
 let maxTime = 60;
+
+
 export default class LoginView extends React.Component {
   constructor() {
     super();
@@ -34,12 +36,15 @@ export default class LoginView extends React.Component {
       selectItem: e,
     });
   };
+
   onRegisterCallback = () => {
     this.props.navigation.navigate('register');
   };
+
   onLoginCallback = () => {
     this.props.navigation.navigate('mainPgae');
   };
+
   renderPage = () => {
     switch (this.state.selectItem) {
       case 'accountlogin':
@@ -133,13 +138,14 @@ export default class LoginView extends React.Component {
   }
 }
 //账号密码登录
-class AccoutLoginView extends React.Component {
+class AccoutLoginView extends React.Component
+{
   constructor() {
     super();
     this.state = {
       loginName: '',//lihonghao
       passWord: '',//123456
-      token: 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+      token: 'xgcpx1kjt6xzz2tot2cppdv3ur467vkh',
     };
   }
   //密码
@@ -175,17 +181,8 @@ class AccoutLoginView extends React.Component {
     };
     let url = 'http://lhh.natapp1.cc/api/wx/auth/login';
     const callback = responseData => {
-      AsyncStorage.setItem('loginType', 'mainPgae')
-        .then(() => console.log('update'))
-        .catch(e => console.log('e: ', e));
-
-      AsyncStorage.setItem('token', responseData.data.token)
-        .then(() => console.log('update'))
-        .catch(e => console.log('e: ', e));
-
       window.token = responseData.data.token;
-      console.log('yjcao_token' + window.token);
-      window.isLogin = true;
+      Localstorage.save('token', responseData.data.token);
       this.props.onLoginCallback();
     };
     const errCallback = responseData => {
@@ -326,7 +323,8 @@ class AccoutLoginView extends React.Component {
 }
 
 //验证码登录
-class VerificationcodeView extends React.Component {
+class VerificationcodeView extends React.Component
+{
   constructor() {
     super();
     this.state = {
@@ -369,31 +367,16 @@ class VerificationcodeView extends React.Component {
     };
     let url = 'http://lhh.natapp1.cc/api/wx/auth/mobileLogin';
     const callback = responseData => {
-      // setToken(responseData.data.token)
-      // navigation.navigate('Home', { token: responseData.data.token })
-      // let Localstorage1 = new Localstorage();
-      // Localstorage1.save('token',responseData.data.token)
       this.props.onLoginCallback();
-
-      AsyncStorage.setItem('loginType', 'mainPgae')
-        .then(() => console.log('update'))
-        .catch(e => console.log('e: ', e));
-
-      AsyncStorage.setItem('token', responseData.data.token)
-        .then(() => console.log('update'))
-        .catch(e => console.log('e: ', e));
-
       window.token = responseData.data.token;
-      window.isLogin = true;
+      Localstorage.save('token', responseData.data.token);
     };
     const errCallback = responseData => {
-      console.log('ssdasffas');
       if (responseData.errno == 501) {
         console.log(responseData.errmsg);
       }
     };
     fetchData(url, param, callback);
-    // console.log(JSON.stringify(token))
   };
   //发送验证码
   sendCode = () => {
@@ -406,7 +389,7 @@ class VerificationcodeView extends React.Component {
           --maxTime;
           this.setState({
             verificationBool: true,
-            verificationtext: '重新获取' + maxTime,
+            verificationtext: '重新获取' + maxTime+'秒',
           });
         } else {
           this.setState({

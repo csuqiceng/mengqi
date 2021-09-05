@@ -398,12 +398,31 @@ export default class MyAddressView extends React.Component {
       }
     } else {
       return (
-        <View style={{flex: 1, alignItems: 'center'}}>
+        <View style={{flex: 1}}>
           <NavBar
             titleItem={() => this.renderTitleItem()}
             leftItem={() => this.renderLeftItem()}
           />
-          <Text>没有地址</Text>
+            <View style={{flex: 1, backgroundColor: '#F1F1F1',alignItems: 'center',justifyContent:'center'}}>
+                <Text>请添加新的地址</Text>
+            </View>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              this.props.navigation.navigate('newaddress');
+            }}>
+            <View style={styles.tgLoginBtnStyle}>
+              <Text
+                style={{
+                  color: 'black',
+                  textAlign: 'center',
+                  justifyContent: 'center',
+                  fontSize: 16,
+                }}>
+                {'添加新收货人'}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       );
     }

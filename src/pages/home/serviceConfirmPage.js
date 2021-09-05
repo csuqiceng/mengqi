@@ -1,27 +1,25 @@
 //服务详情
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   Text,
   View,
   Image,
   Button,
   StyleSheet,
-  Platform,
   Dimensions,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
   StatusBar,
-  Alert,
   Modal,
-  TouchableHighlight,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
 import Swiper from 'react-native-swiper';
 import NavBar from '../../common/navBar';
 import Stepper from '@ant-design/react-native/lib/stepper';
 import {fetchData} from '../../common/fetch';
-var {width, height} = Dimensions.get('window');
+
+var {width} = Dimensions.get('window');
 
 const swiperData = [
   "https://mengqi-storg.oss-accelerate.aliyuncs.com/hwblw7ybrnhrg2oev6a5.png",

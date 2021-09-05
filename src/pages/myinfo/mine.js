@@ -12,9 +12,9 @@ import MyBalanceView from './balance';
 import Changepassword from './changepassword';
 import MyAddressView from './address';
 import MyNewAddressView from './newaddress';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import Localstorage from "../../common/localStorage";
 const MyinfoStack = createStackNavigator();
 
 class MinePage extends React.Component {
@@ -24,17 +24,21 @@ class MinePage extends React.Component {
       loginType: 'login',
     };
   }
+  componentDidMount() {
+    const storage = Localstorage.get('token');
+    storage.then( (token) => {
+      window.token = token;
+    });
+  }
 
   render() {
     let loginType = this.state.loginType;
-    console.log(window.loginType);
-    console.log(window.token);
-    if (window.loginType) {
-      loginType = window.loginType;
+    if (window.token) {
+      loginType = 'mainPgae';
     }
     return (
       <MyinfoStack.Navigator
-        initialRouteName={'login'}
+        initialRouteName={loginType}
         headerMode="screen"
         screenOptions={{
           headerShown: false,
@@ -84,12 +88,11 @@ class MyinfoPage extends React.Component {
     this.props.navigation.navigate('address');
   };
   render() {
-    console.log('renderMyinfoPage');
     const {navigation} = this.props;
     return (
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <MineHeaderView onSystemPageCallback={this.onSystemPageCallback} />
+          <MineHeaderView onSystemPageCallback={this.onSystemPageCallback} navigation={this.props.navigation}/>
           <View
             style={{
               borderBottomColor: '#e8e8e8',
@@ -97,7 +100,6 @@ class MyinfoPage extends React.Component {
               marginBottom: 10,
             }}>
             <MyCell
-              // leftIconName="collect"
               leftTitle="我的订单"
               rightTitle="全部订单"
               onCellClick={this.onMyAllOrderCallback}

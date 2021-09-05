@@ -1,22 +1,22 @@
-import React, {useState, useEffect} from 'react';
+//服务下单
+import React from 'react';
 import {
   Text,
   View,
-  Button,
   Image,
   StyleSheet,
-  Platform,
   Dimensions,
-  Modal,
   ScrollView,
   TouchableOpacity,
   TextInput,
 } from 'react-native';
 import NavBar from '../../common/navBar';
 import {fetchData} from '../../common/fetch';
-import RadioModal from 'react-native-radio-master';
 import {DatePicker, SimpleItemsDialog} from '../../components/pickers';
 var {width} = Dimensions.get('window');
+
+
+
 export default class ServiceOrderPage extends React.Component {
   constructor() {
     super();
@@ -38,6 +38,8 @@ export default class ServiceOrderPage extends React.Component {
       distributionType: '01', //配送方式01送货02自提03快递
     };
   }
+
+
   // 返回中间按钮
   renderTitleItem = () => {
     return (
@@ -67,6 +69,8 @@ export default class ServiceOrderPage extends React.Component {
       </TouchableOpacity>
     );
   };
+
+  //选择地址
   onSelectAddress = e => {
     console.log(e);
     this.setState({
@@ -82,11 +86,15 @@ export default class ServiceOrderPage extends React.Component {
       serviceItemName: '标准',
     });
   };
+
+  //跳转地址选择
   onChooseAddress = () => {
     this.props.navigation.navigate('address', {
       onSelectAddress: this.onSelectAddress,
     });
   };
+
+  //提交订单
   onConfirmPay = () => {
     let cartId = this.props.route.params.data;
     let data = {
@@ -102,7 +110,6 @@ export default class ServiceOrderPage extends React.Component {
       integral: 0, //使用积分
       distributionType: '01', //配送方式01送货02自提03快递
     };
-    console.log('onConfirmPayData' + JSON.stringify(data));
     let param = {
       body: JSON.stringify(data), // must match 'Content-Type' header
       headers: {
@@ -130,6 +137,8 @@ export default class ServiceOrderPage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   };
+
+
   componentDidMount() {
     let param1 = {
       headers: {

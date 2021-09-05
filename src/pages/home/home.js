@@ -1,4 +1,6 @@
-// 首页服务
+/*
+* 首页
+*/
 import React, {useState} from 'react';
 import Swiper from 'react-native-swiper';
 import {
@@ -12,7 +14,6 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  FlatList,
   TouchableHighlight,
 } from 'react-native';
 import {
@@ -20,7 +21,7 @@ import {
   hotServerData,
   preferentialData,
 } from '../../LocalData/homePageData';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Localstorage from '../../common/localStorage';
 import {fetchData} from '../../common/fetch';
 
 const {width} = Dimensions.get('window');
@@ -30,7 +31,8 @@ const swiperData = [
   {title: '2', image: require('../../assets/images/home_banner.png')},
   {title: '3', image: require('../../assets/images/home_banner.png')},
 ];
-export default class ServiceMainPage extends React.Component {
+
+export default class HomePage extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -42,6 +44,7 @@ export default class ServiceMainPage extends React.Component {
     };
   }
 
+  //跳转分类事件
   onMainServiceCardClick = (data, id) => {
     if (id) {
       this.props.navigation.navigate('Classify', {
@@ -51,6 +54,8 @@ export default class ServiceMainPage extends React.Component {
       });
     }
   };
+
+  //热门服务
   onHotServiceCardClick = (data, id) => {
     if (id) {
       this.props.navigation.navigate('ServiceConfirmPage', {
@@ -59,43 +64,37 @@ export default class ServiceMainPage extends React.Component {
       });
     }
   };
+  //特惠优选下单
   onServiceOrder = (id, name) => {
     this.props.navigation.navigate('ServiceConfirmPage', {name: name, id: id});
   };
-  onChangeNumber = value => {
-    this.setState({
-      searchInput: value,
-    });
-  };
+
+ // 搜索内容
   onChangeText = text => {
     if (text) {
-      this.setState({inputValue: text}); //实时变化值
-      clearTimeout(this.settimeId); //如搜索的内容变化在1秒之中，可以清除变化前的fetch请求，继而减少fetch请求。但不能中断fetch请求
-      this.settimeId = setTimeout(() => {
-        var jsonData = {
-          sessionId: global.appInfo.sessionId,
-          merchName: text,
-        };
-        console.log(jsonData);
-        // fetchData('nsposm/B1404/queryMerchList', jsonData, this.SearchCallback);
-      }, 1000); //让每次要进行fetch请求时先延迟1秒在进行
-      console.log('sheng chen id:' + this.settimeId);
+      // this.setState({inputValue: text}); //实时变化值
+      // clearTimeout(this.settimeId); //如搜索的内容变化在1秒之中，可以清除变化前的fetch请求，继而减少fetch请求。但不能中断fetch请求
+      // this.settimeId = setTimeout(() => {
+      //   var jsonData = {
+      //     sessionId: global.appInfo.sessionId,
+      //     merchName: text,
+      //   };
+      //   console.log(jsonData);
+      //   // fetchData('nsposm/B1404/queryMerchList', jsonData, this.SearchCallback);
+      // }, 1000); //让每次要进行fetch请求时先延迟1秒在进行
+      // console.log('sheng chen id:' + this.settimeId);
     } else {
       this.setState({inputValue: ''});
     }
   };
 
-  // async componentDidMount() {
-  //     try{
-  //         let loginType = await  AsyncStorage.getItem('loginType');
-  //         let token = await  AsyncStorage.getItem('token');
-  //         window.loginType =  loginType;
-  //         window.token =  token;
-  //     } catch (e) {
-  //         console.log('出错')
-  //     }
-  // }
+  //请求首页内容
   componentDidMount() {
+    const storage = Localstorage.get('token');
+    storage.then( (token) => {
+      window.token = token
+    });
+
     let param = {
       headers: {
         'X-Litemall-Token': window.token
@@ -123,6 +122,7 @@ export default class ServiceMainPage extends React.Component {
     fetchData(url, param, callback, errCallback);
   }
 
+  // 渲染
   render() {
     return (
       <View style={styles.container}>
@@ -386,35 +386,7 @@ export default class ServiceMainPage extends React.Component {
   }
 }
 
-/*
- * 卡片
- * */
-// function MidCard(props)
-// {
-//
-//     return(
-//         <View style={{flex:1,flexDirection:'column'}}>
-//             <Text style={{flex:1,marginTop:30,fontSize:15,marginLeft:20,fontWeight:'bold'}}>{props.title}</Text>
-//             <View style={{flex:2,flexDirection:'row'}}>
-//                 <TouchableOpacity activeOpacity={0.5} style={{flex:1}} onPress={()=> props.onCardClick(props.firstTitle)}>
-//                     <View style={{flex:1,backgroundColor:'white',margin:15,marginTop:0,flexDirection:'column',shadowColor:'gray',
-//                         shadowOffset:{width:0,height:0},shadowOpacity:1,shadowRadius:1.5}}>
-//                         <Text style={{margin:10,marginBottom:5,fontSize:12,fontWeight:'bold'}}>{props.firstTitle}</Text>
-//                         <Text style={{margin:10,marginBottom:5,fontSize:10,color:'gray'}}>{props.firstMsg}</Text>
-//                     </View>
-//                 </TouchableOpacity>
-//
-//                 <TouchableOpacity activeOpacity={0.5} style={{flex:1}} onPress={()=> props.onCardClick(props.secondTitle)}>
-//                     <View style={{flex:1,backgroundColor:'white',margin:15,marginTop:0,flexDirection:'column',shadowColor:'gray',
-//                         shadowOffset:{width:0,height:0},shadowOpacity:1,shadowRadius:1.5}}>
-//                         <Text style={{margin:10,marginBottom:5,fontSize:12,fontWeight:'bold'}}>{props.secondTitle}</Text>
-//                         <Text style={{margin:10,marginBottom:5,fontSize:10,color:'gray'}}>{props.secondMsg}</Text>
-//                     </View>
-//                 </TouchableOpacity>
-//             </View>
-//         </View>
-//     )
-// }
+
 
 function BottomMainCard(props) {
   return (
@@ -483,8 +455,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   scrollView: {
-    // backgroundColor: 'pink',
-    // marginHorizontal: 20,
+
   },
   wrapper: {
     height: 150,

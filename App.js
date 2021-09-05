@@ -1,7 +1,7 @@
 import * as React from 'react';
 import MainPage from './src/pages';
-window.isLogin = false;
 
+//App 主入口
 function App() {
   return <MainPage />;
 }

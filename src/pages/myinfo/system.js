@@ -8,8 +8,8 @@ import {
   Dimensions,
 } from 'react-native';
 //导入外部组件
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import NavBar from '../../common/navBar';
+import Localstorage from "../../common/localStorage";
 let {width} = Dimensions.get('window');
 
 const SystemData = [
@@ -79,10 +79,8 @@ export default class SystemPage extends React.Component {
 
   onLoginOut = () => {
     alert('退出成功');
-    AsyncStorage.setItem('loginType', 'login')
-      .then(() => console.log('update'))
-      .catch(e => console.log('e: ', e));
-
+    window.token = undefined;
+    Localstorage.save('token', '');
     this.props.navigation.navigate('login');
   };
   render() {

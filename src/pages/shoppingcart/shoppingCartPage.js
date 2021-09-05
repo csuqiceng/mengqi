@@ -1,3 +1,9 @@
+/**
+ *  购物车页面
+ *
+ */
+
+
 import React from 'react';
 import {
   StyleSheet,
@@ -9,12 +15,13 @@ import {
   ScrollView,
 } from 'react-native';
 import NavBar from '../../common/navBar';
-const {width} = Dimensions.get('window');
 import {fetchData} from '../../common/fetch';
 import CheckBox from 'react-native-check-box';
-import Stepper from "@ant-design/react-native/lib/stepper";
+import Stepper from '../../components/Stepper/Stepper'
+const {width} = Dimensions.get('window');
 
-export default class ShoppingCartPage extends React.Component {
+export default class ShoppingCartPage extends React.Component
+{
   constructor(props) {
     super(props);
     this.state = {
@@ -105,6 +112,8 @@ export default class ShoppingCartPage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
+
+  //删除
   onRemoveChange=(items)=>{
     let data = {
       productIds: items,
@@ -156,37 +165,8 @@ export default class ShoppingCartPage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
-  componentDidMount() {
-    setInterval(() => {
-      let param = {
-        headers: {
-          'X-Litemall-Token': window.token
-            ? window.token
-            : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
-          'content-type': 'application/x-www-form-urlencoded',
-        },
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      };
-      let url = `http://lhh.natapp1.cc/api/wx/cart/index`;
-      const callback = responseData => {
-        // console.log(JSON.stringify(responseData));
-        this.setState({
-          cartTotal: responseData.data.cartTotal,
-          cartList: responseData.data.cartList,
-        });
-      };
-      const errCallback = responseData => {
-        if (responseData.errno == 501) {
-          this.setState({
-            cartTotal: '',
-            cartList: [],
-          });
-        }
-      };
-      fetchData(url, param, callback, errCallback);
-    }, 1000);
-  }
 
+  //修改勾选状态
   onChangeChecked=(isChecked,productIds)=>{
     let data = {
       isChecked: isChecked,
@@ -240,11 +220,51 @@ export default class ShoppingCartPage extends React.Component {
     fetchData(url, param, callback, errCallback);
   }
 
+  //全部勾选
+  onAllChecked=()=>{
+    this.setState({
+      shoppingCartAllChecked:!this.state.shoppingCartAllChecked
+    });
+    this.onChangeChecked(!this.state.shoppingCartAllChecked,this.shoppingCarts)
+  }
+
+  //页面加载完成
+  componentDidMount() {
+    setInterval(() => {
+      let param = {
+        headers: {
+          'X-Litemall-Token': window.token
+            ? window.token
+            : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+          'content-type': 'application/x-www-form-urlencoded',
+        },
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      };
+      let url = `http://lhh.natapp1.cc/api/wx/cart/index`;
+      const callback = responseData => {
+        // console.log(JSON.stringify(responseData));
+        this.setState({
+          cartTotal: responseData.data.cartTotal,
+          cartList: responseData.data.cartList,
+        });
+      };
+      const errCallback = responseData => {
+        if (responseData.errno == 501) {
+          this.setState({
+            cartTotal: '',
+            cartList: [],
+          });
+        }
+      };
+      fetchData(url, param, callback, errCallback);
+    }, 1000);
+  }
+
   renderEditButton=(item)=>{
       if (this.state.shoppingCartEdit){
          return(
            <TouchableOpacity
-             style={{height: 110,width:30,backgroundColor:'#db3d3c',alignItems: "center",justifyContent:'center'}}
+             style={{height: 110,width:35,backgroundColor:'#db3d3c',alignItems: "center",justifyContent:'center'}}
              activeOpacity={0.5}
              onPress={() => {
                this.onRemoveChange([item.productId])
@@ -256,12 +276,7 @@ export default class ShoppingCartPage extends React.Component {
         return null
       }
   }
-  onAllChecked=()=>{
-    this.setState({
-      shoppingCartAllChecked:!this.state.shoppingCartAllChecked
-    });
-    this.onChangeChecked(!this.state.shoppingCartAllChecked,this.shoppingCarts)
-  }
+
   renderShoppingView = () => {
     this.shoppingCartsPrice =0;
     if (this.state.cartList.length > 0) {
@@ -301,7 +316,7 @@ export default class ShoppingCartPage extends React.Component {
                         style={{width: 90, height: 80, borderRadius:10,borderColor:'lightgray',borderWidth:1}}
                       />
                       <View style={{margin:20,flex:1}}>
-                        <Text>{item.goodsName}</Text>
+                        <Text numberOfLines={1} ellipsizeMode={'tail'} style={{fontSize:14}}>{item.goodsName}</Text>
                         {/*<View*/}
                         {/*  style={{*/}
                         {/*    flexDirection: 'row',*/}
@@ -310,16 +325,10 @@ export default class ShoppingCartPage extends React.Component {
                         {/*  }}>*/}
                           {/*<Text>数量：{item.number}</Text>*/}
                           <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
-                          <Text style={{color: '#FA5700', fontWeight: 'bold',fontSize:18,flex:1}}>
-                            ¥ {item.price}
-                          </Text>
-                            <Stepper
-                              max={100}
-                              min={0}
-                              defaultValue={item.number}
-                              style={{flex: 1}}
-                              onChange={(e)=>this.onStepperChange(e,item)}
-                            />
+                            <Text style={{color: '#FA5700', fontWeight: 'bold',fontSize:14,flex:1}}>
+                              ¥ {item.price}
+                            </Text>
+                              <Stepper defaultValue={1} min={1} max={10} value={item.number}  onChange={(e)=>this.onStepperChange(e,item)}/>
                           </View>
 
                         {/*</View>*/}
@@ -352,7 +361,7 @@ export default class ShoppingCartPage extends React.Component {
 
   }
 
- renderBottomView=()=>{
+  renderBottomView=()=>{
    if (this.state.shoppingCartEdit){
      return(
        <View style={{flexDirection: 'row'}}>
@@ -389,7 +398,7 @@ export default class ShoppingCartPage extends React.Component {
              this.onRemoveChange(this.shoppingCartsChecked)
            }}>
            <View style={{...styles.BtnStyle,backgroundColor:'white'}}>
-             <View style={{...styles.BtnStyle, width:80,borderRadius:30,height:30,backgroundColor:'red',marginRight:10}}>
+             <View style={{...styles.BtnStyle,borderTopStartRadius:30,backgroundColor:'red',width:0.25 * width}}>
                <Text
                  style={{
                    color: 'black',
@@ -457,7 +466,7 @@ export default class ShoppingCartPage extends React.Component {
              alert("去结算")
            }}>
            <View style={{...styles.BtnStyle,backgroundColor:'white'}}>
-             <View style={{...styles.BtnStyle, width:80,borderRadius:30,height:30,marginRight:10}}>
+             <View style={{...styles.BtnStyle,borderTopStartRadius:30,width:0.25 * width}}>
              <Text
                style={{
                  color: 'black',

@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from 'react';
+//下单
+
+import React from 'react';
 import {
   Text,
   View,
-  Button,
   Image,
   StyleSheet,
-  Platform,
   Dimensions,
-  SafeAreaView,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
@@ -39,6 +38,7 @@ export default class ServicePayPage extends React.Component {
     );
   };
 
+
   // 返回左边按钮
   renderLeftItem = () => {
     return (
@@ -54,6 +54,8 @@ export default class ServicePayPage extends React.Component {
       </TouchableOpacity>
     );
   };
+
+  //提交支付
   onConfirmPay = () => {
     let orderId = this.props.route.params.data.orderId;
     let data = {
@@ -111,6 +113,7 @@ export default class ServicePayPage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   };
+
 
   componentDidMount() {
     let orderId = this.props.route.params.data.orderId;
