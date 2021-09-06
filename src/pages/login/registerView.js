@@ -66,7 +66,6 @@ export default class RegisterView extends React.Component {
     });
   };
   onRegisterCallback = () => {
-
     let url = 'http://lhh.natapp1.cc/api/wx/auth/register';
     const callback = e => {
       // navigation.goBack()
@@ -90,9 +89,7 @@ export default class RegisterView extends React.Component {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
     const errCallback = responseData => {
-      if (responseData.errno == 501) {
-        alert(responseData.errmsg);
-      }
+      alert(responseData.errmsg);
     };
     fetchData(url, param, callback, errCallback);
   };
@@ -224,10 +221,10 @@ export default class RegisterView extends React.Component {
                 onPress={() => {
                   this.onChangeSecureTextType;
                 }}>
-                <Image
-                  source={require('../../assets/images/myinfo/login_icon_eyes.png')}
-                  style={{width: 22, height: 22}}
-                />
+                {/*<Image*/}
+                {/*  source={require('../../assets/images/myinfo/login_icon_eyes.png')}*/}
+                {/*  style={{width: 22, height: 22}}*/}
+                {/*/>*/}
               </TouchableOpacity>
             </View>
           </View>

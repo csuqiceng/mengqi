@@ -18,6 +18,7 @@ import Swiper from 'react-native-swiper';
 import NavBar from '../../common/navBar';
 import Stepper from '@ant-design/react-native/lib/stepper';
 import {fetchData} from '../../common/fetch';
+import Badge from "../../components/Badge/Badge";
 
 var {width} = Dimensions.get('window');
 
@@ -251,7 +252,7 @@ export default class ServiceConfirmPage extends React.Component {
     const errCallback1 = responseData => {
       if (responseData.errno == 501) {
         alert(responseData.errmsg);
-        // this.props.navigation.navigate('login');
+        this.props.navigation.navigate('login');
       }
     };
     fetchData(url1, param1, callback1, errCallback1);
@@ -284,7 +285,7 @@ export default class ServiceConfirmPage extends React.Component {
   renderShoppingTip=()=>{
      if(this.state.shoppingCount>0){
        return(
-         <Text style={{color: 'white',backgroundColor:'red',borderRadius:10,marginTop:-10,marginLeft:-20,padding: 2}}>{this.state.shoppingCount}</Text>
+         <Badge count={this.state.shoppingCount} style={{backgroundColor: 'red', paddingLeft: 0, paddingRight: 0,marginTop:-10,marginLeft:-20}}/>
        )
      }else{
        return  null;

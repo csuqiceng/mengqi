@@ -304,18 +304,18 @@ class AccoutLoginView extends React.Component
             </TouchableOpacity>
           </View>
 
-          <View
-            style={{marginTop: 20, alignItems: 'center', width: width * 0.8}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>其他登录方式</Text>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => alert('微信登录')}>
-              <Image
-                source={require('../../assets/images/myinfo/login_icon_wechat.png')}
-                style={{width: 30, height: 30, marginTop: 10}}
-              />
-            </TouchableOpacity>
-          </View>
+          {/*<View*/}
+          {/*  style={{marginTop: 20, alignItems: 'center', width: width * 0.8}}>*/}
+          {/*  <Text style={{fontSize: 15, color: 'gray'}}>其他登录方式</Text>*/}
+          {/*  <TouchableOpacity*/}
+          {/*    activeOpacity={0.5}*/}
+          {/*    onPress={() => alert('微信登录')}>*/}
+          {/*    <Image*/}
+          {/*      source={require('../../assets/images/myinfo/login_icon_wechat.png')}*/}
+          {/*      style={{width: 30, height: 30, marginTop: 10}}*/}
+          {/*    />*/}
+          {/*  </TouchableOpacity>*/}
+          {/*</View>*/}
         </View>
       </ScrollView>
     );
@@ -535,18 +535,18 @@ class VerificationcodeView extends React.Component
             </View>
           </View>
 
-          <View
-            style={{marginTop: 20, alignItems: 'center', width: width * 0.8}}>
-            <Text style={{fontSize: 15, color: 'gray'}}>其他登录方式</Text>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => alert('微信登录')}>
-              <Image
-                source={require('../../assets/images/myinfo/login_icon_wechat.png')}
-                style={{width: 30, height: 30, marginTop: 10}}
-              />
-            </TouchableOpacity>
-          </View>
+          {/*<View*/}
+          {/*  style={{marginTop: 20, alignItems: 'center', width: width * 0.8}}>*/}
+          {/*  <Text style={{fontSize: 15, color: 'gray'}}>其他登录方式</Text>*/}
+          {/*  <TouchableOpacity*/}
+          {/*    activeOpacity={0.5}*/}
+          {/*    onPress={() => alert('微信登录')}>*/}
+          {/*    <Image*/}
+          {/*      source={require('../../assets/images/myinfo/login_icon_wechat.png')}*/}
+          {/*      style={{width: 30, height: 30, marginTop: 10}}*/}
+          {/*    />*/}
+          {/*  </TouchableOpacity>*/}
+          {/*</View>*/}
         </View>
       </ScrollView>
     );

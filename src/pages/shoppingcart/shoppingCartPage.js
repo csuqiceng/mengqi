@@ -228,6 +228,12 @@ export default class ShoppingCartPage extends React.Component
     this.onChangeChecked(!this.state.shoppingCartAllChecked,this.shoppingCarts)
   }
 
+  //去结算
+  onServiceOrder=()=>{
+    this.props.navigation.navigate('ServiceOrderPage', {
+      data: '0',
+    });
+  }
   //页面加载完成
   componentDidMount() {
     setInterval(() => {
@@ -242,7 +248,6 @@ export default class ShoppingCartPage extends React.Component
       };
       let url = `http://lhh.natapp1.cc/api/wx/cart/index`;
       const callback = responseData => {
-        // console.log(JSON.stringify(responseData));
         this.setState({
           cartTotal: responseData.data.cartTotal,
           cartList: responseData.data.cartList,
@@ -264,7 +269,7 @@ export default class ShoppingCartPage extends React.Component
       if (this.state.shoppingCartEdit){
          return(
            <TouchableOpacity
-             style={{height: 110,width:35,backgroundColor:'#db3d3c',alignItems: "center",justifyContent:'center'}}
+             style={{height: 110,width:40,backgroundColor:'#db3d3c',alignItems: "center",justifyContent:'center'}}
              activeOpacity={0.5}
              onPress={() => {
                this.onRemoveChange([item.productId])
@@ -282,7 +287,7 @@ export default class ShoppingCartPage extends React.Component
     if (this.state.cartList.length > 0) {
       return (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{flex: 1}}>
+          <View style={{flex: 1,marginLeft: 5,marginTop:10, width:width-10}}>
             {this.state.cartList.map((item, i) => {
               this.shoppingCarts.push(item.productId);
               if (item.checked){
@@ -293,13 +298,9 @@ export default class ShoppingCartPage extends React.Component
                   <View
                     key={i}
                     style={{
-                      margin: 10,
-                      width:width-20,
                       height: 110,
-                      borderColor: 'lightgray',
-                      borderWidth: 1,
+                      marginBottom: 1,
                       backgroundColor: 'white',
-                      borderRadius: 5,
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
@@ -317,27 +318,17 @@ export default class ShoppingCartPage extends React.Component
                       />
                       <View style={{margin:20,flex:1}}>
                         <Text numberOfLines={1} ellipsizeMode={'tail'} style={{fontSize:14}}>{item.goodsName}</Text>
-                        {/*<View*/}
-                        {/*  style={{*/}
-                        {/*    flexDirection: 'row',*/}
-                        {/*    justifyContent: 'space-between',*/}
-                        {/*    marginTop: 10,*/}
-                        {/*  }}>*/}
-                          {/*<Text>数量：{item.number}</Text>*/}
                           <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
                             <Text style={{color: '#FA5700', fontWeight: 'bold',fontSize:14,flex:1}}>
                               ¥ {item.price}
                             </Text>
                               <Stepper defaultValue={1} min={1} max={10} value={item.number}  onChange={(e)=>this.onStepperChange(e,item)}/>
                           </View>
-
-                        {/*</View>*/}
                       </View>
 
                       {
                         this.renderEditButton(item)
                       }
-                    {/*</View>*/}
                   </View>
               );
             })}
@@ -355,6 +346,14 @@ export default class ShoppingCartPage extends React.Component
             }}
           />
           <Text>您的购物车空空如也~</Text>
+          <TouchableOpacity
+            style={{height: 35,width:100,backgroundColor:'#13B4BB',alignItems: "center",justifyContent:'center',marginTop:20,borderRadius:5}}
+            activeOpacity={0.5}
+            onPress={() => {
+              this.props.navigation.navigate('Home');
+            }}>
+            <Text style={{color:'white'}}>去逛逛</Text>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -362,6 +361,9 @@ export default class ShoppingCartPage extends React.Component
   }
 
   renderBottomView=()=>{
+    if (this.state.cartList.length == 0) {
+       return null
+    }
    if (this.state.shoppingCartEdit){
      return(
        <View style={{flexDirection: 'row'}}>
@@ -398,7 +400,7 @@ export default class ShoppingCartPage extends React.Component
              this.onRemoveChange(this.shoppingCartsChecked)
            }}>
            <View style={{...styles.BtnStyle,backgroundColor:'white'}}>
-             <View style={{...styles.BtnStyle,borderTopStartRadius:30,backgroundColor:'red',width:0.25 * width}}>
+             <View style={{...styles.BtnStyle,borderTopStartRadius:30,backgroundColor:'#db3d3c',width:0.25 * width}}>
                <Text
                  style={{
                    color: 'black',
@@ -463,7 +465,7 @@ export default class ShoppingCartPage extends React.Component
            activeOpacity={0.5}
            style={{backgroundColor:'white'}}
            onPress={() => {
-             alert("去结算")
+             this.onServiceOrder()
            }}>
            <View style={{...styles.BtnStyle,backgroundColor:'white'}}>
              <View style={{...styles.BtnStyle,borderTopStartRadius:30,width:0.25 * width}}>

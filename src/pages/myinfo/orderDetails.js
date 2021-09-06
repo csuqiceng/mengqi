@@ -55,6 +55,130 @@ export default class OrderDetails extends React.Component {
       </TouchableOpacity>
     );
   };
+
+  //取消订单
+  onCancelOrder=()=>{
+    const {detailsInfo} = this.state;
+    let data = {
+      orderId: detailsInfo.orderInfo.id, //订单ID
+    };
+    let param = {
+      body: JSON.stringify(data), // must match 'Content-Type' header
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/json',
+      },
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/cancel';
+    const callback = responseData => {
+      if (responseData.errno == 0){
+        alert("取消订单成功！")
+        let id = this.props.route.params.id;
+        let param = {
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          headers: {
+            'X-Litemall-Token': window.token
+              ? window.token
+              : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+            'content-type': 'application/x-www-form-urlencoded',
+          },
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        };
+        let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
+        const callback = responseData => {
+          if (responseData.errno == '0') {
+            this.setState({
+              detailsInfo: responseData.data,
+            });
+          }
+        };
+        const errCallback = responseData => {
+          if (responseData.errno == 501) {
+            alert(responseData.errmsg);
+          }
+        };
+        fetchData(url, param, callback, errCallback);
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
+
+  //提交订单
+  onConfirmPay = () => {
+    const {detailsInfo} = this.state;
+    let data = {
+      orderId: detailsInfo.orderInfo.id, //订单ID
+    };
+    this.props.navigation.navigate('ServicePayPage', {
+      data: data,
+    });
+  };
+
+  //确认收货
+  onServiceConfirm=()=>{
+    const {detailsInfo} = this.state;
+    let data = {
+      orderId: detailsInfo.orderInfo.id, //订单ID
+      sysUserId:'' //上门服务员工ID
+    };
+    let param = {
+      body: JSON.stringify(data), // must match 'Content-Type' header
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/json',
+      },
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/confirm';
+    const callback = responseData => {
+      if (responseData.errno == 0){
+        alert("确认收货成功！")
+        let id = this.props.route.params.id;
+        let param = {
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          headers: {
+            'X-Litemall-Token': window.token
+              ? window.token
+              : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+            'content-type': 'application/x-www-form-urlencoded',
+          },
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        };
+        let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
+        const callback = responseData => {
+          if (responseData.errno == '0') {
+            this.setState({
+              detailsInfo: responseData.data,
+            });
+          }
+        };
+        const errCallback = responseData => {
+          if (responseData.errno == 501) {
+            alert(responseData.errmsg);
+          }
+        };
+        fetchData(url, param, callback, errCallback);
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
   componentDidMount() {
     let id = this.props.route.params.id;
     let param = {
@@ -69,9 +193,8 @@ export default class OrderDetails extends React.Component {
     };
     let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
     const callback = responseData => {
-      console.log('嘻嘻嘻' + JSON.stringify(responseData.data.orderInfo));
-      console.log(JSON.stringify(responseData.data.orderGoods[0]));
       if (responseData.errno == '0') {
+        console.log(JSON.stringify(responseData.data))
         this.setState({
           detailsInfo: responseData.data,
         });
@@ -178,12 +301,11 @@ export default class OrderDetails extends React.Component {
       }
     }
   }
+
   renderBottomView=()=>{
     const {detailsInfo} = this.state;
     if (detailsInfo.orderInfo) {
       let orderStatus = detailsInfo.orderInfo.orderStatus;
-      // let goodsType = detailsInfo.orderGoods[0].goodsType;
-
       if (orderStatus == 102 || orderStatus == 103 || orderStatus == 202) {
         return null;
       } else if (orderStatus == 101) {
@@ -208,13 +330,13 @@ export default class OrderDetails extends React.Component {
             <Button
               color="#00BEAF"
               title="取消订单"
-              onPress={() => this.onServiceOrder()}
+              onPress={() => this.onCancelOrder()}
             />
             <View style={{width:10}}/>
             <Button
               color="#00BEAF"
               title="确认付款"
-              onPress={() => this.onServiceOrder()}
+              onPress={() => this.onConfirmPay()}
             />
           </View>
         )
@@ -240,13 +362,13 @@ export default class OrderDetails extends React.Component {
             <Button
               color="#00BEAF"
               title="取消订单"
-              onPress={() => this.onServiceOrder()}
+              onPress={() => this.onCancelOrder()}
             />
             <View style={{width:10}}/>
             <Button
               color="#00BEAF"
               title="申请退款"
-              onPress={() => this.onServiceOrder()}
+              onPress={() => alert('申请退款')}
             />
           </View>
         )
@@ -272,13 +394,13 @@ export default class OrderDetails extends React.Component {
             <Button
               color="#00BEAF"
               title="删除订单"
-              onPress={() => this.onServiceOrder()}
+              onPress={() => alert('删除订单')}
             />
             <View style={{width:10}}/>
             <Button
               color="#00BEAF"
               title="评价商品"
-              onPress={() => this.onServiceOrder()}
+              onPress={() => alert('评价商品')}
             />
           </View>
         )
@@ -304,7 +426,7 @@ export default class OrderDetails extends React.Component {
             <Button
               color="#00BEAF"
               title="确认收货"
-              onPress={() => this.onServiceOrder()}
+              onPress={() => this.onServiceConfirm()}
             />
           </View>
         )
@@ -313,6 +435,7 @@ export default class OrderDetails extends React.Component {
   }
   render() {
     const {detailsInfo} = this.state;
+    let orderGoods = detailsInfo.orderGoods?detailsInfo.orderGoods:[];
     return (
       <View style={styles.container}>
         <NavBar
@@ -371,7 +494,7 @@ export default class OrderDetails extends React.Component {
           <View
             style={{
               flexDirection: 'column',
-              height: 400,
+              flex:1,
               backgroundColor: 'white',
               margin: 10,
               borderRadius: 10,
@@ -380,7 +503,7 @@ export default class OrderDetails extends React.Component {
               style={{
                 color: 'black',
                 fontSize: 14,
-                marginTop: 5,
+                marginTop: 10,
                 marginLeft: 5,
                 width: width,
                 paddingBottom: 10,
@@ -388,72 +511,79 @@ export default class OrderDetails extends React.Component {
               订单号：
               {detailsInfo.orderInfo ? detailsInfo.orderInfo.orderSn : ''}
             </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                width: width,
-                marginLeft: 10,
-                marginRight: 10,
-              }}>
-              <Image
-                source={{
-                  uri: detailsInfo.orderGoods
-                    ? detailsInfo.orderGoods[0].picUrl
-                    : 'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
-                }}
-                style={{
-                  width: 70,
-                  height: 70,
-                }}
-              />
-              <View style={{flex: 1, marginLeft: 20}}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: 15, color: 'black'}}>
-                    {detailsInfo.orderGoods
-                      ? detailsInfo.orderGoods[0].goodsName
-                      : ''}
-                  </Text>
-                  <View style={{flex: 1}}>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginLeft: 20,
-                      }}>
-                      <Text
-                        numberOfLines={3}
-                        style={{fontSize: 19, color: 'black'}}>
-                        ¥{' '}
-                      </Text>
-                      <Text
-                        numberOfLines={3}
-                        style={{fontSize: 19, color: 'black'}}>
-                        {detailsInfo.orderGoods
-                          ? detailsInfo.orderGoods[0].price
+            {orderGoods.map((item, i) => {
+              return (
+                <View
+                  key={i}
+                  style={{
+                    flexDirection: 'row',
+                    width: width,
+                    marginLeft: 10,
+                    marginRight: 10,
+                    marginBottom: 10,
+                  }}>
+                  <Image
+                    source={{
+                      uri: item
+                        ? item.picUrl
+                        : 'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
+                    }}
+                    style={{
+                      width: 70,
+                      height: 70,
+                    }}
+                  />
+                  <View style={{flex: 1, marginLeft: 20}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontSize: 15, color: 'black'}}>
+                        {item
+                          ? item.goodsName
                           : ''}
                       </Text>
+                      <View style={{flex: 1}}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            marginLeft: 20,
+                          }}>
+                          <Text
+                            numberOfLines={3}
+                            style={{fontSize: 19, color: 'black'}}>
+                            ¥{' '}
+                          </Text>
+                          <Text
+                            numberOfLines={3}
+                            style={{fontSize: 19, color: 'black'}}>
+                            {item
+                              ? item.price
+                              : ''}
+                          </Text>
+                        </View>
+                        <Text
+                          numberOfLines={3}
+                          style={{fontSize: 15, color: 'gray', marginTop: 10}}>
+                          ×
+                          {item
+                            ? item.number
+                            : ''}
+                        </Text>
+                      </View>
                     </View>
-                    <Text
-                      numberOfLines={3}
-                      style={{fontSize: 15, color: 'gray', marginTop: 10}}>
-                      ×
-                      {detailsInfo.orderGoods
-                        ? detailsInfo.orderGoods[0].number
-                        : ''}
-                    </Text>
                   </View>
                 </View>
-              </View>
-            </View>
+              );
+            })}
+
             <View style={{height: 70, marginLeft: 10, marginTop: 20}}>
               <Text style={{color: 'gray', fontSize: 14}}>
                 商品总价： ¥
-                {detailsInfo.orderGoods ? detailsInfo.orderGoods[0].price : ''}
+                {detailsInfo.orderInfo ? detailsInfo.orderInfo.goodsPrice : ''}
               </Text>
               <Text style={{color: 'gray', fontSize: 13}}>运费： ¥{'无'}</Text>
               <Text style={{color: 'gray', fontSize: 16}}>
                 实付款： ¥{' '}
-                {detailsInfo.orderGoods ? detailsInfo.orderGoods[0].price : ''}
+                {detailsInfo.orderInfo ? detailsInfo.orderInfo.actualPrice : ''}
               </Text>
             </View>
             <Text
@@ -472,6 +602,7 @@ export default class OrderDetails extends React.Component {
                 marginLeft: 10,
                 width: width,
                 paddingTop: 5,
+                marginBottom: 10
               }}>
               <Text style={{color: 'gray', fontSize: 14}}>
                 交易创建时间：
@@ -501,7 +632,9 @@ export default class OrderDetails extends React.Component {
         {
           this.renderBottomView()
         }
+
       </View>
+
     );
   }
 }

@@ -191,6 +191,7 @@ export default class ServiceOrderPage extends React.Component {
   render() {
     const {orderData, address, modalVisible, initItem, subscribeTime} =
       this.state;
+    let checkedGoodsList = orderData.checkedGoodsList?orderData.checkedGoodsList:[];
     return (
       <View
         style={styles.container}
@@ -203,73 +204,77 @@ export default class ServiceOrderPage extends React.Component {
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           {/*商品信息*/}
-          <View style={{height: 150, backgroundColor: 'white', marginTop: 20}}>
-            <View
-              style={{
-                height: 40,
-                width: width,
-                flexDirection: 'row',
-                alignItems: 'center',
-                borderBottomWidth: 1,
-                borderBottomColor: 'lightgray',
-              }}>
-              <View style={{width: 2, height: 20, backgroundColor: 'black'}} />
-              <Text style={{fontSize: 17, marginLeft: 10}}>商品信息</Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                margin: 20,
-              }}>
-              <Image
-                source={{
-                  uri: orderData.checkedGoodsList
-                    ? orderData.checkedGoodsList[0].picUrl
-                    : 'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
-                }}
-                style={{
-                  width: 60,
-                  height: 60,
-                }}
-              />
-              <View style={{flex: 1, marginLeft: 20}}>
-                <View style={{flexDirection: 'row'}}>
-                  <Text style={{fontSize: 15, color: 'black'}}>
-                    {orderData.checkedGoodsList
-                      ? orderData.checkedGoodsList[0].goodsName
-                      : ''}
-                  </Text>
-                  <View style={{flex: 1}} />
-                  <View style={{flex: 1}}>
-                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                      <Text
-                        numberOfLines={3}
-                        style={{fontSize: 19, color: '#ff6600'}}>
-                        ¥{' '}
-                      </Text>
-                      <Text
-                        numberOfLines={3}
-                        style={{fontSize: 19, color: '#ff6600'}}>
-                        {orderData.checkedGoodsList
-                          ? orderData.checkedGoodsList[0].price
+          {checkedGoodsList.map((item, i) => {
+            return (
+              <View key={i} style={{height: 150, backgroundColor: 'white'}}>
+                <View
+                  style={{
+                    height: 40,
+                    width: width,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    borderBottomWidth: 1,
+                    borderBottomColor: 'lightgray',
+                  }}>
+                  <View style={{width: 2, height: 20, backgroundColor: 'black'}} />
+                  <Text style={{fontSize: 17, marginLeft: 10}}>商品信息</Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    margin: 20,
+                  }}>
+                  <Image
+                    source={{
+                      uri: item
+                        ? item.picUrl
+                        : 'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
+                    }}
+                    style={{
+                      width: 60,
+                      height: 60,
+                    }}
+                  />
+                  <View style={{flex: 1, marginLeft: 20}}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontSize: 15, color: 'black'}}>
+                        {item
+                          ? item.goodsName
                           : ''}
                       </Text>
+                      <View style={{flex: 1}} />
+                      <View style={{flex: 1}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                          <Text
+                            numberOfLines={3}
+                            style={{fontSize: 19, color: '#ff6600'}}>
+                            ¥{' '}
+                          </Text>
+                          <Text
+                            numberOfLines={3}
+                            style={{fontSize: 19, color: '#ff6600'}}>
+                            {item
+                              ? item.price
+                              : ''}
+                          </Text>
+                        </View>
+                        <Text
+                          numberOfLines={3}
+                          style={{fontSize: 15, color: 'gray', marginTop: 10}}>
+                          ×
+                          {item
+                            ? item.number
+                            : ''}
+                        </Text>
+                      </View>
                     </View>
-                    <Text
-                      numberOfLines={3}
-                      style={{fontSize: 15, color: 'gray', marginTop: 10}}>
-                      ×
-                      {orderData.checkedGoodsList
-                        ? orderData.checkedGoodsList[0].number
-                        : ''}
-                    </Text>
                   </View>
                 </View>
               </View>
-            </View>
-          </View>
+            );
+          })}
           {/*地址*/}
           <View
             style={{

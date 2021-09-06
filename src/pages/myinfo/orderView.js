@@ -932,19 +932,6 @@ class AccomplishView extends React.Component {
                         }}>
                         查看订单详情
                       </Text>
-                      <Text
-                        style={{
-                          borderWidth: 1,
-                          borderColor: 'gray',
-                          padding: 5,
-                          borderRadius: 2,
-                          marginRight: 15,
-                        }}
-                        onPress={() => {
-                          alert('修改地址');
-                        }}>
-                        修改地址
-                      </Text>
                     </View>
                   </View>
                 </TouchableOpacity>

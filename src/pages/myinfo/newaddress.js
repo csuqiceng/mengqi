@@ -102,7 +102,9 @@ export default class MyNewAddressView extends React.Component {
       isDefault: this.state.isDefault,
       areaCode: this.state.areaCode,
     };
-
+    if (data.areaCode.length==0){
+       alert("请输入邮政编码")
+    }
     console.log(JSON.stringify(data));
     let param = {
       body: JSON.stringify(data), // must match 'Content-Type' header
@@ -120,7 +122,10 @@ export default class MyNewAddressView extends React.Component {
       console.log(responseData);
       if (responseData.errno == '0') {
         alert('成功！');
-        this.props.navigation.goBack();
+        if (this.props.route&&this.props.route.params&&this.props.route.params.refresh) {
+          this.props.navigation.goBack();
+          this.props.route.params.refresh();
+        }
       }
     };
     const errCallback = responseData => {
