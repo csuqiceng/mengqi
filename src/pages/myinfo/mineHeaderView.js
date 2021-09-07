@@ -56,6 +56,7 @@ export default class HeaderView extends React.Component {
   }
 }
 function renderTopView(props, info) {
+  console.log(info)
   return (
     <View style={styles.topViewStyle}>
       <Image

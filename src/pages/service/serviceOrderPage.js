@@ -151,7 +151,7 @@ export default class ServiceOrderPage extends React.Component {
     };
     let url1 = 'http://lhh.natapp1.cc/api/wx/address/list';
     const callback1 = responseData => {
-      let addressId = responseData.data.list[0].id;
+      let addressId = responseData.data.list[0]?responseData.data.list[0].id:'';
       let address = responseData.data.list[0];
 
       let cartId = this.props.route.params.data;
@@ -278,7 +278,7 @@ export default class ServiceOrderPage extends React.Component {
           {/*地址*/}
           <View
             style={{
-              height: 150,
+              height: 120,
               backgroundColor: 'white',
               marginTop: 10,
               justifyContent: 'flex-start',
@@ -310,12 +310,12 @@ export default class ServiceOrderPage extends React.Component {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text
                     style={{
-                      fontSize: 18,
-                      color: 'black',
+                      fontSize: address?18:15,
+                      color: address?'black':'lightgray',
                       marginLeft: 10,
                       marginTop: 5,
                     }}>
-                    {address ? address.name : ''}
+                    {address ? address.name : '请选择地址'}
                   </Text>
                   <Text
                     style={{

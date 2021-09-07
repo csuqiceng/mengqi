@@ -14,11 +14,8 @@ import {
 import CheckBox from 'react-native-check-box';
 import NavBar from '../../common/navBar';
 import {fetchData} from '../../common/fetch';
-import CityPicker from '../../components/CityPicker';
-// import {
-//     AreaPicker,
-// } from '../../components/pickers';
-// import AreaJson from '../../components/pickers/Area.json';
+import { AreaPicker} from '../../components/pickers';
+import AreaJson from '../../components/pickers/Area.json';
 const {width} = Dimensions.get('window');
 
 export default class MyNewAddressView extends React.Component {
@@ -33,6 +30,7 @@ export default class MyNewAddressView extends React.Component {
       areaCode: props.areaCode ? props.areaCode : '',
       tel: props.tel ? props.tel : '',
       isDefault: props.isDefault ? props.isDefault : false,
+      id: props.id ? props.id : undefined,
     };
   }
   componentDidMount() {
@@ -47,6 +45,7 @@ export default class MyNewAddressView extends React.Component {
         areaCode: data.areaCode ? data.areaCode : '',
         tel: data.tel ? data.tel : '',
         isDefault: data.isDefault ? data.isDefault : false,
+        id: data.id ? data.id : undefined,
       });
     }
   }
@@ -85,9 +84,9 @@ export default class MyNewAddressView extends React.Component {
   onCityPickerCallback = e => {
     console.log(JSON.stringify(e));
     this.setState({
-      province: e.province,
-      city: e.city,
-      county: e.county,
+      province: e[0],
+      city: e[1],
+      county: e[2],
     });
   };
   addNewAddress = () => {
@@ -98,12 +97,16 @@ export default class MyNewAddressView extends React.Component {
       city: this.state.city,
       county: this.state.county,
       addressDetail: this.state.addressDetail,
-      tel: this.state.tel, //bixu 11
+      tel: this.state.tel,
       isDefault: this.state.isDefault,
       areaCode: this.state.areaCode,
     };
-    if (data.areaCode.length==0){
-       alert("请输入邮政编码")
+    if (this.state.id){
+      data.id = this.state.id;
+    }
+    if (data.tel && data.tel.length !=11){
+       alert("手机格式不对");
+       return;
     }
     console.log(JSON.stringify(data));
     let param = {
@@ -121,7 +124,6 @@ export default class MyNewAddressView extends React.Component {
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
-        alert('成功！');
         if (this.props.route&&this.props.route.params&&this.props.route.params.refresh) {
           this.props.navigation.goBack();
           this.props.route.params.refresh();
@@ -137,6 +139,8 @@ export default class MyNewAddressView extends React.Component {
     fetchData(url, param, callback, errCallback);
   };
   render() {
+    const {province,city,county} = this.state;
+    let address = province + city + county;
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -154,7 +158,7 @@ export default class MyNewAddressView extends React.Component {
                   backgroundColor: 'white',
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginTop: 10,
+                  marginTop: 5,
                   paddingLeft: 15,
                 }}>
                 <Text style={{fontSize: 15, width: 100}}>姓名</Text>
@@ -172,7 +176,7 @@ export default class MyNewAddressView extends React.Component {
                 style={{
                   height: 60,
                   backgroundColor: 'white',
-                  marginTop: 10,
+                  marginTop: 5,
                   flexDirection: 'row',
                   alignItems: 'center',
                   paddingLeft: 15,
@@ -192,7 +196,7 @@ export default class MyNewAddressView extends React.Component {
                 style={{
                   height: 60,
                   backgroundColor: 'white',
-                  marginTop: 10,
+                  marginTop: 5,
                   flexDirection: 'row',
                   alignItems: 'center',
                   paddingLeft: 15,
@@ -212,20 +216,25 @@ export default class MyNewAddressView extends React.Component {
                 style={{
                   height: 60,
                   backgroundColor: 'white',
-                  marginTop: 10,
+                  marginTop: 5,
                   flexDirection: 'row',
                   alignItems: 'center',
                   paddingLeft: 15,
                 }}>
-                <Text style={{fontSize: 15, width: 100}}>所在区域</Text>
-                <CityPicker onCityPickerCallback={this.onCityPickerCallback} />
-                {/*<Text onPress={()=>{this.AreaPicker.show()}}>踩踩踩</Text>*/}
+                <Text style={{fontSize: 15, width: 105}}>所在区域</Text>
+                <TouchableOpacity
+                  activeOpacity={0.5}
+                  onPress={() => {
+                    this.AreaPicker.show()
+                  }}>
+                  <Text style={{fontSize: 15,color: address?'black':'gray'}}>{address?address:'省市区县、乡镇等'}</Text>
+                </TouchableOpacity>
               </View>
               <View
                 style={{
                   height: 60,
                   backgroundColor: 'white',
-                  marginTop: 10,
+                  marginTop: 5,
                   flexDirection: 'row',
                   alignItems: 'center',
                   paddingLeft: 15,
@@ -244,7 +253,7 @@ export default class MyNewAddressView extends React.Component {
               <View
                 style={{
                   flexDirection: 'row',
-                  marginTop: 10,
+                  marginTop: 5,
                   marginLeft: 10,
                   alignItems: 'center',
                 }}>
@@ -278,14 +287,13 @@ export default class MyNewAddressView extends React.Component {
             </View>
           </TouchableOpacity>
 
-          {/*<AreaPicker*/}
-          {/*  areaJson={AreaJson}*/}
-          {/*  onPickerCancel={() => { }}*/}
-          {/*  onPickerConfirm={(value) => {*/}
-          {/*      alert(JSON.stringify(value));*/}
-          {/*      this.onCityPickerCallback(value)*/}
-          {/*  }}*/}
-          {/*  ref={ref => this.AreaPicker = ref} />*/}
+          <AreaPicker
+            areaJson={AreaJson}
+            onPickerCancel={() => { }}
+            onPickerConfirm={(value) => {
+                this.onCityPickerCallback(value)
+            }}
+            ref={ref => this.AreaPicker = ref} />
         </View>
       </KeyboardAvoidingView>
     );

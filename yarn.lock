@@ -6253,6 +6253,11 @@ react-native-iphone-x-helper@^1.3.0:
   resolved "https://registry.nlark.com/react-native-iphone-x-helper/download/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha1-IMYD6aDnZf1vlzlmOL3rDlpgsBA=
 
+react-native-linear-gradient@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.nlark.com/react-native-linear-gradient/download/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+  integrity sha1-liFcvF7HoBJHogiQiIqnW4NNRKA=
+
 react-native-modal-popover@^2.0.1:
   version "2.0.1"
   resolved "https://registry.nlark.com/react-native-modal-popover/download/react-native-modal-popover-2.0.1.tgz#119fb04606a205ffff41fc56666ea4c0cc833aa6"

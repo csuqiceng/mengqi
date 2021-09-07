@@ -22,6 +22,7 @@ import {
   preferentialData,
 } from '../../LocalData/homePageData';
 import Localstorage from '../../common/localStorage';
+import LinearGradient from  'react-native-linear-gradient'
 import {fetchData} from '../../common/fetch';
 
 const {width} = Dimensions.get('window');
@@ -126,29 +127,28 @@ export default class HomePage extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#21D59D', '#1BC7AA', '#13B4BB']} style={{height: 80}}>
+        <View
+              style={{
+                height: 40,
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  includeFontPadding: false,
+                  textAlignVertical: 'center',
+                  flex: 1,
+                }}>
+                首页
+              </Text>
+            </View>
         <View
           style={{
             height: 40,
-            flexDirection: 'column',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 18,
-              fontWeight: 'bold',
-              backgroundColor: 'white',
-              includeFontPadding: false,
-              textAlignVertical: 'center',
-              flex: 1,
-            }}>
-            首页
-          </Text>
-        </View>
-        <View
-          style={{
-            height: 40,
-            backgroundColor: '#fff',
             borderRadius: 0,
             paddingLeft: 25,
             flexDirection: 'row',
@@ -159,33 +159,19 @@ export default class HomePage extends React.Component {
             source={require('../../assets/images/home_icon_search.png')}
             style={{width: 15, height: 15}}
           />
-          <TextInput
-            underlineColorAndroid="transparent"
-            placeholder="请输入关键词"
-            style={{marginLeft: 10, width: 150}}
-            onChangeText={this.onChangeText}
-            value={this.state.inputValue}
-            ref="keyWordInput"
-            onSubmitEditing={() => {
-              this.refs.keyWordInput.blur();
-            }}
-          />
           <TouchableOpacity
             onPress={() => {
               alert('测试');
             }}
             style={{flex: 1}}>
             <Text
-              style={{
-                color: '#0391ff',
-                fontSize: 14,
-                textAlign: 'right',
-                marginRight: 20,
-              }}>
-              搜索
+              style={{marginLeft: 10, width: 150}}
+              >
+              请输入关键词
             </Text>
           </TouchableOpacity>
         </View>
+        </LinearGradient>
         <SafeAreaView style={{flex: 1}}>
           <ScrollView
             style={styles.scrollView}
@@ -451,7 +437,7 @@ function BottomHotCard(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    // paddingTop: StatusBar.currentHeight,
     backgroundColor: 'white',
   },
   scrollView: {
@@ -460,6 +446,7 @@ const styles = StyleSheet.create({
   wrapper: {
     height: 150,
     backgroundColor: '#22DDDD',
+
   },
 
   slide: {

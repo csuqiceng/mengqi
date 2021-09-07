@@ -9,6 +9,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  DeviceEventEmitter
 } from 'react-native';
 import NavBar from '../../common/navBar';
 import {fetchData} from '../../common/fetch';
@@ -78,6 +79,16 @@ export default class ServicePayPage extends React.Component {
         const callback = e => {
           console.log(e);
         };
+        DeviceEventEmitter.addListener('WeChat_Resp', resp => {
+          console.log('res:', resp)
+          if (resp.type === 'WXLaunchMiniProgramReq.Resp') { // 从小程序回到APP的事件
+            // miniProgramCallback(resp.extMsg)
+          } else if (resp.type === 'SendMessageToWX.Resp') { // 发送微信消息后的事件
+            // sendMessageCallback(resp.country)
+          } else if (resp.type === 'PayReq.Resp') { // 支付回调
+            alert(JSON.stringify(resp))
+          }
+        });
         WeChat.isWXAppInstalled().then(isInstalled => {
           if (isInstalled) {
             WeChat.pay({
@@ -87,8 +98,7 @@ export default class ServicePayPage extends React.Component {
               timeStamp: responseData.data.timeStamp, // 时间戳，防重发.
               package: responseData.data.packageValue, // 商家根据财付通文档填写的数据和签名
               sign: responseData.data.sign, // 商家根据微信开放平台文档对数据做的签名
-            })
-              .then(requestJson => {
+            }).then(requestJson => {
                 //支付成功回调
                 alert('支付');
                 if (requestJson.errCode == '0') {
@@ -103,6 +113,7 @@ export default class ServicePayPage extends React.Component {
             alert('请安装微信');
           }
         });
+
       }
     };
     const errCallback = responseData => {

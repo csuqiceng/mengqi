@@ -76,36 +76,38 @@ export default class OrderDetails extends React.Component {
     const callback = responseData => {
       if (responseData.errno == 0){
         alert("取消订单成功！")
-        let id = this.props.route.params.id;
-        let param = {
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          headers: {
-            'X-Litemall-Token': window.token
-              ? window.token
-              : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
-            'content-type': 'application/x-www-form-urlencoded',
-          },
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        };
-        let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
-        const callback = responseData => {
-          if (responseData.errno == '0') {
-            this.setState({
-              detailsInfo: responseData.data,
-            });
-          }
-        };
-        const errCallback = responseData => {
-          if (responseData.errno == 501) {
-            alert(responseData.errmsg);
-          }
-        };
-        fetchData(url, param, callback, errCallback);
+        this.props.navigation.goBack();
+        this.props.route.params.refresh();
+        // let id = this.props.route.params.id;
+        // let param = {
+        //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        //   headers: {
+        //     'X-Litemall-Token': window.token
+        //       ? window.token
+        //       : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        //     'content-type': 'application/x-www-form-urlencoded',
+        //   },
+        //   method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        // };
+        // let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
+        // const callback = responseData => {
+        //   if (responseData.errno == '0') {
+        //     this.setState({
+        //       detailsInfo: responseData.data,
+        //     });
+        //   }
+        // };
+        // const errCallback = responseData => {
+        //   if (responseData.errno == 501) {
+        //     alert(responseData.errmsg);
+        //   }
+        // };
+        // fetchData(url, param, callback, errCallback);
       }
     };
     const errCallback = responseData => {
+      alert(responseData.errmsg);
       if (responseData.errno == 501) {
-        alert(responseData.errmsg);
         this.props.navigation.navigate('login');
       }
     };
@@ -144,31 +146,35 @@ export default class OrderDetails extends React.Component {
     const callback = responseData => {
       if (responseData.errno == 0){
         alert("确认收货成功！")
-        let id = this.props.route.params.id;
-        let param = {
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          headers: {
-            'X-Litemall-Token': window.token
-              ? window.token
-              : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
-            'content-type': 'application/x-www-form-urlencoded',
-          },
-          method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        };
-        let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
-        const callback = responseData => {
-          if (responseData.errno == '0') {
-            this.setState({
-              detailsInfo: responseData.data,
-            });
-          }
-        };
-        const errCallback = responseData => {
-          if (responseData.errno == 501) {
-            alert(responseData.errmsg);
-          }
-        };
-        fetchData(url, param, callback, errCallback);
+        this.props.navigation.goBack();
+        this.props.route.params.refresh();
+        // let id = this.props.route.params.id;
+        // let param = {
+        //   cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        //   headers: {
+        //     'X-Litemall-Token': window.token
+        //       ? window.token
+        //       : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        //     'content-type': 'application/x-www-form-urlencoded',
+        //   },
+        //   method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        // };
+        // let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
+        // const callback = responseData => {
+        //   if (responseData.errno == '0') {
+        //     this.setState({
+        //       detailsInfo: responseData.data,
+        //     });
+        //   }
+        //   this.props.navigation.goBack();
+        //   this.props.route.params.refresh();
+        // };
+        // const errCallback = responseData => {
+        //   if (responseData.errno == 501) {
+        //     alert(responseData.errmsg);
+        //   }
+        // };
+        // fetchData(url, param, callback, errCallback);
       }
     };
     const errCallback = responseData => {
@@ -179,6 +185,41 @@ export default class OrderDetails extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
+
+  //删除订单
+  onDeleteOrder=()=>{
+    const {detailsInfo} = this.state;
+    let data = {
+      orderId: detailsInfo.orderInfo.id, //订单ID
+      sysUserId:'' //上门服务员工ID
+    };
+    let param = {
+      body: JSON.stringify(data), // must match 'Content-Type' header
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/json',
+      },
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/delete';
+    const callback = responseData => {
+      if (responseData.errno == 0){
+        alert("订单已删除！");
+        this.props.navigation.goBack();
+        this.props.route.params.refresh();
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
+
   componentDidMount() {
     let id = this.props.route.params.id;
     let param = {
@@ -365,11 +406,11 @@ export default class OrderDetails extends React.Component {
               onPress={() => this.onCancelOrder()}
             />
             <View style={{width:10}}/>
-            <Button
-              color="#00BEAF"
-              title="申请退款"
-              onPress={() => alert('申请退款')}
-            />
+            {/*<Button*/}
+            {/*  color="#00BEAF"*/}
+            {/*  title="申请退款"*/}
+            {/*  onPress={() => alert('申请退款')}*/}
+            {/*/>*/}
           </View>
         )
       } else if (orderStatus == 401 || orderStatus == 402) {
@@ -394,14 +435,14 @@ export default class OrderDetails extends React.Component {
             <Button
               color="#00BEAF"
               title="删除订单"
-              onPress={() => alert('删除订单')}
+              onPress={() => this.onDeleteOrder()}
             />
             <View style={{width:10}}/>
-            <Button
-              color="#00BEAF"
-              title="评价商品"
-              onPress={() => alert('评价商品')}
-            />
+            {/*<Button*/}
+            {/*  color="#00BEAF"*/}
+            {/*  title="评价商品"*/}
+            {/*  onPress={() => alert('评价商品')}*/}
+            {/*/>*/}
           </View>
         )
       } else if (orderStatus == 301) {

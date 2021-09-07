@@ -6,14 +6,14 @@ import {createStackNavigator} from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 import {MinePage} from './myinfo/mine';
-import MallPage from './news/mallPage';
+import SearchPageView from './search/searchPage';
 import ShoppingCartPage from './shoppingcart/shoppingCartPage';
 import Classify from './classify/classify';
 import GuidePage from '../pages/guide/guidePage';
-import ServiceConfirmPage from './home/serviceConfirmPage';
-import ServiceOrderPage from './home/serviceOrderPage';
+import ServiceConfirmPage from './service/serviceConfirmPage';
+import ServiceOrderPage from './service/serviceOrderPage';
 import HomePage from './home/home';
-import ServicePayPage from './home/servicePayPage';
+import ServicePayPage from './service/servicePayPage';
 
 import SystemPage from './myinfo/system';
 import MyOrderView from './myinfo/orderView';
@@ -205,6 +205,7 @@ export default class MainPage extends React.Component {
           />
           <Stack.Screen name="balance" options={{}} component={MyBalanceView} />
           <Stack.Screen name="address" options={{}} component={MyAddressView} />
+          <Stack.Screen name="search" options={{}} component={SearchPageView} />
           <Stack.Screen
             name="newaddress"
             options={{}}

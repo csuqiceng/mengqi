@@ -144,9 +144,38 @@ class AllorderView extends React.Component {
       AllorderData: '',
     };
   }
+
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id});
+    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
   };
+  _refresh=()=>{
+    let param = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=0';
+    const callback = responseData => {
+      console.log(responseData);
+      if (responseData.errno == '0') {
+        this.setState({
+          AllorderData: responseData.data.list,
+        });
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
 
   componentDidMount() {
     let param = {
@@ -313,9 +342,39 @@ class PayView extends React.Component {
       AllorderData: '',
     };
   }
+
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id});
+    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
   };
+  _refresh=()=>{
+    let param = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=1';
+    const callback = responseData => {
+      console.log(responseData);
+      if (responseData.errno == '0') {
+        this.setState({
+          AllorderData: responseData.data.list,
+        });
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
+
   componentDidMount() {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -480,8 +539,36 @@ class DeliverView extends React.Component {
     };
   }
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id});
+    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
   };
+  _refresh=()=>{
+    let param = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=2';
+    const callback = responseData => {
+      console.log(responseData);
+      if (responseData.errno == '0') {
+        this.setState({
+          AllorderData: responseData.data.list,
+        });
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
   componentDidMount() {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -646,8 +733,36 @@ class ReceiveView extends React.Component {
     };
   }
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id});
+    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
   };
+  _refresh=()=>{
+    let param = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=3';
+    const callback = responseData => {
+      console.log(responseData);
+      if (responseData.errno == '0') {
+        this.setState({
+          AllorderData: responseData.data.list,
+        });
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
   componentDidMount() {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -812,8 +927,38 @@ class AccomplishView extends React.Component {
     };
   }
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id});
+    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
   };
+
+  _refresh=()=>{
+    let param = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=4';
+    const callback = responseData => {
+      console.log(responseData);
+      if (responseData.errno == '0') {
+        this.setState({
+          AllorderData: responseData.data.list,
+        });
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
+
   componentDidMount() {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

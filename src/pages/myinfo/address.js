@@ -83,7 +83,6 @@ export default class MyAddressView extends React.Component {
     fetchData(url, param, callback, errCallback);
   }
   onEditAddress = e => {
-    console.log(e);
     let data;
     const {AddressData} = this.state;
     for (let i = 0; i < AddressData.length; i++) {
@@ -93,8 +92,10 @@ export default class MyAddressView extends React.Component {
         break;
       }
     }
-    console.log(JSON.stringify(data));
-    this.props.navigation.navigate('newaddress', {data: data});
+    this.props.navigation.navigate('newaddress',{
+      data: data,
+      refresh: this._refresh,
+    })
   };
   onDelAddress = e => {
     let data = {
@@ -300,8 +301,9 @@ export default class MyAddressView extends React.Component {
                               style={{flex: 1}}
                               isChecked={item.isDefault}
                               checkBoxColor={'#00BEAF'}
+                              onClick={()=>{this.onChangeDefault(item.id)}}
                             />
-                            <Text style={{marginLeft: 23, marginTop: 1}}>
+                            <Text style={{marginLeft: 23, marginTop: 3}}>
                               设为默认
                             </Text>
                           </View>
