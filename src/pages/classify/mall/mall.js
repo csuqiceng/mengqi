@@ -182,7 +182,7 @@ class RightSecondLvView extends React.Component {
           <View>
             {secondLvData.map((item, i) => {
               return (
-                <View key={item.id} style={{height: 200}}>
+                <View key={item.id} style={{flex:1,marginLeft:10,height: 200}}>
                   <Text
                     style={{
                       textAlignVertical: 'center',
@@ -278,7 +278,7 @@ class RightGoodsView extends React.Component {
     if (goodsData.length > 0) {
       return (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row',marginLeft:15}}>
             {goodsData.map((item, i) => {
               return (
                 <TouchableOpacity
@@ -287,17 +287,25 @@ class RightGoodsView extends React.Component {
                   onPress={() => {
                     this.onChooseGoods(item.id, item.name);
                   }}>
-                  <ImageBackground
+                  <Image
+                    source={{uri: item.picUrl}}
+                    resizeMode="stretch"
                     style={{
-                      width: 100,
-                      height: 100,
-                      marginLeft: 10,
-                      opacity: 0.9,
-                      backgroundColor: 'transparent',
+                      width: 70,
+                      height: 60,
+                      margin: 10
                     }}
-                    source={{uri: item.picUrl}}>
-                    <Text style={styles.text}>{item.name}</Text>
-                  </ImageBackground>
+                  />
+                  {/*<ImageBackground*/}
+                  {/*  style={{*/}
+                  {/*    width: 100,*/}
+                  {/*    height: 100,*/}
+                  {/*    marginLeft: 10,*/}
+                  {/*    opacity: 0.9,*/}
+                  {/*  }}*/}
+                  {/*  source={{uri: item.picUrl}}>*/}
+                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.text}>{item.name}</Text>
+                  {/*</ImageBackground>*/}
                 </TouchableOpacity>
               );
             })}
@@ -319,11 +327,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: 'white',
+    color: 'black',
     fontSize: 12,
-    lineHeight: 100,
+    // lineHeight: 100,
     fontWeight: 'bold',
     textAlign: 'center',
-    backgroundColor: '#000000a0',
+    justifyContent: 'center',
+    width:100
+    // backgroundColor: '#000000a0',
   },
 });

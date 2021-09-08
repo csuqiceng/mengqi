@@ -28,9 +28,9 @@ import {fetchData} from '../../common/fetch';
 const {width} = Dimensions.get('window');
 
 const swiperData = [
-  {title: '1', image: require('../../assets/images/home_banner.png')},
-  {title: '2', image: require('../../assets/images/home_banner.png')},
-  {title: '3', image: require('../../assets/images/home_banner.png')},
+  {title: '1', image: require('../../assets/images/home_banner2.png')},
+  {title: '2', image: require('../../assets/images/home_banner2.png')},
+  {title: '3', image: require('../../assets/images/home_banner2.png')},
 ];
 
 export default class HomePage extends React.Component {
@@ -107,7 +107,6 @@ export default class HomePage extends React.Component {
     };
     let url = 'http://lhh.natapp1.cc/api/wx/new/home/index';
     const callback = responseData => {
-      console.log(responseData);
       this.setState({
         discountMallGoodsList: responseData.data.discountMallGoodsList,
         categoriesList: responseData.data.categoriesList,
@@ -127,13 +126,31 @@ export default class HomePage extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#21D59D', '#1BC7AA', '#13B4BB']} style={{height: 80}}>
-        <View
+        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#21D59D', '#1BC7AA', '#13B4BB']} style={{height: 110}}>
+          <View
               style={{
                 height: 40,
-                flexDirection: 'column',
+                flexDirection: 'row',
                 justifyContent: 'center',
+                marginTop:15,
+                alignItems: 'center'
               }}>
+              <View style={{marginLeft:10,flexDirection:'row'}}>
+                <Image
+                  source={require('../../assets/images/icon_position1.png')}
+                  style={{width: 22, height: 22}}
+                />
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    includeFontPadding: false,
+                    textAlignVertical: 'center',
+                  }}>
+                  荆州
+                </Text>
+              </View>
               <Text
                 style={{
                   textAlign: 'center',
@@ -143,92 +160,116 @@ export default class HomePage extends React.Component {
                   textAlignVertical: 'center',
                   flex: 1,
                 }}>
-                首页
+                梦奇佳园
               </Text>
+            <Image
+              source={require('../../assets/images/icon_scan.png')}
+              style={{width: 25, height: 25,marginRight:10}}
+            />
+            <Image
+              source={require('../../assets/images/icon_news.png')}
+              style={{width: 25, height: 25,marginRight:10}}
+            />
             </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('search');
+            }}
+            style={{flex: 1}}>
         <View
           style={{
-            height: 40,
-            borderRadius: 0,
-            paddingLeft: 25,
+            height: 30,
+            borderRadius: 15,
             flexDirection: 'row',
+            backgroundColor:'white',
+            width:width-40,
+            marginLeft:20,
+            marginTop:10,
             alignItems: 'center',
-            margin: 5,
           }}>
           <Image
             source={require('../../assets/images/home_icon_search.png')}
-            style={{width: 15, height: 15}}
+            style={{width: 15, height: 15,marginLeft:10}}
           />
-          <TouchableOpacity
-            onPress={() => {
-              alert('测试');
-            }}
-            style={{flex: 1}}>
+
             <Text
-              style={{marginLeft: 10, width: 150}}
+              style={{marginLeft: 10, width: 150,color: 'gray'}}
               >
               请输入关键词
             </Text>
-          </TouchableOpacity>
         </View>
+          </TouchableOpacity>
         </LinearGradient>
         <SafeAreaView style={{flex: 1}}>
           <ScrollView
             style={styles.scrollView}
             showsVerticalScrollIndicator={false}>
             {/*Swiper*/}
-            <Swiper
-              style={styles.wrapper}
-              autoplay
-              onMomentumScrollEnd={(e, state, context) => {}}
-              dot={
-                <View
-                  style={{
-                    backgroundColor: 'rgba(0,0,0,.5)',
-                    width: 8,
-                    height: 8,
-                    borderRadius: 4,
-                    marginLeft: 3,
-                    marginRight: 3,
-                    marginTop: 3,
-                    marginBottom: 3,
-                  }}
-                />
-              }
-              activeDot={
-                <View
-                  style={{
-                    backgroundColor: 'yellow',
-                    width: 8,
-                    height: 8,
-                    borderRadius: 4,
-                    marginLeft: 3,
-                    marginRight: 3,
-                    marginTop: 3,
-                    marginBottom: 3,
-                  }}
-                />
-              }
-              paginationStyle={{
-                top: -290,
-                left: null,
-                right: 10,
-              }}
-              loop>
-              {swiperData.map((item, i) => {
-                return (
-                  <View style={styles.slide} key={i}>
-                    {/*<Text numberOfLines={1}>Learn from Kim K to land that job</Text>*/}
-                    <Image
-                      resizeMode="stretch"
-                      style={styles.image}
-                      source={item.image}
-                    />
-                  </View>
-                );
-              })}
-            </Swiper>
 
+            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#21D59D', '#1BC7AA', '#13B4BB']} style={{flex:1}}>
+              <Swiper
+                style={styles.wrapper}
+                autoplay
+                onMomentumScrollEnd={(e, state, context) => {}}
+                dot={
+                  <View
+                    style={{
+                      backgroundColor: 'rgba(0,0,0,.5)',
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      marginLeft: 3,
+                      marginRight: 3,
+                      marginTop: 3,
+                      marginBottom: 3,
+                    }}
+                  />
+                }
+                activeDot={
+                  <View
+                    style={{
+                      backgroundColor: 'yellow',
+                      width: 8,
+                      height: 8,
+                      borderRadius: 4,
+                      marginLeft: 3,
+                      marginRight: 3,
+                      marginTop: 3,
+                      marginBottom: 3,
+                    }}
+                  />
+                }
+                paginationStyle={{
+                  top: -290,
+                  left: null,
+                  right: 10,
+                }}
+                loop>
+                {swiperData.map((item, i) => {
+                  return (
+                    <View style={styles.slide} key={i}>
+                      <Image
+                        resizeMode="stretch"
+                        style={styles.image}
+                        source={item.image}
+                      />
+                    </View>
+                  );
+                })}
+              </Swiper>
+            </LinearGradient>
+
+            <View style={{height:40,flexDirection:'row',backgroundColor:'#F9F9F9',alignItems:'center'}}>
+              <Image
+                source={require('../../assets/images/icon_announcement.png')}
+                style={{width: 22, height: 22,marginLeft:10}}
+              />
+              <Text
+                style={{marginLeft: 10, width: 150,color: 'gray'}}
+              >
+                商家入驻持续招募中...
+              </Text>
+            </View>
             {/*主要服务*/}
 
             <View
@@ -445,21 +486,14 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     height: 150,
-    backgroundColor: '#22DDDD',
-
+    width:width-10,
+    marginLeft:5,
+    marginBottom:1,
   },
 
   slide: {
     height: 200,
-    justifyContent: 'center',
     backgroundColor: 'transparent',
-  },
-
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB',
   },
 
   text: {
@@ -469,8 +503,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: width,
-    flex: 1,
+    width: width-10,
+    height:150
   },
   input: {
     height: 40,
