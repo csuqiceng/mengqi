@@ -1,10 +1,11 @@
 //分类
 
 import * as React from 'react';
-import {Text, View, Image, TouchableOpacity, TextInput} from 'react-native';
+import { Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
 import SegmentedControl from '@ant-design/react-native/lib/segmented-control';
 import ClassifyMall from './mall/mall';
 import ClassifyService from './service/service';
+const {width} = Dimensions.get('window');
 export default class Classify extends React.Component {
   constructor(props) {
     super(props);
@@ -61,66 +62,33 @@ export default class Classify extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        <View style={{flexDirection: 'row', marginTop: 10}}>
-          <View style={{flex: 1}} />
-          <SegmentedControl
-            values={['服务', '商城']}
-            style={{
-              width: 200,
-              backgroundColor: 'white',
-              borderColor: 'gray',
-              height: 40,
-              borderRadius: 20,
-            }}
-            tintColor={'#00BEAF'}
-            selectedIndex={this.selectId}
-            onChange={this.onChange}
-          />
-          <View style={{flex: 1}} />
-        </View>
-
-        <View
+      <View style={{flex: 1,backgroundColor:'white'}}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('search');
+          }}
           style={{
-            height: 40,
-            backgroundColor: '#CFD2D8',
-            borderRadius: 0,
-            paddingLeft: 25,
+            height: 30,
+            borderRadius: 15,
             flexDirection: 'row',
+            backgroundColor:'#F5F6F7',
+            width:width-40,
+            marginLeft:20,
+            marginTop:20,
             alignItems: 'center',
-            margin: 5,
+            marginBottom:20
           }}>
           <Image
             source={require('../../assets/images/home_icon_search.png')}
-            style={{width: 15, height: 15}}
+            style={{width: 15, height: 15,marginLeft:10}}
           />
-          <TextInput
-            underlineColorAndroid="transparent"
-            placeholder="请输入关键词"
-            style={{marginLeft: 10, width: 150}}
-            // onChangeText={this.onChangeText}
-            // value={this.state.inputValue}
-            ref="keyWordInput"
-            onSubmitEditing={() => {
-              this.refs.keyWordInput.blur();
-            }}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              alert('ceshi');
-            }}
-            style={{flex: 1}}>
-            <Text
-              style={{
-                color: '#0391ff',
-                fontSize: 14,
-                textAlign: 'right',
-                marginRight: 20,
-              }}>
-              搜索
-            </Text>
-          </TouchableOpacity>
-        </View>
+
+          <Text
+            style={{marginLeft: 10, width: 150,color: '#999999'}}
+          >
+            请输入关键词
+          </Text>
+        </TouchableOpacity>
 
         {this.renderPage()}
       </View>

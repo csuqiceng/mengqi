@@ -178,4 +178,154 @@ const preferentialData = [
   },
 ];
 
-export {mainServerData, hotServerData, preferentialData};
+const brandListData = [
+  {
+    "id": 1046003,
+    "name": "梦奇清洗",
+    "desc": "梦奇清洗",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/pog25x29iwsk3rolexyk.png",
+    "sortOrder": 50,
+    "floorPrice": 1,
+    "addTime": "2021-07-28 13:59:53",
+    "updateTime": "2021-09-09 13:41:04",
+    "deleted": false,
+    "goodsType": "02"
+  },
+  {
+    "id": 1046004,
+    "name": "商城商品",
+    "desc": "商城商品",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/jefsr6dd6wi1rimnod75.png",
+    "sortOrder": 50,
+    "floorPrice": 2,
+    "addTime": "2021-07-28 14:00:05",
+    "updateTime": "2021-09-09 13:42:48",
+    "deleted": false,
+    "goodsType": "01"
+  },
+  {
+    "id": 1046005,
+    "name": "国内特产",
+    "desc": "国内特产",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/pjs1r9sv1altqctxorff.png",
+    "sortOrder": 50,
+    "floorPrice": 3,
+    "addTime": "2021-09-09 13:42:36",
+    "updateTime": "2021-09-09 13:42:45",
+    "deleted": false,
+    "goodsType": "01"
+  },
+  {
+    "id": 1046006,
+    "name": "梦奇到家",
+    "desc": "梦奇到家",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/8x0qkkmve8uv527eorw9.png",
+    "sortOrder": 50,
+    "floorPrice": 4,
+    "addTime": "2021-09-09 13:43:22",
+    "updateTime": "2021-09-09 13:43:22",
+    "deleted": false,
+    "goodsType": "02"
+  },
+  {
+    "id": 1046007,
+    "name": "家电安装",
+    "desc": "家电安装",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/qp8p3aynntbjm8om1769.png",
+    "sortOrder": 50,
+    "floorPrice": 5,
+    "addTime": "2021-09-09 13:49:18",
+    "updateTime": "2021-09-09 14:01:51",
+    "deleted": false,
+    "goodsType": "02"
+  },
+  {
+    "id": 1046008,
+    "name": "秒杀拼团",
+    "desc": "秒杀拼团",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/8ii25pt7mb4eu3cz1k39.png",
+    "sortOrder": 50,
+    "floorPrice": 6,
+    "addTime": "2021-09-09 13:49:53",
+    "updateTime": "2021-09-09 13:49:53",
+    "deleted": false,
+    "goodsType": "01"
+  },
+  {
+    "id": 1046009,
+    "name": "充值缴费",
+    "desc": "充值缴费",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/e5ir639a5tb3ba7hvpr2.png",
+    "sortOrder": 50,
+    "floorPrice": 7,
+    "addTime": "2021-09-09 13:50:40",
+    "updateTime": "2021-09-09 14:02:10",
+    "deleted": false,
+    "goodsType": "01"
+  },
+  {
+    "id": 1046010,
+    "name": "技术服务",
+    "desc": "技术服务",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/6xzavko7cr9y7jv5a4rq.png",
+    "sortOrder": 50,
+    "floorPrice": 8,
+    "addTime": "2021-09-09 13:51:08",
+    "updateTime": "2021-09-09 13:51:08",
+    "deleted": false,
+    "goodsType": "02"
+  },
+  {
+    "id": 1046011,
+    "name": "二手市场",
+    "desc": "二手市场",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/a4j4tw6sjyb881e1elm3.png",
+    "sortOrder": 50,
+    "floorPrice": 9,
+    "addTime": "2021-09-09 13:51:45",
+    "updateTime": "2021-09-09 14:02:48",
+    "deleted": false,
+    "goodsType": "01"
+  },
+  {
+    "id": 1046012,
+    "name": "更多",
+    "desc": "更多",
+    "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/t8pcct0v0xhr1c3lxz85.png",
+    "sortOrder": 50,
+    "floorPrice": 10,
+    "addTime": "2021-09-09 13:53:08",
+    "updateTime": "2021-09-09 14:03:07",
+    "deleted": false,
+    "goodsType": "01"
+  }
+]
+
+
+const adListData = [
+  {
+    "id": 1,
+    "name": "加入梦奇佳园",
+    "link": "",
+    "url": "https://mengqi-storg.oss-accelerate.aliyuncs.com/a2ka7gc0ou7cxa9nmyhk.png",
+    "position": 1,
+    "content": "加入梦奇佳园",
+    "enabled": true,
+    "addTime": "2018-02-01 00:00:00",
+    "updateTime": "2021-09-09 14:04:49",
+    "deleted": false
+  },
+  {
+    "id": 2,
+    "name": "梦奇清洗",
+    "link": "",
+    "url": "https://mengqi-storg.oss-accelerate.aliyuncs.com/3ezreoj8eipvqqlg9hkk.png",
+    "position": 1,
+    "content": "梦奇清洗",
+    "enabled": true,
+    "addTime": "2018-02-01 00:00:00",
+    "updateTime": "2021-09-09 14:05:18",
+    "deleted": false
+  }
+]
+export {mainServerData, hotServerData, preferentialData,brandListData,adListData};

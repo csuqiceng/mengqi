@@ -1,37 +1,41 @@
 /*
 * 首页
 */
-import React, {useState} from 'react';
+import React from 'react';
 import Swiper from 'react-native-swiper';
 import {
   Text,
   View,
-  TextInput,
   StyleSheet,
   Image,
   Dimensions,
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   TouchableHighlight,
 } from 'react-native';
 import {
-  mainServerData,
   hotServerData,
   preferentialData,
+  brandListData,
+  adListData
 } from '../../LocalData/homePageData';
 import Localstorage from '../../common/localStorage';
 import LinearGradient from  'react-native-linear-gradient'
 import {fetchData} from '../../common/fetch';
-
+// import { RNCamera } from 'react-native-camera';
 const {width} = Dimensions.get('window');
 
-const swiperData = [
-  {title: '1', image: require('../../assets/images/home_banner2.png')},
-  {title: '2', image: require('../../assets/images/home_banner2.png')},
-  {title: '3', image: require('../../assets/images/home_banner2.png')},
-];
+function group(array, subGroupLength) {
+  var index = 0;
+  var newArray = [];
+
+  while(index < array.length) {
+    newArray.push(array.slice(index, index += subGroupLength));
+  }
+
+  return newArray;
+}
 
 export default class HomePage extends React.Component {
   constructor() {
@@ -40,8 +44,9 @@ export default class HomePage extends React.Component {
       searchInput: '',
       dataSource: '',
       discountMallGoodsList: preferentialData,
-      categoriesList: mainServerData,
       hoteServiceList: hotServerData,
+      brandList:brandListData,
+      adList:adListData
     };
   }
 
@@ -109,8 +114,9 @@ export default class HomePage extends React.Component {
     const callback = responseData => {
       this.setState({
         discountMallGoodsList: responseData.data.discountMallGoodsList,
-        categoriesList: responseData.data.categoriesList,
         hoteServiceList: responseData.data.hoteServiceList,
+        brandList:responseData.data.brandList,
+        adList:responseData.data.adList
       });
     };
     const errCallback = responseData => {
@@ -124,6 +130,9 @@ export default class HomePage extends React.Component {
 
   // 渲染
   render() {
+    const  {brandList,hoteServiceList,discountMallGoodsList,adList} = this.state;
+    var groupedBrandList = group(brandList, 5);
+    var groupedDiscountMallGoodsList = group(discountMallGoodsList, 2);
     return (
       <View style={styles.container}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#21D59D', '#1BC7AA', '#13B4BB']} style={{height: 110}}>
@@ -210,6 +219,7 @@ export default class HomePage extends React.Component {
               <Swiper
                 style={styles.wrapper}
                 autoplay
+                autoplayTimeout={4}
                 onMomentumScrollEnd={(e, state, context) => {}}
                 dot={
                   <View
@@ -245,15 +255,21 @@ export default class HomePage extends React.Component {
                   right: 10,
                 }}
                 loop>
-                {swiperData.map((item, i) => {
+                {adList.map((item, i) => {
                   return (
+                    <TouchableHighlight
+                      key={i}
+                      activeOpacity={0.6}
+                      underlayColor="#DDDDDD"
+                      onPress={() => alert(item.content)}>
                     <View style={styles.slide} key={i}>
                       <Image
                         resizeMode="stretch"
                         style={styles.image}
-                        source={item.image}
+                        source={{uri:item.url}}
                       />
                     </View>
+                    </TouchableHighlight>
                   );
                 })}
               </Swiper>
@@ -275,25 +291,33 @@ export default class HomePage extends React.Component {
             <View
               style={{
                 flex: 1,
-                flexDirection: 'row',
-                marginLeft: 15,
-                marginTop: 15,
+                flexDirection: 'column',
+                width:width,
+                marginBottom: 15,
               }}>
-              {this.state.categoriesList.map((item, i) => {
+              {groupedBrandList.map((item, i) => {
                 return (
-                  <BottomMainCard
-                    text={item.name}
-                    key={item.name}
-                    id={item.id}
-                    onCardClick={this.onMainServiceCardClick}
-                    image={item.iconUrl}
-                  />
+                  <View key={i} style={{flexDirection:'row',flex:1,marginTop:10}}>
+                    {
+                      item.map((item, i) => {
+                        return (
+                          <BottomMainCard
+                            text={item.name}
+                            key={i}
+                            id={item.id}
+                            onCardClick={this.onMainServiceCardClick}
+                            image={item.picUrl}
+                          />
+                        );
+                      })}
+                    </View>
                 );
               })}
+
             </View>
 
             {/*热门服务*/}
-            <View>
+            <View  style={{backgroundColor:'#F6F6F6'}}>
               <View
                 style={{
                   height: 40,
@@ -310,10 +334,10 @@ export default class HomePage extends React.Component {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                style={{margin: 15}}>
-                {this.state.hoteServiceList.map((item, i) => {
+                style={{paddingTop:10,paddingLeft:10,backgroundColor:'white'}}>
+                {hoteServiceList.map((item, i) => {
                   return (
-                    <View key={item.id} style={{paddingRight: 10}}>
+                    <View key={item.id} style={{paddingRight: 10,marginLeft:10}}>
                       <BottomHotCard
                         text={item.name}
                         key={item.name}
@@ -328,15 +352,13 @@ export default class HomePage extends React.Component {
               </ScrollView>
             </View>
             {/*特惠优选*/}
-            <View>
+            <View style={{backgroundColor:'#F6F6F6',paddingTop:10}}>
               <View
                 style={{
-                  height: 40,
                   flexDirection: 'row',
                   alignItems: 'center',
                   marginLeft: 10,
                   marginRight: 10,
-                  marginBottom: 10,
                 }}>
                 <Image
                   source={require('../../assets/images/home_icon_line.png')}
@@ -344,67 +366,82 @@ export default class HomePage extends React.Component {
                 />
                 <Text style={{fontSize: 17, marginLeft: 10}}>特惠优选</Text>
               </View>
-              {this.state.discountMallGoodsList.map((item, i) => {
+
+              {groupedDiscountMallGoodsList.map((item, i) => {
                 return (
-                  <TouchableHighlight
-                    key={item.name}
-                    activeOpacity={0.6}
-                    underlayColor="#DDDDDD"
-                    onPress={() => this.onServiceOrder(item.id, item.name)}>
-                    <View
-                      style={{
-                        backgroundColor: 'white',
-                        flexDirection: 'row',
-                        marginBottom: 10,
-                      }}
-                      key={item.name}>
-                      <Image
-                        source={{
-                          uri: item.picUrl
-                            ? item.picUrl
-                            : 'http://lhh.natapp1.cc/api/wx/storage/fetch/2r9fr1n5psdjk0xxo10y.png',
-                        }}
-                        style={{
-                          height: 110,
-                          width: 150,
-                          borderWidth: 1,
-                          borderColor: 'white',
-                          borderRadius: 4,
-                        }}
-                      />
-                      <View style={{margin: 10}}>
-                        <Text
-                          numberOfLines={3}
-                          style={{
-                            width: width * 0.5,
-                            fontSize: 13,
-                            height: 30,
-                          }}>
-                          {item.name}
-                        </Text>
-                        <View style={{flexDirection: 'row', marginTop: 40}}>
-                          <Text
-                            numberOfLines={3}
-                            style={{fontSize: 15, color: '#ff6600'}}>
-                            ¥ {item.retailPrice}
-                          </Text>
-                          <Text
-                            numberOfLines={3}
-                            style={{
-                              fontSize: 13,
-                              textDecorationLine: 'line-through',
-                              color: 'gray',
-                              paddingTop: 2,
-                              paddingLeft: 10,
-                            }}>
-                            ¥ {item.counterPrice}
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  </TouchableHighlight>
+                  <View key={i} style={{flexDirection:'row',flex:1,marginTop:10}}>
+                    {
+                      item.map((item, i) => {
+                        return (
+                          <TouchableHighlight
+                            key={item.name}
+                            activeOpacity={0.6}
+                            underlayColor="#DDDDDD"
+                            onPress={() => this.onServiceOrder(item.id, item.name)}>
+                            <View
+                              style={{
+                                backgroundColor: 'white',
+                                flexDirection: 'column',
+                                width:0.5*width-10,
+                                justifyContent:'center',
+                                alignItems:'center',
+                                borderWidth: 1,
+                                borderColor: 'white',
+                                borderRadius: 4,
+                                marginLeft: 5,
+                                marginRight: 5,
+                                paddingTop:10,
+                                paddingBottom:10,
+                              }}
+                              key={item.name}>
+                              <Image
+                                source={{
+                                  uri: item.picUrl
+                                    ? item.picUrl
+                                    : 'http://lhh.natapp1.cc/api/wx/storage/fetch/2r9fr1n5psdjk0xxo10y.png',
+                                }}
+                                style={{
+                                  height: 110,
+                                  width: 150,
+                                }}
+                              />
+                              <View style={{flex:1,marginTop:10}}>
+                                <Text
+                                  numberOfLines={2}
+                                  ellipsizeMode={'tail'}
+                                  style={{
+                                    fontSize: 15,
+                                  }}>
+                                  {item.name}
+                                </Text>
+                                <View style={{flexDirection: 'row'}}>
+                                  <Text
+                                    numberOfLines={1}
+                                    style={{fontSize: 15, color: '#ff6600'}}>
+                                    ¥ {item.retailPrice}
+                                  </Text>
+                                  <Text
+                                    numberOfLines={3}
+                                    style={{
+                                      fontSize: 15,
+                                      textDecorationLine: 'line-through',
+                                      color: 'gray',
+                                      paddingLeft: 10,
+                                    }}>
+                                    ¥ {item.counterPrice}
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                          </TouchableHighlight>
+                        );
+                      })}
+                  </View>
                 );
               })}
+              <View style={{justifyContent:'center',alignItems:'center',height:40,marginTop:10}}>
+                <Text style={{color: 'gray'}}>-----  我也是有底线的呢  -----</Text>
+              </View>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -419,11 +456,11 @@ function BottomMainCard(props) {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={{flex: 1}}
+      style={{flex: 1,justifyContent:'center'}}
       onPress={() => {
         props.onCardClick(props.text, props.id);
       }}>
-      <View style={{width: 100, height: 80, flexDirection: 'column'}}>
+      <View style={{flexDirection: 'column',alignItems:'center'}}>
         <Image
           source={{uri: props.image}}
           style={{
@@ -431,7 +468,7 @@ function BottomMainCard(props) {
             height: 50,
           }}
         />
-        <Text style={{width: 100}}>{props.text}</Text>
+        <Text>{props.text}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -486,7 +523,6 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     height: 150,
-    width:width-10,
     marginLeft:5,
     marginBottom:1,
   },
