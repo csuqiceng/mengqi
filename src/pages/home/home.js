@@ -13,12 +13,14 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableHighlight,
+  ImageBackground,
 } from 'react-native';
 import {
   hotServerData,
   preferentialData,
   brandListData,
-  adListData
+  adListData,
+  specialOfferData
 } from '../../LocalData/homePageData';
 import Localstorage from '../../common/localStorage';
 import LinearGradient from  'react-native-linear-gradient'
@@ -46,7 +48,8 @@ export default class HomePage extends React.Component {
       discountMallGoodsList: preferentialData,
       hoteServiceList: hotServerData,
       brandList:brandListData,
-      adList:adListData
+      adList:adListData,
+      specialOffer:specialOfferData
     };
   }
 
@@ -116,7 +119,8 @@ export default class HomePage extends React.Component {
         discountMallGoodsList: responseData.data.discountMallGoodsList,
         hoteServiceList: responseData.data.hoteServiceList,
         brandList:responseData.data.brandList,
-        adList:responseData.data.adList
+        adList:responseData.data.adList,
+        specialOffer:responseData.data.specialOffer
       });
     };
     const errCallback = responseData => {
@@ -130,7 +134,7 @@ export default class HomePage extends React.Component {
 
   // 渲染
   render() {
-    const  {brandList,hoteServiceList,discountMallGoodsList,adList} = this.state;
+    const  {brandList,hoteServiceList,discountMallGoodsList,adList,specialOffer} = this.state;
     var groupedBrandList = group(brandList, 5);
     var groupedDiscountMallGoodsList = group(discountMallGoodsList, 2);
     return (
@@ -275,13 +279,13 @@ export default class HomePage extends React.Component {
               </Swiper>
             </LinearGradient>
 
-            <View style={{height:40,flexDirection:'row',backgroundColor:'#F9F9F9',alignItems:'center'}}>
+            <View style={{height:40,flexDirection:'row',backgroundColor:'#F9F9F9',alignItems:'center',width:width}}>
               <Image
                 source={require('../../assets/images/icon_announcement.png')}
                 style={{width: 22, height: 22,marginLeft:10}}
               />
               <Text
-                style={{marginLeft: 10, width: 150,color: 'gray'}}
+                style={{marginLeft: 10, width: 200,color: 'gray'}}
               >
                 商家入驻持续招募中...
               </Text>
@@ -313,9 +317,77 @@ export default class HomePage extends React.Component {
                     </View>
                 );
               })}
-
             </View>
+            <View style={{height:10,backgroundColor:'#F6F6F6'}}></View>
+            {/*specialOffer*/}
+            <View style={{height:200,backgroundColor:'#F6F6F6',flexDirection:'row',margin:10}} >
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate('ServiceConfirmPage', {
+                    name: specialOffer[0].name,
+                    id: specialOffer[0].id,
+                  });
+                }}
+                style={{flex:2}}>
+                <ImageBackground
+                  style={{
+                    flex:1,
+                    justifyContent:'flex-end'
+                  }}
+                  source={{
+                    uri: specialOffer[0].picUrl,
+                  }}
+                >
+                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#FF5400',fontSize:17,fontWeight:'bold',backgroundColor:'rgba(255,255,255,0.5)',width:85}}>今日特价</Text>
+                  <View style={{flexDirection:'row',marginBottom:10}}>
+                    <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13}}>剩余</Text>
+                    <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13,backgroundColor:'#FF5400'}}>28</Text>
+                    <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13}}>件</Text>
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
 
+              <View style={{flex:3,marginLeft:10}}>
+                <TouchableOpacity
+                  onPress={() => {
+                    alert('培训直播')
+                  }}
+                  style={{height:90}}
+                >
+                <ImageBackground
+                  style={{
+                    height:90,
+                    justifyContent:'center',
+                    borderRadius:5
+                  }}
+                  source={require('../../assets/images/home_plate2.png')}
+                >
+                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#00DC8A',fontSize:17,fontWeight:'bold',width:85,marginLeft:10}}>培训直播</Text>
+                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13,marginLeft:10}}>干货满满等你来看</Text>
+                </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    alert('商家入驻')
+                  }}
+                  style={{flex:1}}
+                >
+                <ImageBackground
+                  style={{
+                    height:100,
+                    marginTop:10,
+                    justifyContent:'flex-end',
+                    borderRadius:5
+                  }}
+
+                  source={require('../../assets/images/home_plate3.png')}
+                >
+                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#0931FF',fontSize:17,fontWeight:'bold',width:85,marginLeft:10}}>商家入驻</Text>
+                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'gray',fontSize:13,marginLeft:10,marginBottom:10}}>喜迎财富来袭</Text>
+                </ImageBackground>
+                </TouchableOpacity>
+              </View>
+            </View>
             {/*热门服务*/}
             <View  style={{backgroundColor:'#F6F6F6'}}>
               <View

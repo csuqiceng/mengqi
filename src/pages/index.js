@@ -42,9 +42,9 @@ class MainTabPage extends React.Component
       return (
 
         <Tab.Navigator
+          initialRouteName="Home"
           screenOptions={{
             headerShown: false,
-            // tabBarVisible:true,
           }}>
           <Tab.Screen
             name="Home"

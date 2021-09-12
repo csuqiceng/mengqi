@@ -10,6 +10,7 @@ import {
   TextInput,
 } from 'react-native';
 import NavBar from '../../common/navBar';
+import { fetchData } from "../../common/fetch";
 const {width} = Dimensions.get('window');
 
 export default class MyBalanceView extends React.Component {
@@ -17,6 +18,7 @@ export default class MyBalanceView extends React.Component {
     super(props);
     this.state = {
       balanceValue: '',
+      amount:''
     };
   }
   // 返回中间按钮
@@ -54,7 +56,32 @@ export default class MyBalanceView extends React.Component {
       balanceValue: e,
     });
   };
+
+  componentDidMount() {
+    let param = {
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/json',
+      },
+      method: 'GET',
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/amount/info';
+    const callback = responseData => {
+      this.setState({
+        amount: responseData.data.info.amount,
+      });
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
   render() {
+    const {amount} = this.state;
     return (
       <View style={styles.container}>
         <NavBar
@@ -72,7 +99,7 @@ export default class MyBalanceView extends React.Component {
           }}>
           <Text style={{color: '#E9E3C3', fontSize: 20}}>我的余额</Text>
           <Text style={{color: '#E9E3C3', fontSize: 40, fontWeight: 'bold'}}>
-            ¥200
+            ¥ {amount}
           </Text>
         </View>
         <View
@@ -99,18 +126,19 @@ export default class MyBalanceView extends React.Component {
                 paddingLeft: 10,
                 marginLeft: 20,
               }}>
-              <TextInput
-                onChangeText={this.onBalanceChanged} //添加值改变事件
-                // onFocus={this.props.onfocusCallback}//获取焦点
-                // onBlur={this.props.onBlurCallback}//失去焦点
-                style={styles.tgTextInputStyle}
-                autoCapitalize="none" //设置首字母不自动大写
-                underlineColorAndroid={'transparent'} //将下划线颜色改为透明
-                keyboardType="numeric"
-                placeholderTextColor={'#ccc'} //设置占位符颜色
-                placeholder={'请输入充值金额'} //设置占位符
-                value={this.state.balanceValue}
-              />
+              {/*<TextInput*/}
+              {/*  onChangeText={this.onBalanceChanged} //添加值改变事件*/}
+              {/*  // onFocus={this.props.onfocusCallback}//获取焦点*/}
+              {/*  // onBlur={this.props.onBlurCallback}//失去焦点*/}
+              {/*  style={styles.tgTextInputStyle}*/}
+              {/*  autoCapitalize="none" //设置首字母不自动大写*/}
+              {/*  underlineColorAndroid={'transparent'} //将下划线颜色改为透明*/}
+              {/*  keyboardType="numeric"*/}
+              {/*  placeholderTextColor={'#ccc'} //设置占位符颜色*/}
+              {/*  placeholder={'请输入充值金额'} //设置占位符*/}
+              {/*  value={this.state.balanceValue}*/}
+              {/*/>*/}
+              <Text>请选择充值金额</Text>
             </View>
           </View>
           <View style={{flexDirection: 'row', marginTop: 30}}>

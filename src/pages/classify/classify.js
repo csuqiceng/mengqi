@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
-import SegmentedControl from '@ant-design/react-native/lib/segmented-control';
 import ClassifyMall from './mall/mall';
 import ClassifyService from './service/service';
 const {width} = Dimensions.get('window');
@@ -30,16 +29,17 @@ export default class Classify extends React.Component {
     this.setState({searchValue: ''});
   };
   renderPage = () => {
-    if (this.selectId == 1) {
-      return <ClassifyMall navigation={this.props.navigation} />;
-    } else {
-      return (
-        <ClassifyService
-          navigation={this.props.navigation}
-          LeftToolbar={this.state.LeftToolbar}
-        />
-      );
-    }
+    return <ClassifyMall navigation={this.props.navigation} LeftToolbar={this.state.LeftToolbar}/>;
+    // if (this.selectId == 1) {
+    //   return <ClassifyMall navigation={this.props.navigation} />;
+    // } else {
+    //   return (
+    //     <ClassifyService
+    //       navigation={this.props.navigation}
+    //       LeftToolbar={this.state.LeftToolbar}
+    //     />
+    //   );
+    // }
   };
   UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
     console.log(
@@ -89,7 +89,7 @@ export default class Classify extends React.Component {
             请输入关键词
           </Text>
         </TouchableOpacity>
-
+        <View style={{height:1,backgroundColor:'#EEEEEE'}}></View>
         {this.renderPage()}
       </View>
     );

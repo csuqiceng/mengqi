@@ -16,6 +16,7 @@ export default class HeaderView extends React.Component {
     super(props);
     this.state = {
       info: '',
+      userName:''
     };
   }
   componentDidMount() {
@@ -32,6 +33,7 @@ export default class HeaderView extends React.Component {
     let url = 'http://lhh.natapp1.cc/api/wx/amount/info';
     const callback = responseData => {
       this.setState({
+        userName:responseData.data.userName,
         info: responseData.data.info,
       });
     };
@@ -44,19 +46,18 @@ export default class HeaderView extends React.Component {
   }
 
   render() {
-    const {info} = this.state;
+    const {info,userName} = this.state;
     return (
       <View style={styles.container}>
         {/*上部分*/}
-        {renderTopView(this.props, info)}
+        {renderTopView(this.props,userName)}
         {/*下部分*/}
         {renderBottomView(info)}
       </View>
     );
   }
 }
-function renderTopView(props, info) {
-  console.log(info)
+function renderTopView(props,userName) {
   return (
     <View style={styles.topViewStyle}>
       <Image
@@ -71,7 +72,7 @@ function renderTopView(props, info) {
             fontWeight: 'bold',
             marginLeft: 10,
           }}>
-          {info.userId}
+          {userName}
         </Text>
         {/*<Image source={require('../../assets/favicon.png')} style={{width:17, height:17}}/>*/}
       </View>
@@ -90,35 +91,102 @@ function renderTopView(props, info) {
   );
 }
 function renderBottomView(info) {
-  return <View style={styles.bottomViewStyle}>{renderBottomItem(info)}</View>;
+  return (
+    <View style={styles.bottomViewStyle}>
+      {/*{renderBottomItem(info)}*/}
+      <RenderBottomItem/>
+    </View>
+  )
 }
-function renderBottomItem(info) {
-  // 数组
-  console.log(info);
-  var itemArr = [];
-  // 数据数组
-  var data = [
-    {number: info.amount, title: '我的余额'},
-    {number: '321', title: '积分'},
-    {number: '12', title: '优惠券'},
-  ];
-  // 遍历创建组件装入数组
-  for (var i = 0; i < data.length; i++) {
-    // 取出单独的数据
-    var item = data[i];
 
-    itemArr.push(
-      <TouchableOpacity key={i}>
-        <View style={styles.bottomInnerViewStyle}>
-          <Text style={{color: 'white', fontSize: 20}}>{item.number}</Text>
-          <Text style={{color: 'white', fontSize: 15}}>{item.title}</Text>
-        </View>
-      </TouchableOpacity>,
-    );
+class RenderBottomItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      totalAmount:'',
+      remainAmount:'',
+      couponCount:'',
+    };
   }
-  // 返回数组
-  return itemArr;
+  componentDidMount() {
+    let param = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = 'http://lhh.natapp1.cc/api/wx/user/index';
+    const callback = responseData => {
+      this.setState({
+        totalAmount:responseData.data.totalAmount,
+        remainAmount:responseData.data.remainAmount,
+        couponCount:responseData.data.couponCount,
+      });
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
+   render() {
+     const {totalAmount,remainAmount,couponCount} = this.state;
+      return(
+        <View style={{flexDirection:'row'}}>
+                 <TouchableOpacity >
+                   <View style={styles.bottomInnerViewStyle}>
+                     <Text style={{color: 'white', fontSize: 20}}>{totalAmount}</Text>
+                     <Text style={{color: 'white', fontSize: 15}}>总金额</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity >
+                  <View style={styles.bottomInnerViewStyle}>
+                    <Text style={{color: 'white', fontSize: 20}}>{remainAmount}</Text>
+                    <Text style={{color: 'white', fontSize: 15}}>余额</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity >
+                  <View style={styles.bottomInnerViewStyle}>
+                    <Text style={{color: 'white', fontSize: 20}}>{couponCount}</Text>
+                    <Text style={{color: 'white', fontSize: 15}}>优惠券</Text>
+                  </View>
+                </TouchableOpacity>
+        </View>
+      )
+   }
 }
+// function renderBottomItem(info) {
+//   // 数组
+//   console.log(info);
+//   var itemArr = [];
+//   // 数据数组
+//   var data = [
+//     {number: info.amount, title: '我的余额'},
+//     {number: '321', title: '积分'},
+//     {number: '12', title: '优惠券'},
+//   ];
+//   // 遍历创建组件装入数组
+//   for (var i = 0; i < data.length; i++) {
+//     // 取出单独的数据
+//     var item = data[i];
+//
+//     itemArr.push(
+//       <TouchableOpacity key={i}>
+//         <View style={styles.bottomInnerViewStyle}>
+//           <Text style={{color: 'white', fontSize: 20}}>{item.number}</Text>
+//           <Text style={{color: 'white', fontSize: 15}}>{item.title}</Text>
+//         </View>
+//       </TouchableOpacity>,
+//     );
+//   }
+//   // 返回数组
+//   return itemArr;
+// }
 
 const styles = StyleSheet.create({
   container: {

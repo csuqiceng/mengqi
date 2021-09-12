@@ -23,11 +23,13 @@ export default class ClassifyMall extends React.Component {
       LeftToolbar: '1036018',
       firstLvData: {},
     };
+    this.LeftToolbar = '1036018';
   }
   onLeftToolbarClick = e => {
     this.setState({
       LeftToolbar: e,
     });
+    this.LeftToolbar = e;
   };
   renderRightView = () => {
     return (
@@ -37,6 +39,14 @@ export default class ClassifyMall extends React.Component {
       />
     );
   };
+  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.LeftToolbar) {
+      this.setState({
+        LeftToolbar: nextProps.LeftToolbar,
+      });
+      this.LeftToolbar = nextProps.LeftToolbar;
+    }
+  }
   componentDidMount() {
     let param = {
       headers: {
@@ -51,10 +61,34 @@ export default class ClassifyMall extends React.Component {
       'http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?goodsType=01';
     const callback = responseData => {
       console.log(responseData.data);
-      this.setState({
-        firstLvData: responseData.data,
-        LeftToolbar: responseData.data[0].id,
-      });
+      let goodsType1 = responseData.data;
+      let param = {
+        headers: {
+          'X-Litemall-Token': window.token
+            ? window.token
+            : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+          'content-type': 'application/json',
+        },
+        method: 'GET',
+      };
+      let url =
+        'http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?goodsType=02';
+      const callback = responseData => {
+        let goodsType2 = responseData.data;
+        let firstLvData = goodsType1.concat(goodsType2)
+        this.setState({
+          firstLvData: firstLvData,
+          LeftToolbar: firstLvData[0].id,
+        });
+      };
+      const errCallback = responseData => {
+        if (responseData.errno == 501) {
+          alert(responseData.errmsg);
+          this.props.navigation.navigate('login');
+        }
+      };
+      fetchData(url, param, callback, errCallback);
+
     };
     const errCallback = responseData => {
       if (responseData.errno == 501) {
@@ -64,12 +98,25 @@ export default class ClassifyMall extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
+  renderLeftLineIcon=(item)=>{
+    if (this.LeftToolbar == item.id){
+       return(
+         <Image
+           source={require('../../../assets/images/icon_line2.png')}
+           style={{width: 5, height: 18,marginTop:11}}
+         />
+       )
+    }else{
+       return null
+    }
+  }
   render() {
     const {firstLvData} = this.state;
+    console.log(this.LeftToolbar);
     if (firstLvData.length > 0) {
       return (
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
+        <View style={{flex: 1,flexDirection: 'row',backgroundColor:'white'}}>
+          <View style={{flex: 1,backgroundColor:'#EEEEEE'}}>
             {firstLvData.map((item, i) => {
               return (
                 <TouchableOpacity
@@ -80,17 +127,22 @@ export default class ClassifyMall extends React.Component {
                   }}>
                   <View
                     style={{
-                      height: 80,
+                      height: 40,
+                      flexDirection:'row',
                       backgroundColor:
-                        this.state.LeftToolbar == item.id
-                          ? '#00BEAF'
-                          : '#F9F9F7',
+                        this.LeftToolbar == item.id
+                          ? 'white'
+                          : '#EEEEEE',
                     }}>
+                    {
+                      this.renderLeftLineIcon(item)
+                    }
+
                     <Text
                       style={{
                         textAlign: 'center',
                         textAlignVertical: 'center',
-                        flex: 1,
+                        flex:1
                       }}>
                       {item.name}
                     </Text>
@@ -179,7 +231,7 @@ class RightSecondLvView extends React.Component {
     if (secondLvData.length > 0) {
       return (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View>
+          <View style={{backgroundColor:'white'}}>
             {secondLvData.map((item, i) => {
               return (
                 <View key={item.id} style={{flex:1,marginLeft:10,height: 200}}>

@@ -324,7 +324,7 @@ export default class RegisterView extends React.Component {
                 onPress={() => {
                   this.props.navigation.navigate('login');
                 }}>
-                <Text style={{fontSize: 15, color: '#13B4BB'}}> 去登陆</Text>
+                <Text style={{fontSize: 15, color: '#13B4BB'}}> 去登录</Text>
               </TouchableOpacity>
             </View>
           </View>

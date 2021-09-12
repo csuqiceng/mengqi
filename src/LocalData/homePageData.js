@@ -328,4 +328,16 @@ const adListData = [
     "deleted": false
   }
 ]
-export {mainServerData, hotServerData, preferentialData,brandListData,adListData};
+
+const specialOfferData = [{
+  "id": 1181053,
+  "name": "宝世车友 链条润滑剂",
+  "brief": "",
+  "picUrl": "https://mengqi-storg.oss-accelerate.aliyuncs.com/ishqif59gv30bbrrqewi.png",
+  "isNew": true,
+  "isHot": false,
+  "counterPrice": 19.9,
+  "retailPrice": 20
+}]
+
+export {mainServerData, hotServerData, preferentialData,brandListData,adListData,specialOfferData};

@@ -4,7 +4,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  TextInput,
   ScrollView,
   ImageBackground,
   StyleSheet,
@@ -257,7 +256,7 @@ class RightGoodsView extends React.Component {
         method: 'GET',
       };
 
-      let url = `http://lhh.natapp1.cc/api//wx/catalog/querySecondaryCategoryGoodList?id=${nextProps.secondLvId}`;
+      let url = `http://lhh.natapp1.cc/api/wx/catalog/querySecondaryCategoryGoodList?id=${nextProps.secondLvId}`;
       const callback = responseData => {
         this.setState({
           goodsData: responseData.data.list,
