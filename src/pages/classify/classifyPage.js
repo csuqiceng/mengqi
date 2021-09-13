@@ -9,88 +9,79 @@ import {
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import {fetchData} from '../../../common/fetch';
-// import yiji from '../../../LocalData/yiji.json'
-// import erji from '../../../LocalData/erji.json'
-// import shangping from '../../../LocalData/shangping.json'
+import {fetchData} from '../../common/fetch';
 
-// const firstLvData = yiji.data;
-// const secondLvData = erji.data;
-export default class ClassifyMall extends React.Component {
+function group(array, subGroupLength) {
+  var index = 0;
+  var newArray = [];
+
+  while(index < array.length) {
+    newArray.push(array.slice(index, index += subGroupLength));
+  }
+
+  return newArray;
+}
+
+export default class ClassifyPage extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      LeftToolbar: '1036018',
-      firstLvData: {},
+      toolbarId: '',
     };
-    this.LeftToolbar = '1036018';
   }
   onLeftToolbarClick = e => {
     this.setState({
-      LeftToolbar: e,
+      toolbarId: e,
     });
-    this.LeftToolbar = e;
   };
   renderRightView = () => {
+    const {categoryList} = this.props;
+    let {toolbarId} = this.state;
+    if (categoryList.length > 0) {
+      toolbarId = toolbarId ? toolbarId : categoryList[0].id
+    }
     return (
       <RightSecondLvView
-        firstLvData={this.state.LeftToolbar}
+        toolbarId={toolbarId}
         navigation={this.props.navigation}
       />
     );
   };
-  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.LeftToolbar) {
-      this.setState({
-        LeftToolbar: nextProps.LeftToolbar,
-      });
-      this.LeftToolbar = nextProps.LeftToolbar;
-    }
-  }
-  componentDidMount() {
-    let param = {
-      headers: {
-        'X-Litemall-Token': window.token
-          ? window.token
-          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
-        'content-type': 'application/json',
-      },
-      method: 'GET',
-    };
-    let url =
-      `http://lhh.natapp1.cc/api/wx/catalog/index?id=`;
-    const callback = responseData => {
-      console.log(responseData.data);
 
-    };
-    const errCallback = responseData => {
-      if (responseData.errno == 501) {
-        alert(responseData.errmsg);
-        this.props.navigation.navigate('login');
-      }
-    };
-    fetchData(url, param, callback, errCallback);
-  }
   renderLeftLineIcon=(item)=>{
-    if (this.LeftToolbar == item.id){
-       return(
-         <Image
-           source={require('../../../assets/images/icon_line2.png')}
-           style={{width: 5, height: 18,marginTop:11}}
-         />
-       )
+    const {categoryList} = this.props;
+    let {toolbarId} = this.state;
+    if (categoryList.length > 0) {
+      toolbarId = toolbarId ? toolbarId : categoryList[0].id
+    }
+    if (toolbarId == item.id){
+      return(
+        <Image
+          source={require('../../assets/images/icon_line2.png')}
+          style={{width: 5, height: 18,marginTop:11}}
+        />
+      )
     }else{
-       return null
+      return null
     }
   }
+  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+     if (nextProps.categoryList.length>0){
+       this.setState({
+         toolbarId:nextProps.categoryList[0].id
+       })
+     }
+  }
+
   render() {
-    const {firstLvData} = this.state;
-    console.log(this.LeftToolbar);
-    if (firstLvData.length > 0) {
+    const {categoryList} = this.props;
+    let {toolbarId} = this.state;
+    if (categoryList.length > 0) {
+      toolbarId = toolbarId?toolbarId:categoryList[0].id
       return (
         <View style={{flex: 1,flexDirection: 'row',backgroundColor:'white'}}>
           <View style={{flex: 1,backgroundColor:'#EEEEEE'}}>
-            {firstLvData.map((item, i) => {
+            {categoryList.map((item, i) => {
               return (
                 <TouchableOpacity
                   key={item.id}
@@ -103,7 +94,7 @@ export default class ClassifyMall extends React.Component {
                       height: 40,
                       flexDirection:'row',
                       backgroundColor:
-                        this.LeftToolbar == item.id
+                        toolbarId == item.id
                           ? 'white'
                           : '#EEEEEE',
                     }}>
@@ -137,7 +128,7 @@ export default class ClassifyMall extends React.Component {
   }
 }
 
-//商品
+//二级分类
 class RightSecondLvView extends React.Component {
   constructor(props) {
     super(props);
@@ -159,7 +150,7 @@ class RightSecondLvView extends React.Component {
       },
       method: 'GET',
     };
-    let url = `http://lhh.natapp1.cc/api/wx/catalog/getsecondcategory?id=${this.props.firstLvData}`;
+    let url = `http://lhh.natapp1.cc/api/wx/catalog/getsecondcategory?id=${this.props.toolbarId}`;
     const callback = responseData => {
       this.setState({
         secondLvData: responseData.data,
@@ -184,7 +175,8 @@ class RightSecondLvView extends React.Component {
       },
       method: 'GET',
     };
-    let url = `http://lhh.natapp1.cc/api/wx/catalog/getsecondcategory?id=${nextProps.firstLvData}`;
+    let url = `http://lhh.natapp1.cc/api/wx/catalog/getsecondcategory?id=${nextProps.toolbarId}`;
+
     const callback = responseData => {
       this.setState({
         secondLvData: responseData.data,
@@ -207,7 +199,7 @@ class RightSecondLvView extends React.Component {
           <View style={{backgroundColor:'white'}}>
             {secondLvData.map((item, i) => {
               return (
-                <View key={item.id} style={{flex:1,marginLeft:10,height: 200}}>
+                <View key={item.id} style={{flex:1,marginLeft:15}}>
                   <Text
                     style={{
                       textAlignVertical: 'center',
@@ -217,7 +209,7 @@ class RightSecondLvView extends React.Component {
                     }}>
                     {item.name}
                   </Text>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{flexDirection: 'row',marginBottom:10}}>
                     {this.renderGoodsView(item.id)}
                   </View>
                 </View>
@@ -236,6 +228,7 @@ class RightSecondLvView extends React.Component {
   }
 }
 
+//二级分类下商品
 class RightGoodsView extends React.Component {
   constructor(props) {
     super(props);
@@ -256,7 +249,7 @@ class RightGoodsView extends React.Component {
       },
       method: 'GET',
     };
-    let url = `http://lhh.natapp1.cc/api//wx/catalog/querySecondaryCategoryGoodList?id=${this.props.secondLvId}`;
+    let url = `http://lhh.natapp1.cc/api/wx/catalog/querySecondaryCategoryGoodList?id=${this.props.secondLvId}`;
     const callback = responseData => {
       this.setState({
         goodsData: responseData.data.list,
@@ -282,7 +275,7 @@ class RightGoodsView extends React.Component {
         method: 'GET',
       };
 
-      let url = `http://lhh.natapp1.cc/api//wx/catalog/querySecondaryCategoryGoodList?id=${nextProps.secondLvId}`;
+      let url = `http://lhh.natapp1.cc/api/wx/catalog/querySecondaryCategoryGoodList?id=${nextProps.secondLvId}`;
       const callback = responseData => {
         this.setState({
           goodsData: responseData.data.list,
@@ -298,40 +291,38 @@ class RightGoodsView extends React.Component {
     }
   }
   render() {
-    const {secondLvId} = this.props;
     const {goodsData} = this.state;
     if (goodsData.length > 0) {
+      var goodsDataList = group(goodsData, 2);
       return (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{flexDirection: 'row',marginLeft:15}}>
-            {goodsData.map((item, i) => {
+          <View style={{flexDirection: 'column'}}>
+            {goodsDataList.map((item, i) => {
               return (
-                <TouchableOpacity
-                  key={item.id}
-                  activeOpacity={0.5}
-                  onPress={() => {
-                    this.onChooseGoods(item.id, item.name);
-                  }}>
-                  <Image
-                    source={{uri: item.picUrl}}
-                    resizeMode="stretch"
-                    style={{
-                      width: 70,
-                      height: 60,
-                      margin: 10
-                    }}
-                  />
-                  {/*<ImageBackground*/}
-                  {/*  style={{*/}
-                  {/*    width: 100,*/}
-                  {/*    height: 100,*/}
-                  {/*    marginLeft: 10,*/}
-                  {/*    opacity: 0.9,*/}
-                  {/*  }}*/}
-                  {/*  source={{uri: item.picUrl}}>*/}
-                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.text}>{item.name}</Text>
-                  {/*</ImageBackground>*/}
-                </TouchableOpacity>
+                <View key={i} style={{flexDirection:'row',flex:1,justifyContent:'space-between',marginRight:10,marginTop:10,marginBottom:10}}>
+                  {
+                    item.map((item, i) => {
+                      return (
+                        <TouchableOpacity
+                          key={item.id}
+                          activeOpacity={0.5}
+                          onPress={() => {
+                            this.onChooseGoods(item.id, item.name);
+                          }}>
+                          <Image
+                            source={{uri: item.picUrl}}
+                            resizeMode="cover"
+                            style={{
+                              width: 90,
+                              height: 60,
+                              margin: 10,
+                            }}
+                          />
+                          <Text numberOfLines={1} ellipsizeMode={'tail'} style={styles.text}>{item.name}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
+                </View>
               );
             })}
           </View>
@@ -359,6 +350,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     width:100
-    // backgroundColor: '#000000a0',
   },
 });

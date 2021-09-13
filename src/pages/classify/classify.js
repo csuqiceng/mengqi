@@ -2,65 +2,76 @@
 
 import * as React from 'react';
 import { Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
-import ClassifyMall from './mall/mall';
-import ClassifyService from './service/service';
+import ClassifyPage from './classifyPage';
+import { fetchData } from "../../common/fetch";
 const {width} = Dimensions.get('window');
 export default class Classify extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectId: 0,
-      searchValue: '',
-      LeftToolbar: '',
+      searchValue:'',
+      categoryList:[],
     };
-    this.selectId = 0;
   }
-  onChange = e => {
-    this.selectId = e.nativeEvent.selectedSegmentIndex;
-    this.setState({
-      selected: e.nativeEvent.selectedSegmentIndex,
-    });
-  };
-  onSearchBarChange = (searchValue: any) => {
-    this.setState({searchValue});
-  };
 
-  onSearchBarclear = () => {
-    this.setState({searchValue: ''});
-  };
-  renderPage = () => {
-    return <ClassifyMall navigation={this.props.navigation} LeftToolbar={this.state.LeftToolbar}/>;
-    // if (this.selectId == 1) {
-    //   return <ClassifyMall navigation={this.props.navigation} />;
-    // } else {
-    //   return (
-    //     <ClassifyService
-    //       navigation={this.props.navigation}
-    //       LeftToolbar={this.state.LeftToolbar}
-    //     />
-    //   );
-    // }
-  };
   UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
-    console.log(
-      'UNSAFE_componentWillReceiveProps' + JSON.stringify(nextProps.route),
-    );
-    if (nextProps.route.params) {
-      if (nextProps.route.params.selectId == 0) {
-        this.setState({
-          selectId: nextProps.route.params.selectId,
-          LeftToolbar: nextProps.route.params.id,
-        });
-        this.selectId = nextProps.route.params.selectId;
-      }
+    let id ='';
+    if (nextProps.route&&nextProps.route.params){
+      id = nextProps.route.params.id;
     }
+    let param = {
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET',
+    };
+    let url = `http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?brandId=${id}`;
+    const callback = responseData => {
+      this.setState({
+        categoryList:responseData.data
+      })
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        // alert(responseData.errmsg);
+      }
+    };
+    fetchData(url, param, callback, errCallback);
   }
 
-  componentDidMount() {
-    console.log(JSON.stringify(this.props.route));
-  }
+ componentDidMount() {
+    let id ='';
+    if (this.props.route&&this.props.route.params){
+      id = this.props.route.params.id;
+    }
+   let param = {
+     headers: {
+       'X-Litemall-Token': window.token
+         ? window.token
+         : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+       'content-type': 'application/x-www-form-urlencoded',
+     },
+     method: 'GET',
+   };
+   let url = `http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?brandId=${id}`;
+   const callback = responseData => {
+        this.setState({
+          categoryList:responseData.data
+        })
+   };
+   const errCallback = responseData => {
+     if (responseData.errno == 501) {
+       alert(responseData.errmsg);
+     }
+   };
+   fetchData(url, param, callback, errCallback);
+ }
 
   render() {
+    const {categoryList} = this.state;
     return (
       <View style={{flex: 1,backgroundColor:'white'}}>
         <TouchableOpacity
@@ -82,7 +93,6 @@ export default class Classify extends React.Component {
             source={require('../../assets/images/home_icon_search.png')}
             style={{width: 15, height: 15,marginLeft:10}}
           />
-
           <Text
             style={{marginLeft: 10, width: 150,color: '#999999'}}
           >
@@ -90,8 +100,9 @@ export default class Classify extends React.Component {
           </Text>
         </TouchableOpacity>
         <View style={{height:1,backgroundColor:'#EEEEEE'}}></View>
-        {this.renderPage()}
+        <ClassifyPage navigation={this.props.navigation} categoryList={categoryList}/>
       </View>
     );
   }
 }
+

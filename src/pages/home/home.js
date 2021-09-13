@@ -26,6 +26,8 @@ import Localstorage from '../../common/localStorage';
 import LinearGradient from  'react-native-linear-gradient'
 import {fetchData} from '../../common/fetch';
 // import { RNCamera } from 'react-native-camera';
+import {AlertDialogWithDevelop} from '../../components/pickers';
+
 const {width} = Dimensions.get('window');
 
 function group(array, subGroupLength) {
@@ -59,7 +61,6 @@ export default class HomePage extends React.Component {
       this.props.navigation.navigate('Classify', {
         name: data,
         id: id,
-        selectId: 0,
       });
     }
   };
@@ -175,14 +176,27 @@ export default class HomePage extends React.Component {
                 }}>
                 梦奇佳园
               </Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.AlertDialog.show();
+              }}
+            >
             <Image
               source={require('../../assets/images/icon_scan.png')}
               style={{width: 25, height: 25,marginRight:10}}
             />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                this.AlertDialog.show();
+              }}
+              >
             <Image
+
               source={require('../../assets/images/icon_news.png')}
               style={{width: 25, height: 25,marginRight:10}}
             />
+            </TouchableOpacity>
             </View>
           <TouchableOpacity
             onPress={() => {
@@ -350,7 +364,7 @@ export default class HomePage extends React.Component {
               <View style={{flex:3,marginLeft:10}}>
                 <TouchableOpacity
                   onPress={() => {
-                    alert('培训直播')
+                    this.AlertDialog.show();
                   }}
                   style={{height:90}}
                 >
@@ -368,7 +382,7 @@ export default class HomePage extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    alert('商家入驻')
+                    this.AlertDialog.show();
                   }}
                   style={{flex:1}}
                 >
@@ -517,6 +531,11 @@ export default class HomePage extends React.Component {
             </View>
           </ScrollView>
         </SafeAreaView>
+        <AlertDialogWithDevelop
+          showAnimationType='timing'
+          onPress={(isOK) => {
+
+          }} ref={ref => this.AlertDialog = ref} />
       </View>
     );
   }

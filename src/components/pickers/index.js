@@ -22,6 +22,8 @@ import DownloadDialog from './view/DownloadDialog';
 
 import ToastComponent from './view/ToastComponent';
 
+import AlertDialogWithDevelop from './view/AlertDialogWithDevelop';
+
 export {
   BaseComponent,
   BaseDialog,
@@ -35,4 +37,5 @@ export {
   AlertDialog,
   DownloadDialog,
   ToastComponent,
+  AlertDialogWithDevelop
 };

@@ -313,7 +313,7 @@ export default class ShoppingCartPage extends React.Component
                       />
                       <Image
                         resizeMode={'cover'}
-                        source={{uri: item.picUrl}}
+                        source={{uri: item.picUrl?item.picUrl:' '}}
                         style={{width: 90, height: 80, borderRadius:10,borderColor:'lightgray',borderWidth:1}}
                       />
                       <View style={{margin:20,flex:1}}>
