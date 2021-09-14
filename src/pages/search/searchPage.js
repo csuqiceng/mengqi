@@ -98,7 +98,7 @@ export default class SearchPageView extends React.Component {
       },
       method: 'GET',
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/search/index';
+    let url = '/wx/search/index';
     const callback = responseData => {
       this.setState({
         defaultKeyword: responseData.data.defaultKeyword,
@@ -124,7 +124,7 @@ export default class SearchPageView extends React.Component {
       },
       method: 'GET',
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/search/clearhistory';
+    let url = '/wx/search/clearhistory';
     const callback = responseData => {
           let param = {
             headers: {
@@ -135,7 +135,7 @@ export default class SearchPageView extends React.Component {
             },
             method: 'GET',
           };
-          let url = 'http://lhh.natapp1.cc/api/wx/search/index';
+          let url = '/wx/search/index';
           const callback = responseData => {
             this.setState({
               defaultKeyword: responseData.data.defaultKeyword,

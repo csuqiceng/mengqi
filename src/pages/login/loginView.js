@@ -179,7 +179,7 @@ class AccoutLoginView extends React.Component
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/auth/login';
+    let url = '/wx/auth/login';
     const callback = responseData => {
       window.token = responseData.data.token;
       Localstorage.save('token', responseData.data.token);
@@ -365,7 +365,7 @@ class VerificationcodeView extends React.Component
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/auth/mobileLogin';
+    let url = '/wx/auth/mobileLogin';
     const callback = responseData => {
       this.props.onLoginCallback();
       window.token = responseData.data.token;
@@ -403,7 +403,7 @@ class VerificationcodeView extends React.Component
       return;
     }
     if (!this.state.verificationBool) {
-      let url = 'http://lhh.natapp1.cc/api/wx/auth/regCaptcha';
+      let url = '/wx/auth/regCaptcha';
       const callback = e => {
         // navigation.goBack()
       };

@@ -72,7 +72,7 @@ export default class ServicePayPage extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/apppay';
+    let url = '/wx/order/apppay';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.data) {
@@ -137,7 +137,7 @@ export default class ServicePayPage extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${orderId}`;
+    let url = `/wx/order/detail?orderId=${orderId}`;
     const callback = responseData => {
       console.log(responseData);
       this.setState({

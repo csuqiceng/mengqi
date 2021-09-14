@@ -51,7 +51,7 @@ export default class ClassifyService extends React.Component {
       method: 'GET',
     };
     let url =
-      'http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?goodsType=02';
+      '/wx/catalog/getfirstcategory?goodsType=02';
     const callback = responseData => {
       this.setState({
         firstLvData: responseData.data,
@@ -132,7 +132,7 @@ class RightSecondLvView extends React.Component {
       method: 'GET',
     };
     console.log(window.token);
-    let url = `http://lhh.natapp1.cc/api/wx/catalog/getsecondcategory?id=${this.props.firstLvData}`;
+    let url = `/wx/catalog/getsecondcategory?id=${this.props.firstLvData}`;
     const callback = responseData => {
       this.setState({
         secondLvData: responseData.data,
@@ -158,7 +158,7 @@ class RightSecondLvView extends React.Component {
       },
       method: 'GET',
     };
-    let url = `http://lhh.natapp1.cc/api/wx/catalog/getsecondcategory?id=${nextProps.firstLvData}`;
+    let url = `/wx/catalog/getsecondcategory?id=${nextProps.firstLvData}`;
     const callback = responseData => {
       this.setState({
         secondLvData: responseData.data,
@@ -230,7 +230,7 @@ class RightGoodsView extends React.Component {
       },
       method: 'GET',
     };
-    let url = `http://lhh.natapp1.cc/api//wx/catalog/querySecondaryCategoryGoodList?id=${this.props.secondLvId}`;
+    let url = `/wx/catalog/querySecondaryCategoryGoodList?id=${this.props.secondLvId}`;
     const callback = responseData => {
       this.setState({
         goodsData: responseData.data.list,
@@ -256,7 +256,7 @@ class RightGoodsView extends React.Component {
         method: 'GET',
       };
 
-      let url = `http://lhh.natapp1.cc/api/wx/catalog/querySecondaryCategoryGoodList?id=${nextProps.secondLvId}`;
+      let url = `/wx/catalog/querySecondaryCategoryGoodList?id=${nextProps.secondLvId}`;
       const callback = responseData => {
         this.setState({
           goodsData: responseData.data.list,

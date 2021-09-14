@@ -66,7 +66,7 @@ export default class RegisterView extends React.Component {
     });
   };
   onRegisterCallback = () => {
-    let url = 'http://lhh.natapp1.cc/api/wx/auth/register';
+    let url = '/wx/auth/register';
     const callback = e => {
       // navigation.goBack()
       alert("注册成功！")
@@ -119,7 +119,7 @@ export default class RegisterView extends React.Component {
       return;
     }
     if (!this.state.verificationBool) {
-      let url = 'http://lhh.natapp1.cc/api/wx/auth/regCaptcha';
+      let url = '/wx/auth/regCaptcha';
       const callback = e => {
          alert("验证码已发送，请注意查收！")
       };

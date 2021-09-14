@@ -159,7 +159,7 @@ class AllorderView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=0';
+    let url = '/wx/order/list?showType=0';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -188,7 +188,7 @@ class AllorderView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=0';
+    let url = '/wx/order/list?showType=0';
 
     let callback = responseData => {
       console.log(responseData);
@@ -357,7 +357,7 @@ class PayView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=1';
+    let url = '/wx/order/list?showType=1';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -386,7 +386,7 @@ class PayView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=1';
+    let url = '/wx/order/list?showType=1';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -552,7 +552,7 @@ class DeliverView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=2';
+    let url = '/wx/order/list?showType=2';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -580,7 +580,7 @@ class DeliverView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=2';
+    let url = '/wx/order/list?showType=2';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -746,7 +746,7 @@ class ReceiveView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=3';
+    let url = '/wx/order/list?showType=3';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -774,7 +774,7 @@ class ReceiveView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=3';
+    let url = '/wx/order/list?showType=3';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -941,7 +941,7 @@ class AccomplishView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=4';
+    let url = '/wx/order/list?showType=4';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -970,7 +970,7 @@ class AccomplishView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/list?showType=4';
+    let url = '/wx/order/list?showType=4';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {

@@ -139,7 +139,7 @@ export default class ServiceConfirmPage extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/cart/add';
+    let url = '/wx/cart/add';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.data) {
@@ -187,7 +187,7 @@ export default class ServiceConfirmPage extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/cart/fastadd';
+    let url = '/wx/cart/fastadd';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.data) {
@@ -215,7 +215,7 @@ export default class ServiceConfirmPage extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = `http://lhh.natapp1.cc/api/wx/goods/detail?id=${id}`;
+    let url = `/wx/goods/detail?id=${id}`;
     const callback = responseData => {
       console.log(JSON.stringify(responseData));
       this.setState({
@@ -242,7 +242,7 @@ export default class ServiceConfirmPage extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url1 = `http://lhh.natapp1.cc/api/wx/cart/index`;
+    let url1 = `/wx/cart/index`;
     const callback1 = responseData => {
       console.log(JSON.stringify(responseData));
       this.setState({

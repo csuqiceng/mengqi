@@ -120,7 +120,7 @@ export default class MyNewAddressView extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/address/save';
+    let url = '/wx/address/save';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {

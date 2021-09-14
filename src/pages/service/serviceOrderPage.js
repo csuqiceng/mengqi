@@ -120,7 +120,7 @@ export default class ServiceOrderPage extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/submit';
+    let url = '/wx/order/submit';
     const callback = responseData => {
       console.log("ServicePayPage————"+JSON.stringify(responseData));
       if (responseData.data) {
@@ -149,7 +149,7 @@ export default class ServiceOrderPage extends React.Component {
       },
       method: 'GET',
     };
-    let url1 = 'http://lhh.natapp1.cc/api/wx/address/list';
+    let url1 = '/wx/address/list';
     const callback1 = responseData => {
       let addressId = responseData.data.list[0]?responseData.data.list[0].id:'';
       let address = responseData.data.list[0];
@@ -164,7 +164,7 @@ export default class ServiceOrderPage extends React.Component {
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
       };
-      let url = `http://lhh.natapp1.cc/api/wx/cart/checkout?cartId=${cartId}&addressId=${addressId}&couponId=0&integral=&balance=`;
+      let url = `/wx/cart/checkout?cartId=${cartId}&addressId=${addressId}&couponId=0&integral=&balance=`;
       const callback = responseData => {
         console.log(responseData);
         this.setState({

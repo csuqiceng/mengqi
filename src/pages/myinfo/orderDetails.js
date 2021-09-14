@@ -72,7 +72,7 @@ export default class OrderDetails extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/cancel';
+    let url = '/wx/order/cancel';
     const callback = responseData => {
       if (responseData.errno == 0){
         alert("取消订单成功！")
@@ -89,7 +89,7 @@ export default class OrderDetails extends React.Component {
         //   },
         //   method: 'GET', // *GET, POST, PUT, DELETE, etc.
         // };
-        // let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
+        // let url = `/wx/order/detail?orderId=${id}`;
         // const callback = responseData => {
         //   if (responseData.errno == '0') {
         //     this.setState({
@@ -142,7 +142,7 @@ export default class OrderDetails extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/confirm';
+    let url = '/wx/order/confirm';
     const callback = responseData => {
       if (responseData.errno == 0){
         alert("确认收货成功！")
@@ -159,7 +159,7 @@ export default class OrderDetails extends React.Component {
         //   },
         //   method: 'GET', // *GET, POST, PUT, DELETE, etc.
         // };
-        // let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
+        // let url = `/wx/order/detail?orderId=${id}`;
         // const callback = responseData => {
         //   if (responseData.errno == '0') {
         //     this.setState({
@@ -203,7 +203,7 @@ export default class OrderDetails extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/order/delete';
+    let url = '/wx/order/delete';
     const callback = responseData => {
       if (responseData.errno == 0){
         alert("订单已删除！");
@@ -232,7 +232,7 @@ export default class OrderDetails extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = `http://lhh.natapp1.cc/api/wx/order/detail?orderId=${id}`;
+    let url = `/wx/order/detail?orderId=${id}`;
     const callback = responseData => {
       if (responseData.errno == '0') {
         console.log(JSON.stringify(responseData.data))

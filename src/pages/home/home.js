@@ -114,7 +114,7 @@ export default class HomePage extends React.Component {
       },
       method: 'GET',
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/new/home/index';
+    let url = '/wx/new/home/index';
     const callback = responseData => {
       this.setState({
         discountMallGoodsList: responseData.data.discountMallGoodsList,
@@ -284,7 +284,7 @@ export default class HomePage extends React.Component {
                       <Image
                         resizeMode="stretch"
                         style={styles.image}
-                        source={{uri:item.url}}
+                        source={{uri:item.url?item.url: ' '}}
                       />
                     </View>
                     </TouchableHighlight>
@@ -553,7 +553,7 @@ function BottomMainCard(props) {
       }}>
       <View style={{flexDirection: 'column',alignItems:'center'}}>
         <Image
-          source={{uri: props.image}}
+          source={{uri: props.image?props.image: ' '}}
           style={{
             width: 50,
             height: 50,

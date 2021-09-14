@@ -67,7 +67,7 @@ export default class MyBalanceView extends React.Component {
       },
       method: 'GET',
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/amount/info';
+    let url = '/wx/amount/info';
     const callback = responseData => {
       this.setState({
         amount: responseData.data.info.amount,

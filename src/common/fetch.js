@@ -1,6 +1,7 @@
 // 网络请求
 
 async function fetchData(url, param, callback, errCallback) {
+  url = 'https://www.mengqi.org.cn/mall/app/api' + url;
   await fetch(url, param)
     .then(response => {
       if (response.ok) {

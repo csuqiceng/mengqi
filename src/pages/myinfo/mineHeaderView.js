@@ -30,7 +30,7 @@ export default class HeaderView extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/amount/info';
+    let url = '/wx/amount/info';
     const callback = responseData => {
       this.setState({
         userName:responseData.data.userName,
@@ -119,7 +119,7 @@ class RenderBottomItem extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/user/index';
+    let url = '/wx/user/index';
     const callback = responseData => {
       this.setState({
         totalAmount:responseData.data.totalAmount,

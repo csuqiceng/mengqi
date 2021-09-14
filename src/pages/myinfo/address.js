@@ -68,7 +68,7 @@ export default class MyAddressView extends React.Component {
       },
       method: 'GET',
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/address/list';
+    let url = '/wx/address/list';
     const callback = responseData => {
       this.setState({
         AddressData: responseData.data.list,
@@ -112,7 +112,7 @@ export default class MyAddressView extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/address/delete';
+    let url = '/wx/address/delete';
     const callback = responseData => {
       alert('删除成功！');
       let param = {
@@ -170,7 +170,7 @@ export default class MyAddressView extends React.Component {
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/address/save';
+    let url = '/wx/address/save';
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
@@ -183,7 +183,7 @@ export default class MyAddressView extends React.Component {
           },
           method: 'GET',
         };
-        let url = 'http://lhh.natapp1.cc/api/wx/address/list';
+        let url = '/wx/address/list';
         const callback = responseData => {
           this.setState({
             AddressData: responseData.data.list,
@@ -222,7 +222,7 @@ export default class MyAddressView extends React.Component {
       },
       method: 'GET',
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/address/list';
+    let url = '/wx/address/list';
     const callback = responseData => {
       this.setState({
         AddressData: responseData.data.list,

@@ -75,7 +75,7 @@ export default class ShoppingCartPage extends React.Component
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/cart/update';
+    let url = '/wx/cart/update';
     const callback = responseData => {
       console.log(responseData);
       let param = {
@@ -87,7 +87,7 @@ export default class ShoppingCartPage extends React.Component
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
       };
-      let url = `http://lhh.natapp1.cc/api/wx/cart/index`;
+      let url = `/wx/cart/index`;
       const callback = responseData => {
         // console.log(JSON.stringify(responseData));
         this.setState({
@@ -128,7 +128,7 @@ export default class ShoppingCartPage extends React.Component
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = `http://lhh.natapp1.cc/api/wx/cart/delete`;
+    let url = `/wx/cart/delete`;
     const callback = responseData => {
       console.log(JSON.stringify(responseData));
       let param = {
@@ -140,7 +140,7 @@ export default class ShoppingCartPage extends React.Component
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
       };
-      let url = `http://lhh.natapp1.cc/api/wx/cart/index`;
+      let url = `/wx/cart/index`;
       const callback = responseData => {
         // console.log(JSON.stringify(responseData));
         this.setState({
@@ -182,7 +182,7 @@ export default class ShoppingCartPage extends React.Component
       },
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
     };
-    let url = 'http://lhh.natapp1.cc/api/wx/cart/checked';
+    let url = '/wx/cart/checked';
     const callback = responseData => {
       console.log(responseData);
       let param = {
@@ -194,7 +194,7 @@ export default class ShoppingCartPage extends React.Component
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
       };
-      let url = `http://lhh.natapp1.cc/api/wx/cart/index`;
+      let url = `/wx/cart/index`;
       const callback = responseData => {
         // console.log(JSON.stringify(responseData));
         this.setState({
@@ -246,7 +246,7 @@ export default class ShoppingCartPage extends React.Component
         },
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
       };
-      let url = `http://lhh.natapp1.cc/api/wx/cart/index`;
+      let url = `/wx/cart/index`;
       const callback = responseData => {
         this.setState({
           cartTotal: responseData.data.cartTotal,

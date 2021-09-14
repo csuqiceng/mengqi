@@ -28,7 +28,7 @@ export default class Classify extends React.Component {
       },
       method: 'GET',
     };
-    let url = `http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?brandId=${id}`;
+    let url = `/wx/catalog/getfirstcategory?brandId=${id}`;
     const callback = responseData => {
       this.setState({
         categoryList:responseData.data
@@ -56,7 +56,7 @@ export default class Classify extends React.Component {
      },
      method: 'GET',
    };
-   let url = `http://lhh.natapp1.cc/api/wx/catalog/getfirstcategory?brandId=${id}`;
+   let url = `/wx/catalog/getfirstcategory?brandId=${id}`;
    const callback = responseData => {
         this.setState({
           categoryList:responseData.data
