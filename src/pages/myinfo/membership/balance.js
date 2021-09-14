@@ -9,8 +9,8 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
-import NavBar from '../../common/navBar';
-import { fetchData } from "../../common/fetch";
+import NavBar from '../../../common/navBar';
+import { fetchData } from "../../../common/fetch";
 const {width} = Dimensions.get('window');
 
 export default class MyBalanceView extends React.Component {
@@ -45,7 +45,7 @@ export default class MyBalanceView extends React.Component {
           this.props.navigation.goBack();
         }}>
         <Image
-          source={require('../../assets/images/back.png')}
+          source={require('../../../assets/images/back.png')}
           style={{width: 20, height: 20, marginLeft: 10}}
         />
       </TouchableOpacity>
@@ -158,7 +158,7 @@ export default class MyBalanceView extends React.Component {
                   alignItems: 'center',
                 }}>
                 <Image
-                  source={require('../../assets/images/myinfo/icon_alipay_nor.png')}
+                  source={require('../../../assets/images/myinfo/icon_alipay_nor.png')}
                   style={{
                     width: 20,
                     height: 20,
@@ -186,7 +186,7 @@ export default class MyBalanceView extends React.Component {
                   marginLeft: 20,
                 }}>
                 <Image
-                  source={require('../../assets/images/myinfo/icon_wechat_sel.png')}
+                  source={require('../../../assets/images/myinfo/icon_wechat_sel.png')}
                   style={{
                     width: 20,
                     height: 20,

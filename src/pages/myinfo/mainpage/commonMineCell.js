@@ -14,7 +14,7 @@ function rightSubView(props) {
       {renderRightContent(props)}
       {/*箭头*/}
       <Image
-        source={require('../../assets/images/myinfo/icon_back.png')}
+        source={require('../../../assets/images/myinfo/icon_back.png')}
         style={{width: 15, height: 25, marginRight: 8, marginLeft: 5}}
       />
     </View>

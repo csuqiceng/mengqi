@@ -13,9 +13,9 @@ import {
   Button,
   Alert,
 } from 'react-native';
-import NavBar from '../../common/navBar';
+import NavBar from '../../../common/navBar';
 const {width, height} = Dimensions.get('window');
-import {fetchData} from '../../common/fetch';
+import {fetchData} from '../../../common/fetch';
 
 export default class OrderDetails extends React.Component {
   constructor(props) {
@@ -49,7 +49,7 @@ export default class OrderDetails extends React.Component {
           this.props.navigation.goBack();
         }}>
         <Image
-          source={require('../../assets/images/back.png')}
+          source={require('../../../assets/images/back.png')}
           style={{width: 20, height: 20, marginLeft: 10}}
         />
       </TouchableOpacity>
@@ -279,7 +279,7 @@ export default class OrderDetails extends React.Component {
                 alignItems: 'center'
               }}>
               <Image
-                source={require('../../assets/images/myinfo/details_icon_pay.png')}
+                source={require('../../../assets/images/myinfo/details_icon_pay.png')}
                 style={{width: 30, height: 30}}
               />
               <View
@@ -333,7 +333,7 @@ export default class OrderDetails extends React.Component {
                 marginRight: 30,
               }}>
               <Image
-                source={require('../../assets/images/myinfo/details_icon_service.png')}
+                source={require('../../../assets/images/myinfo/details_icon_service.png')}
                 style={{width: 30, height: 30}}
               />
             </View>
@@ -507,7 +507,7 @@ export default class OrderDetails extends React.Component {
               }}>
               <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <Image
-                  source={require('../../assets/images/myinfo/my_icon_address.png')}
+                  source={require('../../../assets/images/myinfo/my_icon_address.png')}
                   style={{width: 35, height: 30}}
                 />
               </View>

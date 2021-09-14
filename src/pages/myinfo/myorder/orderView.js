@@ -8,9 +8,9 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import NavBar from '../../common/navBar';
+import NavBar from '../../../common/navBar';
 const {width} = Dimensions.get('window');
-import {fetchData} from '../../common/fetch';
+import {fetchData} from '../../../common/fetch';
 const OrderViewData = [
   {
     title: '全部订单',
@@ -65,7 +65,7 @@ export default class MyOrderView extends React.Component {
           this.props.navigation.goBack();
         }}>
         <Image
-          source={require('../../assets/images/back.png')}
+          source={require('../../../assets/images/back.png')}
           style={{width: 20, height: 20, marginLeft: 10}}
         />
       </TouchableOpacity>
@@ -321,7 +321,7 @@ class AllorderView extends React.Component {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Image
-            source={require('../../assets/images/myinfo/payment_none.png')}
+            source={require('../../../assets/images/myinfo/payment_none.png')}
             style={{
               width: 120,
               height: 90,
@@ -518,7 +518,7 @@ class PayView extends React.Component {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Image
-            source={require('../../assets/images/myinfo/payment_none.png')}
+            source={require('../../../assets/images/myinfo/payment_none.png')}
             style={{
               width: 120,
               height: 90,
@@ -712,7 +712,7 @@ class DeliverView extends React.Component {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Image
-            source={require('../../assets/images/myinfo/payment_none.png')}
+            source={require('../../../assets/images/myinfo/payment_none.png')}
             style={{
               width: 120,
               height: 90,
@@ -906,7 +906,7 @@ class ReceiveView extends React.Component {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Image
-            source={require('../../assets/images/myinfo/payment_none.png')}
+            source={require('../../../assets/images/myinfo/payment_none.png')}
             style={{
               width: 120,
               height: 90,
@@ -1089,7 +1089,7 @@ class AccomplishView extends React.Component {
       return (
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <Image
-            source={require('../../assets/images/myinfo/payment_none.png')}
+            source={require('../../../assets/images/myinfo/payment_none.png')}
             style={{
               width: 120,
               height: 90,

@@ -12,10 +12,10 @@ import {
   Platform,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
-import NavBar from '../../common/navBar';
-import {fetchData} from '../../common/fetch';
-import { AreaPicker} from '../../components/pickers';
-import AreaJson from '../../components/pickers/Area.json';
+import NavBar from '../../../common/navBar';
+import {fetchData} from '../../../common/fetch';
+import { AreaPicker} from '../../../components/pickers';
+import AreaJson from '../../../components/pickers/Area.json';
 const {width} = Dimensions.get('window');
 
 export default class MyNewAddressView extends React.Component {
@@ -74,7 +74,7 @@ export default class MyNewAddressView extends React.Component {
           this.props.navigation.goBack();
         }}>
         <Image
-          source={require('../../assets/images/back.png')}
+          source={require('../../../assets/images/back.png')}
           style={{width: 20, height: 20, marginLeft: 10}}
         />
       </TouchableOpacity>

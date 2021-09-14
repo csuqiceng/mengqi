@@ -11,8 +11,8 @@ import {
   ScrollView,
 } from 'react-native';
 import CheckBox from 'react-native-check-box';
-import NavBar from '../../common/navBar';
-import {fetchData} from '../../common/fetch';
+import NavBar from '../../../common/navBar';
+import {fetchData} from '../../../common/fetch';
 const {width} = Dimensions.get('window');
 
 export default class MyAddressView extends React.Component {
@@ -52,7 +52,7 @@ export default class MyAddressView extends React.Component {
           this.props.navigation.goBack();
         }}>
         <Image
-          source={require('../../assets/images/back.png')}
+          source={require('../../../assets/images/back.png')}
           style={{width: 20, height: 20, marginLeft: 10}}
         />
       </TouchableOpacity>
@@ -317,7 +317,7 @@ export default class MyAddressView extends React.Component {
                             }}>
                             <View style={{flexDirection: 'row'}}>
                               <Image
-                                source={require('../../assets/images/myinfo/icon_edit.png')}
+                                source={require('../../../assets/images/myinfo/icon_edit.png')}
                                 style={{width: 20, height: 20}}
                               />
                               <Text>编辑</Text>
@@ -330,7 +330,7 @@ export default class MyAddressView extends React.Component {
                             }}>
                             <View style={{flexDirection: 'row'}}>
                               <Image
-                                source={require('../../assets/images/myinfo/icon_delete.png')}
+                                source={require('../../../assets/images/myinfo/icon_delete.png')}
                                 style={{
                                   width: 20,
                                   height: 20,

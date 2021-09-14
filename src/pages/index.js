@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-import {MinePage} from './myinfo/mine';
+import MinePage from './myinfo/mine';
 import SearchPageView from './search/searchPage';
 import ShoppingCartPage from './shoppingcart/shoppingCartPage';
 import Classify from './classify/classify';
@@ -16,13 +16,13 @@ import ServiceOrderPage from './service/serviceOrderPage';
 import HomePage from './home/home';
 import ServicePayPage from './service/servicePayPage';
 
-import SystemPage from './myinfo/system';
-import MyOrderView from './myinfo/orderView';
-import MyOrderDetails from './myinfo/orderDetails';
-import MyBalanceView from './myinfo/balance';
-import Changepassword from './myinfo/changepassword';
-import MyAddressView from './myinfo/address';
-import MyNewAddressView from './myinfo/newaddress';
+import SystemPage from './myinfo/system/system';
+import MyOrderView from './myinfo/myorder/orderView';
+import MyOrderDetails from './myinfo/myorder/orderDetails';
+import MyBalanceView from './myinfo/membership/balance';
+import Changepassword from './myinfo/system/changepassword';
+import MyAddressView from './myinfo/servicetool/address';
+import MyNewAddressView from './myinfo/servicetool/newaddress';
 import Localstorage from "../common/localStorage";
 
 

@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 //导入外部组件
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import NavBar from '../../common/navBar';
+import NavBar from '../../../common/navBar';
 var {width, height} = Dimensions.get('window');
 
 export default class Changepassword extends React.Component {
@@ -46,7 +46,7 @@ export default class Changepassword extends React.Component {
           this.props.navigation.goBack();
         }}>
         <Image
-          source={require('../../assets/images/back.png')}
+          source={require('../../../assets/images/back.png')}
           style={{width: 20, height: 20, marginLeft: 10}}
         />
       </TouchableOpacity>

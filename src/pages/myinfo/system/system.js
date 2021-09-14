@@ -8,35 +8,35 @@ import {
   Dimensions,
 } from 'react-native';
 //导入外部组件
-import NavBar from '../../common/navBar';
-import Localstorage from "../../common/localStorage";
+import NavBar from '../../../common/navBar';
+import Localstorage from "../../../common/localStorage";
 let {width} = Dimensions.get('window');
 
 const SystemData = [
   {
     title: '更改密码',
     id: 'changepassword',
-    img: require('../../assets/images/myinfo/set_icon_password.png'),
+    img: require('../../../assets/images/myinfo/set_icon_password.png'),
   },
   {
     title: '清除缓存',
     id: 'delete',
-    img: require('../../assets/images/myinfo/set_icon_de.png'),
+    img: require('../../../assets/images/myinfo/set_icon_de.png'),
   },
   {
     title: '意见反馈',
     id: 'opinion',
-    img: require('../../assets/images/myinfo/set_icon_opinion.png'),
+    img: require('../../../assets/images/myinfo/set_icon_opinion.png'),
   },
   {
     title: '检测更新',
     id: 'update',
-    img: require('../../assets/images/myinfo/set_icon_new.png'),
+    img: require('../../../assets/images/myinfo/set_icon_new.png'),
   },
   {
     title: '关于我们',
     id: 'about',
-    img: require('../../assets/images/myinfo/set_icon_us.png'),
+    img: require('../../../assets/images/myinfo/set_icon_us.png'),
   },
 ];
 export default class SystemPage extends React.Component {
@@ -70,7 +70,7 @@ export default class SystemPage extends React.Component {
           this.props.navigation.goBack();
         }}>
         <Image
-          source={require('../../assets/images/back.png')}
+          source={require('../../../assets/images/back.png')}
           style={{width: 20, height: 20, marginLeft: 10}}
         />
       </TouchableOpacity>
@@ -112,7 +112,7 @@ export default class SystemPage extends React.Component {
                     {item.title}
                   </Text>
                   <Image
-                    source={require('../../assets/images/myinfo/icon_back.png')}
+                    source={require('../../../assets/images/myinfo/icon_back.png')}
                     style={{width: 22, height: 22}}
                   />
                 </View>
