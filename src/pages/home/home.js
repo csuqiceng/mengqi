@@ -534,7 +534,6 @@ export default class HomePage extends React.Component {
         <AlertDialogWithDevelop
           showAnimationType='timing'
           onPress={(isOK) => {
-
           }} ref={ref => this.AlertDialog = ref} />
       </View>
     );

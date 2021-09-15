@@ -7,7 +7,6 @@ import {
   Image,
   TouchableOpacity, Platform,
 } from "react-native";
-import MyCell from "./commonMineCell";
 
 const InnerViewData = [
   {
@@ -97,12 +96,12 @@ export default class MineMiddleView extends React.Component {
           {InnerViewData.map((item, i) => {
             return (
               <TouchableOpacity
-                key={item.i}
+                key={i}
                 activeOpacity={0.5}
                 onPress={() => {
                   this.props.navigation.navigate('myorder', {id: item.id});
                 }}>
-                <InnerView imagePath={item.img} title={item.title} />
+                <InnerView  imagePath={item.img} title={item.title} />
               </TouchableOpacity>
             );
           })}

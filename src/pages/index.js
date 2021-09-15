@@ -170,47 +170,19 @@ export default class MainPage extends React.Component {
           }}>
           <Stack.Screen name="Guide" component={GuidePage} />
           <Stack.Screen name="Home" component={MainTabPage} />
-          <Stack.Screen
-            name="HomePage"
-            options={{}}
-            component={HomePage}
-          />
-          <Stack.Screen
-            name="ServiceOrderPage"
-            options={({route}) => ({title: route.params.name})}
-            component={ServiceOrderPage}
-          />
-          <Stack.Screen
-            name="ServiceConfirmPage"
-            options={({route}) => ({title: route.params.name})}
-            component={ServiceConfirmPage}
-          />
-          <Stack.Screen
-            name="ServicePayPage"
-            options={({route}) => ({title: route.params.name})}
-            component={ServicePayPage}
-          />
+          <Stack.Screen name="HomePage" options={{}} component={HomePage} />
+          <Stack.Screen name="ServiceOrderPage" options={({route}) => ({title: route.params.name})} component={ServiceOrderPage} />
+          <Stack.Screen name="ServiceConfirmPage" options={({route}) => ({title: route.params.name})} component={ServiceConfirmPage} />
+          <Stack.Screen name="ServicePayPage" options={({route}) => ({title: route.params.name})} component={ServicePayPage} />
 
           <Stack.Screen name="system" options={{}} component={SystemPage} />
-          <Stack.Screen
-            name="changepassword"
-            options={{}}
-            component={Changepassword}
-          />
+          <Stack.Screen name="changepassword" options={{}} component={Changepassword} />
           <Stack.Screen name="myorder" options={{}} component={MyOrderView} />
-          <Stack.Screen
-            name="orderdetails"
-            options={{}}
-            component={MyOrderDetails}
-          />
-          <Stack.Screen name="balance" options={{}} component={MyBalanceView} />
-          <Stack.Screen name="address" options={{}} component={MyAddressView} />
+          <Stack.Screen name="orderdetails" options={{}} component={MyOrderDetails} />
+          <Stack.Screen name="mybalance" options={{}} component={MyBalanceView} />
+          <Stack.Screen name="shippingaddress" options={{}} component={MyAddressView} />
           <Stack.Screen name="search" options={{}} component={SearchPageView} />
-          <Stack.Screen
-            name="newaddress"
-            options={{}}
-            component={MyNewAddressView}
-          />
+          <Stack.Screen name="newaddress" options={{}} component={MyNewAddressView} />
         </Stack.Navigator>
       </NavigationContainer>
       </SafeAreaView>
