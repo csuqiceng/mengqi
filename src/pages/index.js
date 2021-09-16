@@ -24,6 +24,7 @@ import Changepassword from './myinfo/system/changepassword';
 import MyAddressView from './myinfo/servicetool/address';
 import MyNewAddressView from './myinfo/servicetool/newaddress';
 import Localstorage from "../common/localStorage";
+import CitySelect from "./home/CitySectionList";
 
 
 //App 底部入口
@@ -183,6 +184,8 @@ export default class MainPage extends React.Component {
           <Stack.Screen name="shippingaddress" options={{}} component={MyAddressView} />
           <Stack.Screen name="search" options={{}} component={SearchPageView} />
           <Stack.Screen name="newaddress" options={{}} component={MyNewAddressView} />
+          <Stack.Screen name="cityselect" options={{}} component={CitySelect} />
+
         </Stack.Navigator>
       </NavigationContainer>
       </SafeAreaView>

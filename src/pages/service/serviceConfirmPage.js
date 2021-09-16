@@ -266,9 +266,7 @@ export default class ServiceConfirmPage extends React.Component {
         `;
   };
   onWebViewMessage = msg => {
-    console.log('dddddee');
     if (msg.nativeEvent.data !== undefined && msg.nativeEvent.data !== null) {
-      console.log('dddddee');
       this.setState({
         webHeight: parseInt(msg.nativeEvent.data),
       });

@@ -149,7 +149,12 @@ export default class HomePage extends React.Component {
                 marginTop:15,
                 alignItems: 'center'
               }}>
-              <View style={{marginLeft:10,flexDirection:'row'}}>
+                <TouchableOpacity
+                  style={{marginLeft:10,flexDirection:'row'}}
+                  onPress={() => {
+                    this.props.navigation.navigate('cityselect');
+                  }}
+                >
                 <Image
                   source={require('../../assets/images/icon_position1.png')}
                   style={{width: 22, height: 22}}
@@ -164,7 +169,7 @@ export default class HomePage extends React.Component {
                   }}>
                   荆州
                 </Text>
-              </View>
+                </TouchableOpacity>
               <Text
                 style={{
                   textAlign: 'center',
