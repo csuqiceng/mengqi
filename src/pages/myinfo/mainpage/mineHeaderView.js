@@ -20,6 +20,31 @@ export default class HeaderView extends React.Component {
       userName:''
     };
   }
+  UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
+    let param = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = '/wx/amount/info';
+    const callback = responseData => {
+      this.setState({
+        userName:responseData.data.userName,
+        info: responseData.data.info,
+      });
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  }
   componentDidMount() {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

@@ -354,7 +354,7 @@ export default class HomePage extends React.Component {
                     justifyContent:'flex-end'
                   }}
                   source={{
-                    uri: specialOffer[0].picUrl,
+                    uri: specialOffer[0]?specialOffer[0].picUrl:'',
                   }}
                 >
                   <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#FF5400',fontSize:17,fontWeight:'bold',backgroundColor:'rgba(255,255,255,0.5)',width:85}}>今日特价</Text>
@@ -418,7 +418,7 @@ export default class HomePage extends React.Component {
                 }}>
                 <Image
                   source={require('../../assets/images/home_icon_line.png')}
-                  style={{width: 5, height: 30}}
+                  style={{width: 5, height: 20}}
                 />
                 <Text style={{fontSize: 17, marginLeft: 10}}>热门服务</Text>
               </View>
@@ -453,7 +453,7 @@ export default class HomePage extends React.Component {
                 }}>
                 <Image
                   source={require('../../assets/images/home_icon_line.png')}
-                  style={{width: 5, height: 30}}
+                  style={{width: 5, height: 20}}
                 />
                 <Text style={{fontSize: 17, marginLeft: 10}}>特惠优选</Text>
               </View>

@@ -42,7 +42,9 @@ export default class LoginView extends React.Component {
   };
 
   onLoginCallback = () => {
-    this.props.navigation.navigate('mainPgae');
+    this.props.navigation.navigate('mainPgae', {
+      data: "",
+    });
   };
 
   renderPage = () => {
@@ -182,6 +184,7 @@ class AccoutLoginView extends React.Component
     let url = '/wx/auth/login';
     const callback = responseData => {
       window.token = responseData.data.token;
+      console.log(responseData.data.token)
       Localstorage.save('token', responseData.data.token);
       this.props.onLoginCallback();
     };
@@ -237,7 +240,7 @@ class AccoutLoginView extends React.Component
             />
             <TextInput
               onChangeText={this.onPasswordChanged} //添加值改变事件
-              onFocus={this.props.onfocusCallback} //获取焦点
+              // onFocus={this.props.onfocusCallback} //获取焦点
               style={styles.tgTextInputStyle}
               autoCapitalize="none" //设置首字母不自动大写
               underlineColorAndroid={'transparent'} //将下划线颜色改为透明

@@ -28,7 +28,7 @@ export  default class UserPage extends React.Component {
           <MineBottomView navigation={navigation} type='user' onDeveloping={()=>this.onDeveloping()}/>
 
           <View style={{justifyContent:'center',alignItems:'center',height:40}}>
-            <Text style={{ fontSize: 12,color:'gray'}}>梦奇佳园环保科技有限公司 </Text>
+            <Text style={{ fontSize: 12,color:'gray'}}>梦奇环保科技版权所有 </Text>
           </View>
         </ScrollView>
         <AlertDialogWithDevelop

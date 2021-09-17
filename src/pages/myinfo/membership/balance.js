@@ -7,12 +7,29 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  TextInput,
-} from 'react-native';
+  TextInput, DeviceEventEmitter,
+} from "react-native";
 import NavBar from '../../../common/navBar';
 import { fetchData } from "../../../common/fetch";
+import * as WeChat from 'react-native-wechat-lib';
 const {width} = Dimensions.get('window');
 
+const chargeData = [
+  {name:'100元',value:'01'},
+  {name:'200元',value:'02'},
+  {name:'500元',value:'03'},
+  {name:'1000元',value:'04'},
+]
+function group(array, subGroupLength) {
+  var index = 0;
+  var newArray = [];
+
+  while(index < array.length) {
+    newArray.push(array.slice(index, index += subGroupLength));
+  }
+
+  return newArray;
+}
 export default class MyBalanceView extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +37,7 @@ export default class MyBalanceView extends React.Component {
       balanceValue: '',
       amount:''
     };
+    WeChat.registerApp('wx9d0bb224716e8c3c', 'universalLink');
   }
   // 返回中间按钮
   renderTitleItem = () => {
@@ -80,7 +98,95 @@ export default class MyBalanceView extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
+
+  //提交充值
+  onConfirmPay = () => {
+    let balanceValue = this.state.balanceValue;
+    let data = {
+      amountStatus: balanceValue,
+    };
+    let param = {
+      body: JSON.stringify(data), // must match 'Content-Type' header
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/json',
+      },
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url = '/wx/amount/createRechargeOrder';
+    const callback = responseData => {
+      console.log(responseData);
+      if (responseData.data) {
+        DeviceEventEmitter.addListener('WeChat_Resp', resp => {
+          console.log('res:', resp)
+          if (resp.type === 'WXLaunchMiniProgramReq.Resp') { // 从小程序回到APP的事件
+            // miniProgramCallback(resp.extMsg)
+          } else if (resp.type === 'SendMessageToWX.Resp') { // 发送微信消息后的事件
+            // sendMessageCallback(resp.country)
+          } else if (resp.type === 'PayReq.Resp') { // 支付回调
+            alert(JSON.stringify(resp))
+          }
+        });
+        WeChat.isWXAppInstalled().then(isInstalled => {
+          if (isInstalled) {
+            WeChat.pay({
+              partnerId: responseData.data.partnerId, // 商家向财付通申请的商家id
+              prepayId: responseData.data.prepayId, // 预支付订单
+              nonceStr: responseData.data.nonceStr, // 随机串，防重发
+              timeStamp: responseData.data.timeStamp, // 时间戳，防重发.
+              package: responseData.data.packageValue, // 商家根据财付通文档填写的数据和签名
+              sign: responseData.data.sign, // 商家根据微信开放平台文档对数据做的签名
+            }).then(requestJson => {
+              //支付成功回调
+              alert('支付');
+              if (requestJson.errCode == '0') {
+                //回调成功处理
+              }
+            }).catch(err => {
+                alert('支付失败');
+              });
+          } else {
+            console.log(isInstalled);
+            alert('请安装微信');
+          }
+        });
+
+        let param = {
+          headers: {
+            'X-Litemall-Token': window.token
+              ? window.token
+              : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+            'content-type': 'application/json',
+          },
+          method: 'GET',
+        };
+        let url = '/wx/amount/info';
+        const callback = responseData => {
+          this.setState({
+            amount: responseData.data.info.amount,
+          });
+        };
+        const errCallback = responseData => {
+          if (responseData.errno == 501) {
+            this.props.navigation.navigate('login');
+          }
+        };
+        fetchData(url, param, callback, errCallback);
+      }
+    };
+    const errCallback = responseData => {
+      if (responseData.errno == 501) {
+        alert(responseData.errmsg);
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url, param, callback, errCallback);
+  };
+
   render() {
+    var chargeDataList = group(chargeData, 4);
     const {amount} = this.state;
     return (
       <View style={styles.container}>
@@ -111,21 +217,21 @@ export default class MyBalanceView extends React.Component {
             borderRadius: 10,
             padding: 40,
           }}>
-          <Text style={{color: 'gray'}}>金额充值</Text>
-          <View style={{flexDirection: 'row', marginTop: 15}}>
-            <Text style={{fontSize: 20}}>金额(元)</Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                backgroundColor: '#fff',
-                width: 200,
-                height: 30,
-                borderBottomWidth: 1,
-                borderColor: 'lightgray',
-                paddingLeft: 10,
-                marginLeft: 20,
-              }}>
+          <Text style={{color: 'black',fontSize: 17}}>请选择充值金额</Text>
+          {/*<View style={{flexDirection: 'row', marginTop: 15}}>*/}
+          {/*  <Text style={{fontSize: 20}}>金额(元)</Text>*/}
+            {/*<View*/}
+            {/*  style={{*/}
+            {/*    flexDirection: 'row',*/}
+            {/*    alignItems: 'center',*/}
+            {/*    backgroundColor: '#fff',*/}
+            {/*    width: 200,*/}
+            {/*    height: 30,*/}
+            {/*    borderBottomWidth: 1,*/}
+            {/*    borderColor: 'lightgray',*/}
+            {/*    paddingLeft: 10,*/}
+            {/*    marginLeft: 20,*/}
+            {/*  }}>*/}
               {/*<TextInput*/}
               {/*  onChangeText={this.onBalanceChanged} //添加值改变事件*/}
               {/*  // onFocus={this.props.onfocusCallback}//获取焦点*/}
@@ -138,14 +244,43 @@ export default class MyBalanceView extends React.Component {
               {/*  placeholder={'请输入充值金额'} //设置占位符*/}
               {/*  value={this.state.balanceValue}*/}
               {/*/>*/}
-              <Text>请选择充值金额</Text>
-            </View>
-          </View>
+            {/*  <Text>请选择充值金额</Text>*/}
+            {/*</View>*/}
+          {/*</View>*/}
+          {chargeDataList.map((item, i) => {
+            return (
+              <View key={i} style={{flexDirection:'row',flex:1,marginTop:10,paddingBottom: 30}}>
+                {
+                  item.map((item, i) => {
+                    return (
+                      <TouchableOpacity
+                        key={i}
+                        style={{
+                          width: 70,
+                          height: 40,
+                          marginRight:5,
+                          backgroundColor:this.state.balanceValue ==item.value?'#00BEAF':'#EEEEEE',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderRadius: 5,
+
+                        }}
+                        activeOpacity={0.5}
+                        onPress={() => {
+                          this.onBalanceChanged(item.value)
+                        }}>
+                          <Text style={{color:'black'}}>{item.name}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+              </View>
+            );
+          })}
           <View style={{flexDirection: 'row', marginTop: 30}}>
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                alert('支付宝');
+                // alert('支付宝');
               }}>
               <View
                 style={{
@@ -172,7 +307,7 @@ export default class MyBalanceView extends React.Component {
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                alert('支付宝');
+                // alert('支付宝');
               }}>
               <View
                 style={{
@@ -202,12 +337,12 @@ export default class MyBalanceView extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => {
-            alert('确认');
+            this.onConfirmPay()
           }}>
           <View
             style={{
               ...styles.tgOkBtnStyle,
-              backgroundColor: '#CCCCCC',
+              backgroundColor:this.state.balanceValue?'#00BEAF':'#CCCCCC',
               marginLeft: width * 0.1,
             }}>
             <Text

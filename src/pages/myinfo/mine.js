@@ -43,7 +43,6 @@ export default class  MinePage extends React.Component {
         />
         <MyinfoStack.Screen
           name="mainPgae"
-          options={{}}
           component={MyinfoPage}
         />
       </MyinfoStack.Navigator>
