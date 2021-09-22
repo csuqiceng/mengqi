@@ -41,6 +41,13 @@ function group(array, subGroupLength) {
   return newArray;
 }
 
+const data = [
+  {name:'服务保障',image:require('../../assets/images/icon_fw.png')},
+  {name:'质量保障',image:require('../../assets/images/icon_zl.png')},
+  {name:'时效保障',image:require('../../assets/images/icon_sx.png')},
+  {name:'价格保障',image:require('../../assets/images/icon_jg.png')},
+
+]
 export default class HomePage extends React.Component {
   constructor() {
     super();
@@ -121,7 +128,7 @@ export default class HomePage extends React.Component {
         hoteServiceList: responseData.data.hoteServiceList,
         brandList:responseData.data.brandList,
         adList:responseData.data.adList,
-        specialOffer:responseData.data.specialOffer
+        // specialOffer:responseData.data.specialOffer
       });
     };
     const errCallback = responseData => {
@@ -298,16 +305,27 @@ export default class HomePage extends React.Component {
               </Swiper>
             </LinearGradient>
 
-            <View style={{height:40,flexDirection:'row',backgroundColor:'#F9F9F9',alignItems:'center',width:width}}>
-              <Image
-                source={require('../../assets/images/icon_announcement.png')}
-                style={{width: 22, height: 22,marginLeft:10}}
-              />
-              <Text
-                style={{marginLeft: 10, width: 200,color: 'gray'}}
-              >
-                商家入驻持续招募中...
-              </Text>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                height:40,
+              }}>
+            {data.map((item, i) => {
+              return (
+                <View key={i} style={{flexDirection:'row',backgroundColor:'#F9F9F9',alignItems:'center',width:"25%",justifyContent:'center',paddingBottom:5}}>
+                  <Image
+                    source={item.image}
+                    style={{width: 11, height: 11}}
+                  />
+                  <Text
+                    style={{color: 'gray',marginLeft: 5}}
+                  >
+                    {item.name}
+                  </Text>
+                </View>
+              );
+            })}
             </View>
             {/*主要服务*/}
 
@@ -339,13 +357,15 @@ export default class HomePage extends React.Component {
             </View>
             <View style={{height:10,backgroundColor:'#F6F6F6'}}></View>
             {/*specialOffer*/}
-            <View style={{height:200,backgroundColor:'#F6F6F6',flexDirection:'row',margin:10}} >
+            <View style={{height:200,backgroundColor:'#F6F6F6',flexDirection:'row',margin:10}}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('ServiceConfirmPage', {
-                    name: specialOffer[0].name,
-                    id: specialOffer[0].id,
-                  });
+                  this.props.navigation.navigate('classifylist', {name: '空调清洗', id: 1036006});
+                  // this.props.navigation.navigate('servicelist', {
+                  //   name: specialOffer[0].name,
+                  //   id: specialOffer[0].id,
+                  //   groupedDiscountMallGoodsList:groupedDiscountMallGoodsList,
+                  // });
                 }}
                 style={{flex:2}}>
                 <ImageBackground
@@ -354,7 +374,7 @@ export default class HomePage extends React.Component {
                     justifyContent:'flex-end'
                   }}
                   source={{
-                    uri: specialOffer[0]?specialOffer[0].picUrl:'',
+                    uri: specialOffer[0]?specialOffer[0].picUrl:'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
                   }}
                 >
                   <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#FF5400',fontSize:17,fontWeight:'bold',backgroundColor:'rgba(255,255,255,0.5)',width:85}}>今日特价</Text>

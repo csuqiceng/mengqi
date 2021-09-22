@@ -42,7 +42,7 @@ const memberShipData1 = [
 const serviceToolData = [
   {title:'我的收藏',key:'myinvitation',image:require('../../../assets/images/myinfo/my_icon_ye.png')},
   {title:'收货地址',key:'shippingaddress',image:require('../../../assets/images/myinfo/my_icon_jf.png')},
-  {title:'绑定手机号',key:'bindmobile',image:require('../../../assets/images/myinfo/my_icon_pay.png')},
+  {title:'实名认证',key:'bindmobile',image:require('../../../assets/images/myinfo/my_icon_shiming.png')},
   {title:'操作帮助',key:'operationhelp',image:require('../../../assets/images/myinfo/my_icon_register.png')},
   {title:'我的客服',key:'customerservice',image:require('../../../assets/images/myinfo/my_icon_member.png')},
 ]

@@ -15,7 +15,7 @@ import ServiceConfirmPage from './service/serviceConfirmPage';
 import ServiceOrderPage from './service/serviceOrderPage';
 import HomePage from './home/home';
 import ServicePayPage from './service/servicePayPage';
-
+import ServiceListPage from './service/serviceListPage';
 import SystemPage from './myinfo/system/system';
 import MyOrderView from './myinfo/myorder/orderView';
 import MyOrderDetails from './myinfo/myorder/orderDetails';
@@ -25,6 +25,7 @@ import MyAddressView from './myinfo/servicetool/address';
 import MyNewAddressView from './myinfo/servicetool/newaddress';
 import Localstorage from "../common/localStorage";
 import CitySelect from "./home/CitySectionList";
+import ClassifyList from "./classify/classifyList";
 
 
 //App 底部入口
@@ -185,7 +186,8 @@ export default class MainPage extends React.Component {
           <Stack.Screen name="search" options={{}} component={SearchPageView} />
           <Stack.Screen name="newaddress" options={{}} component={MyNewAddressView} />
           <Stack.Screen name="cityselect" options={{}} component={CitySelect} />
-
+          <Stack.Screen name="servicelist" options={{}} component={ServiceListPage} />
+          <Stack.Screen name="classifylist" options={{}} component={ClassifyList} />
         </Stack.Navigator>
       </NavigationContainer>
       </SafeAreaView>
