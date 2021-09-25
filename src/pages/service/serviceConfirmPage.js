@@ -18,13 +18,13 @@ import Swiper from 'react-native-swiper';
 import NavBar from '../../common/navBar';
 import Stepper from '@ant-design/react-native/lib/stepper';
 import {fetchData} from '../../common/fetch';
-import Badge from "../../components/Badge/Badge";
+import Badge from '../../components/Badge/Badge';
 
 var {width} = Dimensions.get('window');
 
 const swiperData = [
-  "https://mengqi-storg.oss-accelerate.aliyuncs.com/hwblw7ybrnhrg2oev6a5.png",
-  "https://mengqi-storg.oss-accelerate.aliyuncs.com/hwblw7ybrnhrg2oev6a5.png"
+  'https://mengqi-storg.oss-accelerate.aliyuncs.com/hwblw7ybrnhrg2oev6a5.png',
+  'https://mengqi-storg.oss-accelerate.aliyuncs.com/hwblw7ybrnhrg2oev6a5.png',
 ];
 
 export default class ServiceConfirmPage extends React.Component {
@@ -39,8 +39,8 @@ export default class ServiceConfirmPage extends React.Component {
       productList: '',
       info: '',
       webHeight: 500,
-      swiperData:swiperData,
-      shoppingCount:0
+      swiperData: swiperData,
+      shoppingCount: 0,
     };
   }
   // 返回中间按钮
@@ -103,17 +103,17 @@ export default class ServiceConfirmPage extends React.Component {
         ? this.state.chooseItem.specifications[0]
         : '',
     });
-    if (this.chooseType=='addShoppingCart'){
-       this.addShoppingCart()
-    }else {
-      this.onServiceOrder()
+    if (this.chooseType == 'addShoppingCart') {
+      this.addShoppingCart();
+    } else {
+      this.onServiceOrder();
     }
   };
 
-  addShoppingCart=()=>{
+  addShoppingCart = () => {
     if (!this.state.chooseItem) {
-      this.setModalVisible(true)
-      this.chooseType='addShoppingCart'
+      this.setModalVisible(true);
+      this.chooseType = 'addShoppingCart';
       return;
     }
     let productId = this.state.productList ? this.state.productList[0].id : 0.0;
@@ -128,7 +128,7 @@ export default class ServiceConfirmPage extends React.Component {
       productId: productId,
       number: this.state.serviceItemCount,
     };
-    console.log(JSON.stringify(data))
+    console.log(JSON.stringify(data));
     let param = {
       body: JSON.stringify(data), // must match 'Content-Type' header
       headers: {
@@ -144,8 +144,8 @@ export default class ServiceConfirmPage extends React.Component {
       console.log(responseData);
       if (responseData.data) {
         this.setState({
-          shoppingCount:responseData.data
-        })
+          shoppingCount: responseData.data,
+        });
         // this.props.navigation.navigate('ServiceOrderPage', {
         //   data: responseData.data,
         // });
@@ -158,11 +158,11 @@ export default class ServiceConfirmPage extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
   onServiceOrder = () => {
     if (!this.state.chooseItem) {
-      this.setModalVisible(true)
-      this.chooseType='onServiceOrder'
+      this.setModalVisible(true);
+      this.chooseType = 'onServiceOrder';
       return;
     }
     let productId = this.state.productList ? this.state.productList[0].id : 0.0;
@@ -221,7 +221,7 @@ export default class ServiceConfirmPage extends React.Component {
       this.setState({
         productList: responseData.data.productList,
         info: responseData.data.info,
-        swiperData:responseData.data.info.gallery,
+        swiperData: responseData.data.info.gallery,
       });
     };
     const errCallback = responseData => {
@@ -232,7 +232,6 @@ export default class ServiceConfirmPage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
 
-
     let param1 = {
       headers: {
         'X-Litemall-Token': window.token
@@ -242,12 +241,12 @@ export default class ServiceConfirmPage extends React.Component {
       },
       method: 'GET', // *GET, POST, PUT, DELETE, etc.
     };
-    let url1 = `/wx/cart/index`;
+    let url1 = '/wx/cart/index';
     const callback1 = responseData => {
       console.log(JSON.stringify(responseData));
       this.setState({
-        shoppingCount:responseData.data.cartTotal.goodsCount
-      })
+        shoppingCount: responseData.data.cartTotal.goodsCount,
+      });
     };
     const errCallback1 = responseData => {
       if (responseData.errno == 501) {
@@ -280,17 +279,26 @@ export default class ServiceConfirmPage extends React.Component {
     console.log('Sending post message,this is RN');
     this.webView.postMessage('Post message from react native ');
   }
-  renderShoppingTip=()=>{
-     if(this.state.shoppingCount>0){
-       return(
-         <Badge count={this.state.shoppingCount} style={{backgroundColor: 'red', paddingLeft: 0, paddingRight: 0,marginTop:-10,marginLeft:-20}}/>
-       )
-     }else{
-       return  null;
-     }
-  }
+  renderShoppingTip = () => {
+    if (this.state.shoppingCount > 0) {
+      return (
+        <Badge
+          count={this.state.shoppingCount}
+          style={{
+            backgroundColor: 'red',
+            paddingLeft: 0,
+            paddingRight: 0,
+            marginTop: -10,
+            marginLeft: -20,
+          }}
+        />
+      );
+    } else {
+      return null;
+    }
+  };
   render() {
-    let INJECTEDJAVASCRIPT =`
+    let INJECTEDJAVASCRIPT = `
           let webHeight = document.body.scrollHeight;
           console.log(webHeight)
           window.ReactNativeWebView.postMessage(webHeight);
@@ -299,7 +307,7 @@ export default class ServiceConfirmPage extends React.Component {
       this.state;
 
     let scrollHeight = 0;
-    if (info.detail){
+    if (info.detail) {
       // let detail = info.detail;
       // detail = detail.replace(/"\"/g,"")
       // console.log("detail"+detail)
@@ -399,24 +407,34 @@ export default class ServiceConfirmPage extends React.Component {
               }}
               loop>
               {this.state.swiperData.map((item, i) => {
-                console.log(item)
+                console.log(item);
                 return (
                   <View style={styles.slide} key={i}>
-                    <Image source={{uri: item}}  style={{width:width,height:196}} />
+                    <Image
+                      source={{uri: item}}
+                      style={{width: width, height: 196}}
+                    />
                   </View>
                 );
               })}
             </Swiper>
             {/*  服务介绍  */}
-            <View style={{flex: 1, backgroundColor: '#F1F1F1',borderTopStartRadius:30,borderTopEndRadius:30}}>
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: '#F1F1F1',
+                borderTopStartRadius: 30,
+                borderTopEndRadius: 30,
+              }}>
               <View
                 style={{
                   height: 100,
                   backgroundColor: 'white',
                   paddingLeft: 15,
                   paddingRight: 15,
-                  paddingTop: 20
-                  ,borderTopStartRadius:30,borderTopEndRadius:30
+                  paddingTop: 20,
+                  borderTopStartRadius: 30,
+                  borderTopEndRadius: 30,
                 }}>
                 <Text style={{color: '#333333', fontSize: 20}}>
                   {this.props.route.params.name}
@@ -504,7 +522,6 @@ export default class ServiceConfirmPage extends React.Component {
                 {/*  {'---商品详情---'}*/}
                 {/*</Text>*/}
 
-
                 <WebView
                   ref={ref => (this.webView = ref)}
                   style={{width: width, height: 3944}}
@@ -576,8 +593,8 @@ export default class ServiceConfirmPage extends React.Component {
                         JSON.stringify(event.nativeEvent.data),
                     );
                     this.setState({
-                      webHeight:parseInt(event.nativeEvent.data)
-                    })
+                      webHeight: parseInt(event.nativeEvent.data),
+                    });
                   }}
                 />
               </View>
@@ -592,12 +609,15 @@ export default class ServiceConfirmPage extends React.Component {
             justifyContent: 'flex-end',
             margin: 5,
           }}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={{flex: 1}}
-              style={{justifyContent: 'center',alignItems:'center',flexDirection:'row'}}
-              onPress={() => this.props.navigation.navigate('ShoppingCart')}
-            >
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={{flex: 1}}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}
+            onPress={() => this.props.navigation.navigate('ShoppingCart')}>
             <Image
               source={require('../../assets/images/myinfo/payment_none.png')}
               style={{
@@ -605,11 +625,9 @@ export default class ServiceConfirmPage extends React.Component {
                 height: 40,
               }}
             />
-            {
-              this.renderShoppingTip()
-            }
-            </TouchableOpacity>
-          <View style={{flex:1}}/>
+            {this.renderShoppingTip()}
+          </TouchableOpacity>
+          <View style={{flex: 1}} />
           <Button
             color="#272C2E"
             title="加入购物车"
@@ -672,7 +690,9 @@ export default class ServiceConfirmPage extends React.Component {
               </View>
 
               <View>
-                <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 10}}>服务项目</Text>
+                <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 10}}>
+                  服务项目
+                </Text>
                 <View style={{flexDirection: 'row', marginTop: 10}}>
                   {defaultproductList.map((item, i) => {
                     return (

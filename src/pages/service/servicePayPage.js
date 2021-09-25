@@ -9,7 +9,7 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
-  DeviceEventEmitter
+  DeviceEventEmitter,
 } from 'react-native';
 import NavBar from '../../common/navBar';
 import {fetchData} from '../../common/fetch';
@@ -38,7 +38,6 @@ export default class ServicePayPage extends React.Component {
       </Text>
     );
   };
-
 
   // 返回左边按钮
   renderLeftItem = () => {
@@ -80,13 +79,16 @@ export default class ServicePayPage extends React.Component {
           console.log(e);
         };
         DeviceEventEmitter.addListener('WeChat_Resp', resp => {
-          console.log('res:', resp)
-          if (resp.type === 'WXLaunchMiniProgramReq.Resp') { // 从小程序回到APP的事件
+          console.log('res:', resp);
+          if (resp.type === 'WXLaunchMiniProgramReq.Resp') {
+            // 从小程序回到APP的事件
             // miniProgramCallback(resp.extMsg)
-          } else if (resp.type === 'SendMessageToWX.Resp') { // 发送微信消息后的事件
+          } else if (resp.type === 'SendMessageToWX.Resp') {
+            // 发送微信消息后的事件
             // sendMessageCallback(resp.country)
-          } else if (resp.type === 'PayReq.Resp') { // 支付回调
-            alert(JSON.stringify(resp))
+          } else if (resp.type === 'PayReq.Resp') {
+            // 支付回调
+            alert(JSON.stringify(resp));
           }
         });
         WeChat.isWXAppInstalled().then(isInstalled => {
@@ -98,7 +100,8 @@ export default class ServicePayPage extends React.Component {
               timeStamp: responseData.data.timeStamp, // 时间戳，防重发.
               package: responseData.data.packageValue, // 商家根据财付通文档填写的数据和签名
               sign: responseData.data.sign, // 商家根据微信开放平台文档对数据做的签名
-            }).then(requestJson => {
+            })
+              .then(requestJson => {
                 //支付成功回调
                 alert('支付');
                 if (requestJson.errCode == '0') {
@@ -113,7 +116,6 @@ export default class ServicePayPage extends React.Component {
             alert('请安装微信');
           }
         });
-
       }
     };
     const errCallback = responseData => {
@@ -124,7 +126,6 @@ export default class ServicePayPage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   };
-
 
   componentDidMount() {
     let orderId = this.props.route.params.data.orderId;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, TouchableOpacity, Image } from "react-native";
+import {View, TouchableOpacity, Image} from 'react-native';
 
 import BaseDialog from './BaseDialog';
 
@@ -41,20 +41,19 @@ class AlertDialogWithDevelop extends BaseDialog {
           style={{
             position: 'absolute',
             top: '0%',
-            left: '90%',}}
+            left: '90%',
+          }}
           onPress={() => {
             this.dismiss(() => {
               if (this.props.onPress) {
                 this.props.onPress(true);
               }
             });
-          }}
-          >
-        <Image
-          source={require('../../../assets/images/close.png')}
-          style={{width: this.getSize(25), height: this.getSize(25)
-          }}
-        />
+          }}>
+          <Image
+            source={require('../../../assets/images/close.png')}
+            style={{width: this.getSize(25), height: this.getSize(25)}}
+          />
         </TouchableOpacity>
       </View>
     );

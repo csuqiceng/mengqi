@@ -7,25 +7,26 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  TextInput, DeviceEventEmitter,
-} from "react-native";
+  TextInput,
+  DeviceEventEmitter,
+} from 'react-native';
 import NavBar from '../../../common/navBar';
-import { fetchData } from "../../../common/fetch";
+import {fetchData} from '../../../common/fetch';
 import * as WeChat from 'react-native-wechat-lib';
 const {width} = Dimensions.get('window');
 
 const chargeData = [
-  {name:'100元',value:'01'},
-  {name:'200元',value:'02'},
-  {name:'500元',value:'03'},
-  {name:'1000元',value:'04'},
-]
+  {name: '100元', value: '01'},
+  {name: '200元', value: '02'},
+  {name: '500元', value: '03'},
+  {name: '1000元', value: '04'},
+];
 function group(array, subGroupLength) {
   var index = 0;
   var newArray = [];
 
-  while(index < array.length) {
-    newArray.push(array.slice(index, index += subGroupLength));
+  while (index < array.length) {
+    newArray.push(array.slice(index, (index += subGroupLength)));
   }
 
   return newArray;
@@ -35,7 +36,7 @@ export default class MyBalanceView extends React.Component {
     super(props);
     this.state = {
       balanceValue: '',
-      amount:''
+      amount: '',
     };
     WeChat.registerApp('wx9d0bb224716e8c3c', 'universalLink');
   }
@@ -120,13 +121,16 @@ export default class MyBalanceView extends React.Component {
       console.log(responseData);
       if (responseData.data) {
         DeviceEventEmitter.addListener('WeChat_Resp', resp => {
-          console.log('res:', resp)
-          if (resp.type === 'WXLaunchMiniProgramReq.Resp') { // 从小程序回到APP的事件
+          console.log('res:', resp);
+          if (resp.type === 'WXLaunchMiniProgramReq.Resp') {
+            // 从小程序回到APP的事件
             // miniProgramCallback(resp.extMsg)
-          } else if (resp.type === 'SendMessageToWX.Resp') { // 发送微信消息后的事件
+          } else if (resp.type === 'SendMessageToWX.Resp') {
+            // 发送微信消息后的事件
             // sendMessageCallback(resp.country)
-          } else if (resp.type === 'PayReq.Resp') { // 支付回调
-            alert(JSON.stringify(resp))
+          } else if (resp.type === 'PayReq.Resp') {
+            // 支付回调
+            alert(JSON.stringify(resp));
           }
         });
         WeChat.isWXAppInstalled().then(isInstalled => {
@@ -138,13 +142,15 @@ export default class MyBalanceView extends React.Component {
               timeStamp: responseData.data.timeStamp, // 时间戳，防重发.
               package: responseData.data.packageValue, // 商家根据财付通文档填写的数据和签名
               sign: responseData.data.sign, // 商家根据微信开放平台文档对数据做的签名
-            }).then(requestJson => {
-              //支付成功回调
-              alert('支付');
-              if (requestJson.errCode == '0') {
-                //回调成功处理
-              }
-            }).catch(err => {
+            })
+              .then(requestJson => {
+                //支付成功回调
+                alert('支付');
+                if (requestJson.errCode == '0') {
+                  //回调成功处理
+                }
+              })
+              .catch(err => {
                 alert('支付失败');
               });
           } else {
@@ -217,62 +223,70 @@ export default class MyBalanceView extends React.Component {
             borderRadius: 10,
             padding: 40,
           }}>
-          <Text style={{color: 'black',fontSize: 17}}>请选择充值金额</Text>
+          <Text style={{color: 'black', fontSize: 17}}>请选择充值金额</Text>
           {/*<View style={{flexDirection: 'row', marginTop: 15}}>*/}
           {/*  <Text style={{fontSize: 20}}>金额(元)</Text>*/}
-            {/*<View*/}
-            {/*  style={{*/}
-            {/*    flexDirection: 'row',*/}
-            {/*    alignItems: 'center',*/}
-            {/*    backgroundColor: '#fff',*/}
-            {/*    width: 200,*/}
-            {/*    height: 30,*/}
-            {/*    borderBottomWidth: 1,*/}
-            {/*    borderColor: 'lightgray',*/}
-            {/*    paddingLeft: 10,*/}
-            {/*    marginLeft: 20,*/}
-            {/*  }}>*/}
-              {/*<TextInput*/}
-              {/*  onChangeText={this.onBalanceChanged} //添加值改变事件*/}
-              {/*  // onFocus={this.props.onfocusCallback}//获取焦点*/}
-              {/*  // onBlur={this.props.onBlurCallback}//失去焦点*/}
-              {/*  style={styles.tgTextInputStyle}*/}
-              {/*  autoCapitalize="none" //设置首字母不自动大写*/}
-              {/*  underlineColorAndroid={'transparent'} //将下划线颜色改为透明*/}
-              {/*  keyboardType="numeric"*/}
-              {/*  placeholderTextColor={'#ccc'} //设置占位符颜色*/}
-              {/*  placeholder={'请输入充值金额'} //设置占位符*/}
-              {/*  value={this.state.balanceValue}*/}
-              {/*/>*/}
-            {/*  <Text>请选择充值金额</Text>*/}
-            {/*</View>*/}
+          {/*<View*/}
+          {/*  style={{*/}
+          {/*    flexDirection: 'row',*/}
+          {/*    alignItems: 'center',*/}
+          {/*    backgroundColor: '#fff',*/}
+          {/*    width: 200,*/}
+          {/*    height: 30,*/}
+          {/*    borderBottomWidth: 1,*/}
+          {/*    borderColor: 'lightgray',*/}
+          {/*    paddingLeft: 10,*/}
+          {/*    marginLeft: 20,*/}
+          {/*  }}>*/}
+          {/*<TextInput*/}
+          {/*  onChangeText={this.onBalanceChanged} //添加值改变事件*/}
+          {/*  // onFocus={this.props.onfocusCallback}//获取焦点*/}
+          {/*  // onBlur={this.props.onBlurCallback}//失去焦点*/}
+          {/*  style={styles.tgTextInputStyle}*/}
+          {/*  autoCapitalize="none" //设置首字母不自动大写*/}
+          {/*  underlineColorAndroid={'transparent'} //将下划线颜色改为透明*/}
+          {/*  keyboardType="numeric"*/}
+          {/*  placeholderTextColor={'#ccc'} //设置占位符颜色*/}
+          {/*  placeholder={'请输入充值金额'} //设置占位符*/}
+          {/*  value={this.state.balanceValue}*/}
+          {/*/>*/}
+          {/*  <Text>请选择充值金额</Text>*/}
+          {/*</View>*/}
           {/*</View>*/}
           {chargeDataList.map((item, i) => {
             return (
-              <View key={i} style={{flexDirection:'row',flex:1,marginTop:10,paddingBottom: 30}}>
-                {
-                  item.map((item, i) => {
-                    return (
-                      <TouchableOpacity
-                        key={i}
-                        style={{
-                          width: 70,
-                          height: 40,
-                          marginRight:5,
-                          backgroundColor:this.state.balanceValue ==item.value?'#00BEAF':'#EEEEEE',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          borderRadius: 5,
-
-                        }}
-                        activeOpacity={0.5}
-                        onPress={() => {
-                          this.onBalanceChanged(item.value)
-                        }}>
-                          <Text style={{color:'black'}}>{item.name}</Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+              <View
+                key={i}
+                style={{
+                  flexDirection: 'row',
+                  flex: 1,
+                  marginTop: 10,
+                  paddingBottom: 30,
+                }}>
+                {item.map((item, i) => {
+                  return (
+                    <TouchableOpacity
+                      key={i}
+                      style={{
+                        width: 70,
+                        height: 40,
+                        marginRight: 5,
+                        backgroundColor:
+                          this.state.balanceValue == item.value
+                            ? '#00BEAF'
+                            : '#EEEEEE',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 5,
+                      }}
+                      activeOpacity={0.5}
+                      onPress={() => {
+                        this.onBalanceChanged(item.value);
+                      }}>
+                      <Text style={{color: 'black'}}>{item.name}</Text>
+                    </TouchableOpacity>
+                  );
+                })}
               </View>
             );
           })}
@@ -337,12 +351,12 @@ export default class MyBalanceView extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => {
-            this.onConfirmPay()
+            this.onConfirmPay();
           }}>
           <View
             style={{
               ...styles.tgOkBtnStyle,
-              backgroundColor:this.state.balanceValue?'#00BEAF':'#CCCCCC',
+              backgroundColor: this.state.balanceValue ? '#00BEAF' : '#CCCCCC',
               marginLeft: width * 0.1,
             }}>
             <Text

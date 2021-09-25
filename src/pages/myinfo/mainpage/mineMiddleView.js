@@ -5,8 +5,9 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity, Platform,
-} from "react-native";
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 
 const InnerViewData = [
   {
@@ -42,57 +43,71 @@ export default class MineMiddleView extends React.Component {
   }
   render() {
     return (
-      <View style={{
-        margin:10,
-        backgroundColor:'white',
-        shadowColor: '#000',
-        shadowOffset: { width: 4, height: 4 },
-        shadowOpacity: 0.8,
-        shadowRadius: 6,
-        elevation: 10
-      }}>
+      <View
+        style={{
+          margin: 10,
+          backgroundColor: 'white',
+          shadowColor: '#000',
+          shadowOffset: {width: 4, height: 4},
+          shadowOpacity: 0.8,
+          shadowRadius: 6,
+          elevation: 10,
+        }}>
         <View
           style={{
-            flex:1,
+            flex: 1,
             borderBottomColor: '#e8e8e8',
             borderBottomWidth: 1,
             marginBottom: 10,
           }}>
-            <View style={{
+          <View
+            style={{
               // 主轴的方向
               flexDirection: 'row',
               justifyContent: 'space-between',
               // backgroundColor: 'white',
               alignItems: 'center',
-              height: Platform.OS == 'ios' ? 50 : 36
+              height: Platform.OS == 'ios' ? 50 : 36,
             }}>
-              {/*--左边--*/}
-              <View style={{
-                flex:1,
+            {/*--左边--*/}
+            <View
+              style={{
+                flex: 1,
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginLeft: 8
+                marginLeft: 8,
               }}>
-                <Text style={{ fontSize: 18,fontWeight:'bold' }}>我的订单</Text>
-              </View>
+              <Text style={{fontSize: 18, fontWeight: 'bold'}}>我的订单</Text>
+            </View>
 
-              {/*--右边--*/}
-              <TouchableOpacity
-                activeOpacity={0.5}
-                onPress={() => {
-                  this.props.navigation.navigate('myorder', {id: 'allorder'});
+            {/*--右边--*/}
+            <TouchableOpacity
+              activeOpacity={0.5}
+              onPress={() => {
+                this.props.navigation.navigate('myorder', {id: 'allorder'});
+              }}>
+              <View
+                style={{
+                  paddingRight: 5,
+                  alignItems: 'center',
+                  flexDirection: 'row',
                 }}>
-              <View style={{paddingRight: 5,alignItems: 'center',flexDirection: 'row'}}>
                 <Text style={{color: 'black'}}>全部订单</Text>
                 <Image
                   source={require('../../../assets/images/myinfo/icon_back.png')}
                   style={{width: 15, height: 20, marginRight: 8, marginLeft: 5}}
                 />
               </View>
-          </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={{flex:1,flexDirection: 'row',justifyContent: 'space-around',paddingBottom: 20}}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            paddingBottom: 20,
+          }}>
           {InnerViewData.map((item, i) => {
             return (
               <TouchableOpacity
@@ -101,7 +116,7 @@ export default class MineMiddleView extends React.Component {
                 onPress={() => {
                   this.props.navigation.navigate('myorder', {id: item.id});
                 }}>
-                <InnerView  imagePath={item.img} title={item.title} />
+                <InnerView imagePath={item.img} title={item.title} />
               </TouchableOpacity>
             );
           })}

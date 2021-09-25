@@ -146,9 +146,12 @@ class AllorderView extends React.Component {
   }
 
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
+    this.props.navigation.navigate('orderdetails', {
+      id: id,
+      refresh: this._refresh,
+    });
   };
-  _refresh=()=>{
+  _refresh = () => {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
@@ -175,7 +178,7 @@ class AllorderView extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
 
   componentDidMount() {
     let param = {
@@ -344,9 +347,12 @@ class PayView extends React.Component {
   }
 
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
+    this.props.navigation.navigate('orderdetails', {
+      id: id,
+      refresh: this._refresh,
+    });
   };
-  _refresh=()=>{
+  _refresh = () => {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
@@ -373,7 +379,7 @@ class PayView extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
 
   componentDidMount() {
     let param = {
@@ -539,9 +545,12 @@ class DeliverView extends React.Component {
     };
   }
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
+    this.props.navigation.navigate('orderdetails', {
+      id: id,
+      refresh: this._refresh,
+    });
   };
-  _refresh=()=>{
+  _refresh = () => {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
@@ -568,7 +577,7 @@ class DeliverView extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
   componentDidMount() {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -733,9 +742,12 @@ class ReceiveView extends React.Component {
     };
   }
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
+    this.props.navigation.navigate('orderdetails', {
+      id: id,
+      refresh: this._refresh,
+    });
   };
-  _refresh=()=>{
+  _refresh = () => {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
@@ -762,7 +774,7 @@ class ReceiveView extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
   componentDidMount() {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -927,10 +939,13 @@ class AccomplishView extends React.Component {
     };
   }
   onOrderdetails = id => {
-    this.props.navigation.navigate('orderdetails', {id: id,refresh: this._refresh});
+    this.props.navigation.navigate('orderdetails', {
+      id: id,
+      refresh: this._refresh,
+    });
   };
 
-  _refresh=()=>{
+  _refresh = () => {
     let param = {
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
@@ -957,7 +972,7 @@ class AccomplishView extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
 
   componentDidMount() {
     let param = {

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 //导入外部组件
 import NavBar from '../../../common/navBar';
-import Localstorage from "../../../common/localStorage";
+import Localstorage from '../../../common/localStorage';
 let {width} = Dimensions.get('window');
 
 const SystemData = [

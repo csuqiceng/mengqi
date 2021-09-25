@@ -1,6 +1,6 @@
 /*
-* 首页
-*/
+ * 首页
+ */
 import React from 'react';
 import Swiper from 'react-native-swiper';
 import {
@@ -20,10 +20,10 @@ import {
   preferentialData,
   brandListData,
   adListData,
-  specialOfferData
+  specialOfferData,
 } from '../../LocalData/homePageData';
 import Localstorage from '../../common/localStorage';
-import LinearGradient from  'react-native-linear-gradient'
+import LinearGradient from 'react-native-linear-gradient';
 import {fetchData} from '../../common/fetch';
 // import { RNCamera } from 'react-native-camera';
 import {AlertDialogWithDevelop} from '../../components/pickers';
@@ -34,20 +34,19 @@ function group(array, subGroupLength) {
   var index = 0;
   var newArray = [];
 
-  while(index < array.length) {
-    newArray.push(array.slice(index, index += subGroupLength));
+  while (index < array.length) {
+    newArray.push(array.slice(index, (index += subGroupLength)));
   }
 
   return newArray;
 }
 
 const data = [
-  {name:'服务保障',image:require('../../assets/images/icon_fw.png')},
-  {name:'质量保障',image:require('../../assets/images/icon_zl.png')},
-  {name:'时效保障',image:require('../../assets/images/icon_sx.png')},
-  {name:'价格保障',image:require('../../assets/images/icon_jg.png')},
-
-]
+  {name: '服务保障', image: require('../../assets/images/icon_fw.png')},
+  {name: '质量保障', image: require('../../assets/images/icon_zl.png')},
+  {name: '时效保障', image: require('../../assets/images/icon_sx.png')},
+  {name: '价格保障', image: require('../../assets/images/icon_jg.png')},
+];
 export default class HomePage extends React.Component {
   constructor() {
     super();
@@ -56,9 +55,9 @@ export default class HomePage extends React.Component {
       dataSource: '',
       discountMallGoodsList: preferentialData,
       hoteServiceList: hotServerData,
-      brandList:brandListData,
-      adList:adListData,
-      specialOffer:specialOfferData
+      brandList: brandListData,
+      adList: adListData,
+      specialOffer: specialOfferData,
     };
   }
 
@@ -86,7 +85,7 @@ export default class HomePage extends React.Component {
     this.props.navigation.navigate('ServiceConfirmPage', {name: name, id: id});
   };
 
- // 搜索内容
+  // 搜索内容
   onChangeText = text => {
     if (text) {
       // this.setState({inputValue: text}); //实时变化值
@@ -108,8 +107,8 @@ export default class HomePage extends React.Component {
   //请求首页内容
   componentDidMount() {
     const storage = Localstorage.get('token');
-    storage.then( (token) => {
-      window.token = token
+    storage.then(token => {
+      window.token = token;
     });
 
     let param = {
@@ -126,8 +125,8 @@ export default class HomePage extends React.Component {
       this.setState({
         discountMallGoodsList: responseData.data.discountMallGoodsList,
         hoteServiceList: responseData.data.hoteServiceList,
-        brandList:responseData.data.brandList,
-        adList:responseData.data.adList,
+        brandList: responseData.data.brandList,
+        adList: responseData.data.adList,
         // specialOffer:responseData.data.specialOffer
       });
     };
@@ -142,101 +141,105 @@ export default class HomePage extends React.Component {
 
   // 渲染
   render() {
-    const  {brandList,hoteServiceList,discountMallGoodsList,adList,specialOffer} = this.state;
+    const {
+      brandList,
+      hoteServiceList,
+      discountMallGoodsList,
+      adList,
+      specialOffer,
+    } = this.state;
     var groupedBrandList = group(brandList, 5);
     var groupedDiscountMallGoodsList = group(discountMallGoodsList, 2);
     return (
       <View style={styles.container}>
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#21D59D', '#1BC7AA', '#13B4BB']} style={{height: 110}}>
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}
+          colors={['#21D59D', '#1BC7AA', '#13B4BB']}
+          style={{height: 110}}>
           <View
-              style={{
-                height: 40,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop:15,
-                alignItems: 'center'
+            style={{
+              height: 40,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 15,
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity
+              style={{marginLeft: 10, flexDirection: 'row'}}
+              onPress={() => {
+                this.props.navigation.navigate('cityselect');
               }}>
-                <TouchableOpacity
-                  style={{marginLeft:10,flexDirection:'row'}}
-                  onPress={() => {
-                    this.props.navigation.navigate('cityselect');
-                  }}
-                >
-                <Image
-                  source={require('../../assets/images/icon_position1.png')}
-                  style={{width: 22, height: 22}}
-                />
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 13,
-                    fontWeight: 'bold',
-                    includeFontPadding: false,
-                    textAlignVertical: 'center',
-                  }}>
-                  荆州
-                </Text>
-                </TouchableOpacity>
+              <Image
+                source={require('../../assets/images/icon_position1.png')}
+                style={{width: 22, height: 22}}
+              />
               <Text
                 style={{
                   textAlign: 'center',
-                  fontSize: 18,
+                  fontSize: 13,
                   fontWeight: 'bold',
                   includeFontPadding: false,
                   textAlignVertical: 'center',
-                  flex: 1,
                 }}>
-                梦奇佳园
+                荆州
               </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 18,
+                fontWeight: 'bold',
+                includeFontPadding: false,
+                textAlignVertical: 'center',
+                flex: 1,
+              }}>
+              梦奇佳园
+            </Text>
             <TouchableOpacity
               onPress={() => {
                 this.AlertDialog.show();
-              }}
-            >
-            <Image
-              source={require('../../assets/images/icon_scan.png')}
-              style={{width: 25, height: 25,marginRight:10}}
-            />
+              }}>
+              <Image
+                source={require('../../assets/images/icon_scan.png')}
+                style={{width: 25, height: 25, marginRight: 10}}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 this.AlertDialog.show();
-              }}
-              >
-            <Image
-
-              source={require('../../assets/images/icon_news.png')}
-              style={{width: 25, height: 25,marginRight:10}}
-            />
+              }}>
+              <Image
+                source={require('../../assets/images/icon_news.png')}
+                style={{width: 25, height: 25, marginRight: 10}}
+              />
             </TouchableOpacity>
-            </View>
+          </View>
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate('search');
             }}
             style={{flex: 1}}>
-        <View
-          style={{
-            height: 30,
-            borderRadius: 15,
-            flexDirection: 'row',
-            backgroundColor:'white',
-            width:width-40,
-            marginLeft:20,
-            marginTop:10,
-            alignItems: 'center',
-          }}>
-          <Image
-            source={require('../../assets/images/home_icon_search.png')}
-            style={{width: 15, height: 15,marginLeft:10}}
-          />
+            <View
+              style={{
+                height: 30,
+                borderRadius: 15,
+                flexDirection: 'row',
+                backgroundColor: 'white',
+                width: width - 40,
+                marginLeft: 20,
+                marginTop: 10,
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../../assets/images/home_icon_search.png')}
+                style={{width: 15, height: 15, marginLeft: 10}}
+              />
 
-            <Text
-              style={{marginLeft: 10, width: 150,color: 'gray'}}
-              >
-              请输入关键词
-            </Text>
-        </View>
+              <Text style={{marginLeft: 10, width: 150, color: 'gray'}}>
+                请输入关键词
+              </Text>
+            </View>
           </TouchableOpacity>
         </LinearGradient>
         <SafeAreaView style={{flex: 1}}>
@@ -245,7 +248,11 @@ export default class HomePage extends React.Component {
             showsVerticalScrollIndicator={false}>
             {/*Swiper*/}
 
-            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#21D59D', '#1BC7AA', '#13B4BB']} style={{flex:1}}>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={['#21D59D', '#1BC7AA', '#13B4BB']}
+              style={{flex: 1}}>
               <Swiper
                 style={styles.wrapper}
                 autoplay
@@ -292,13 +299,13 @@ export default class HomePage extends React.Component {
                       activeOpacity={0.6}
                       underlayColor="#DDDDDD"
                       onPress={() => alert(item.content)}>
-                    <View style={styles.slide} key={i}>
-                      <Image
-                        resizeMode="stretch"
-                        style={styles.image}
-                        source={{uri:item.url?item.url: ' '}}
-                      />
-                    </View>
+                      <View style={styles.slide} key={i}>
+                        <Image
+                          resizeMode="stretch"
+                          style={styles.image}
+                          source={{uri: item.url ? item.url : ' '}}
+                        />
+                      </View>
                     </TouchableHighlight>
                   );
                 })}
@@ -309,23 +316,30 @@ export default class HomePage extends React.Component {
               style={{
                 flex: 1,
                 flexDirection: 'row',
-                height:40,
+                height: 40,
               }}>
-            {data.map((item, i) => {
-              return (
-                <View key={i} style={{flexDirection:'row',backgroundColor:'#F9F9F9',alignItems:'center',width:"25%",justifyContent:'center',paddingBottom:5}}>
-                  <Image
-                    source={item.image}
-                    style={{width: 11, height: 11}}
-                  />
-                  <Text
-                    style={{color: 'gray',marginLeft: 5}}
-                  >
-                    {item.name}
-                  </Text>
-                </View>
-              );
-            })}
+              {data.map((item, i) => {
+                return (
+                  <View
+                    key={i}
+                    style={{
+                      flexDirection: 'row',
+                      backgroundColor: '#F9F9F9',
+                      alignItems: 'center',
+                      width: '25%',
+                      justifyContent: 'center',
+                      paddingBottom: 5,
+                    }}>
+                    <Image
+                      source={item.image}
+                      style={{width: 11, height: 11}}
+                    />
+                    <Text style={{color: 'gray', marginLeft: 5}}>
+                      {item.name}
+                    </Text>
+                  </View>
+                );
+              })}
             </View>
             {/*主要服务*/}
 
@@ -333,102 +347,175 @@ export default class HomePage extends React.Component {
               style={{
                 flex: 1,
                 flexDirection: 'column',
-                width:width,
+                width: width,
                 marginBottom: 15,
               }}>
               {groupedBrandList.map((item, i) => {
                 return (
-                  <View key={i} style={{flexDirection:'row',flex:1,marginTop:10}}>
-                    {
-                      item.map((item, i) => {
-                        return (
-                          <BottomMainCard
-                            text={item.name}
-                            key={i}
-                            id={item.id}
-                            onCardClick={this.onMainServiceCardClick}
-                            image={item.picUrl}
-                          />
-                        );
-                      })}
-                    </View>
+                  <View
+                    key={i}
+                    style={{flexDirection: 'row', flex: 1, marginTop: 10}}>
+                    {item.map((item, i) => {
+                      return (
+                        <BottomMainCard
+                          text={item.name}
+                          key={i}
+                          id={item.id}
+                          onCardClick={this.onMainServiceCardClick}
+                          image={item.picUrl}
+                        />
+                      );
+                    })}
+                  </View>
                 );
               })}
             </View>
-            <View style={{height:10,backgroundColor:'#F6F6F6'}}></View>
+            <View style={{height: 10, backgroundColor: '#F6F6F6'}} />
             {/*specialOffer*/}
-            <View style={{height:200,backgroundColor:'#F6F6F6',flexDirection:'row',margin:10}}>
+            <View
+              style={{
+                height: 200,
+                backgroundColor: '#F6F6F6',
+                flexDirection: 'row',
+                margin: 10,
+              }}>
               <TouchableOpacity
                 onPress={() => {
-                  this.props.navigation.navigate('classifylist', {name: '空调清洗', id: 1036006});
+                  this.props.navigation.navigate('classifylist', {
+                    name: '空调清洗',
+                    id: 1036006,
+                  });
                   // this.props.navigation.navigate('servicelist', {
                   //   name: specialOffer[0].name,
                   //   id: specialOffer[0].id,
                   //   groupedDiscountMallGoodsList:groupedDiscountMallGoodsList,
                   // });
                 }}
-                style={{flex:2}}>
+                style={{flex: 2}}>
                 <ImageBackground
                   style={{
-                    flex:1,
-                    justifyContent:'flex-end'
+                    flex: 1,
+                    justifyContent: 'flex-end',
                   }}
                   source={{
-                    uri: specialOffer[0]?specialOffer[0].picUrl:'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
-                  }}
-                >
-                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#FF5400',fontSize:17,fontWeight:'bold',backgroundColor:'rgba(255,255,255,0.5)',width:85}}>今日特价</Text>
-                  <View style={{flexDirection:'row',marginBottom:10}}>
-                    <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13}}>剩余</Text>
-                    <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13,backgroundColor:'#FF5400'}}>28</Text>
-                    <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13}}>件</Text>
+                    uri: specialOffer[0]
+                      ? specialOffer[0].picUrl
+                      : 'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
+                  }}>
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode={'tail'}
+                    style={{
+                      color: '#FF5400',
+                      fontSize: 17,
+                      fontWeight: 'bold',
+                      backgroundColor: 'rgba(255,255,255,0.5)',
+                      width: 85,
+                    }}>
+                    今日特价
+                  </Text>
+                  <View style={{flexDirection: 'row', marginBottom: 10}}>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                      style={{color: 'white', fontSize: 13}}>
+                      剩余
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                      style={{
+                        color: 'white',
+                        fontSize: 13,
+                        backgroundColor: '#FF5400',
+                      }}>
+                      28
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                      style={{color: 'white', fontSize: 13}}>
+                      件
+                    </Text>
                   </View>
                 </ImageBackground>
               </TouchableOpacity>
 
-              <View style={{flex:3,marginLeft:10}}>
+              <View style={{flex: 3, marginLeft: 10}}>
                 <TouchableOpacity
                   onPress={() => {
                     this.AlertDialog.show();
                   }}
-                  style={{height:90}}
-                >
-                <ImageBackground
-                  style={{
-                    height:90,
-                    justifyContent:'center',
-                    borderRadius:5
-                  }}
-                  source={require('../../assets/images/home_plate2.png')}
-                >
-                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#00DC8A',fontSize:17,fontWeight:'bold',width:85,marginLeft:10}}>培训直播</Text>
-                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'white',fontSize:13,marginLeft:10}}>干货满满等你来看</Text>
-                </ImageBackground>
+                  style={{height: 90}}>
+                  <ImageBackground
+                    style={{
+                      height: 90,
+                      justifyContent: 'center',
+                      borderRadius: 5,
+                    }}
+                    source={require('../../assets/images/home_plate2.png')}>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                      style={{
+                        color: '#00DC8A',
+                        fontSize: 17,
+                        fontWeight: 'bold',
+                        width: 85,
+                        marginLeft: 10,
+                      }}>
+                      培训直播
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                      style={{color: 'white', fontSize: 13, marginLeft: 10}}>
+                      干货满满等你来看
+                    </Text>
+                  </ImageBackground>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
                     this.AlertDialog.show();
                   }}
-                  style={{flex:1}}
-                >
-                <ImageBackground
-                  style={{
-                    height:100,
-                    marginTop:10,
-                    justifyContent:'flex-end',
-                    borderRadius:5
-                  }}
-
-                  source={require('../../assets/images/home_plate3.png')}
-                >
-                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'#0931FF',fontSize:17,fontWeight:'bold',width:85,marginLeft:10}}>商家入驻</Text>
-                  <Text numberOfLines={1} ellipsizeMode={'tail'} style={{color:'gray',fontSize:13,marginLeft:10,marginBottom:10}}>喜迎财富来袭</Text>
-                </ImageBackground>
+                  style={{flex: 1}}>
+                  <ImageBackground
+                    style={{
+                      height: 100,
+                      marginTop: 10,
+                      justifyContent: 'flex-end',
+                      borderRadius: 5,
+                    }}
+                    source={require('../../assets/images/home_plate3.png')}>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                      style={{
+                        color: '#0931FF',
+                        fontSize: 17,
+                        fontWeight: 'bold',
+                        width: 85,
+                        marginLeft: 10,
+                      }}>
+                      商家入驻
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                      style={{
+                        color: 'gray',
+                        fontSize: 13,
+                        marginLeft: 10,
+                        marginBottom: 10,
+                      }}>
+                      喜迎财富来袭
+                    </Text>
+                  </ImageBackground>
                 </TouchableOpacity>
               </View>
             </View>
             {/*热门服务*/}
-            <View  style={{backgroundColor:'#F6F6F6'}}>
+            <View style={{backgroundColor: '#F6F6F6'}}>
               <View
                 style={{
                   height: 40,
@@ -445,10 +532,16 @@ export default class HomePage extends React.Component {
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                style={{paddingTop:10,paddingLeft:10,backgroundColor:'white'}}>
+                style={{
+                  paddingTop: 10,
+                  paddingLeft: 10,
+                  backgroundColor: 'white',
+                }}>
                 {hoteServiceList.map((item, i) => {
                   return (
-                    <View key={item.id} style={{paddingRight: 10,marginLeft:10}}>
+                    <View
+                      key={item.id}
+                      style={{paddingRight: 10, marginLeft: 10}}>
                       <BottomHotCard
                         text={item.name}
                         key={item.name}
@@ -463,7 +556,7 @@ export default class HomePage extends React.Component {
               </ScrollView>
             </View>
             {/*特惠优选*/}
-            <View style={{backgroundColor:'#F6F6F6',paddingTop:10}}>
+            <View style={{backgroundColor: '#F6F6F6', paddingTop: 10}}>
               <View
                 style={{
                   flexDirection: 'row',
@@ -480,104 +573,114 @@ export default class HomePage extends React.Component {
 
               {groupedDiscountMallGoodsList.map((item, i) => {
                 return (
-                  <View key={i} style={{flexDirection:'row',flex:1,marginTop:10}}>
-                    {
-                      item.map((item, i) => {
-                        return (
-                          <TouchableHighlight
-                            key={item.name}
-                            activeOpacity={0.6}
-                            underlayColor="#DDDDDD"
-                            onPress={() => this.onServiceOrder(item.id, item.name)}>
-                            <View
-                              style={{
-                                backgroundColor: 'white',
-                                flexDirection: 'column',
-                                width:0.5*width-10,
-                                justifyContent:'center',
-                                alignItems:'center',
-                                borderWidth: 1,
-                                borderColor: 'white',
-                                borderRadius: 4,
-                                marginLeft: 5,
-                                marginRight: 5,
-                                paddingTop:10,
-                                paddingBottom:10,
+                  <View
+                    key={i}
+                    style={{flexDirection: 'row', flex: 1, marginTop: 10}}>
+                    {item.map((item, i) => {
+                      return (
+                        <TouchableHighlight
+                          key={item.name}
+                          activeOpacity={0.6}
+                          underlayColor="#DDDDDD"
+                          onPress={() =>
+                            this.onServiceOrder(item.id, item.name)
+                          }>
+                          <View
+                            style={{
+                              backgroundColor: 'white',
+                              flexDirection: 'column',
+                              width: 0.5 * width - 10,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              borderWidth: 1,
+                              borderColor: 'white',
+                              borderRadius: 4,
+                              marginLeft: 5,
+                              marginRight: 5,
+                              paddingTop: 10,
+                              paddingBottom: 10,
+                            }}
+                            key={item.name}>
+                            <Image
+                              source={{
+                                uri: item.picUrl
+                                  ? item.picUrl
+                                  : 'http://lhh.natapp1.cc/api/wx/storage/fetch/2r9fr1n5psdjk0xxo10y.png',
                               }}
-                              key={item.name}>
-                              <Image
-                                source={{
-                                  uri: item.picUrl
-                                    ? item.picUrl
-                                    : 'http://lhh.natapp1.cc/api/wx/storage/fetch/2r9fr1n5psdjk0xxo10y.png',
-                                }}
+                              style={{
+                                height: 110,
+                                width: 150,
+                              }}
+                            />
+                            <View style={{flex: 1, marginTop: 10}}>
+                              <Text
+                                numberOfLines={2}
+                                ellipsizeMode={'tail'}
                                 style={{
-                                  height: 110,
-                                  width: 150,
-                                }}
-                              />
-                              <View style={{flex:1,marginTop:10}}>
+                                  fontSize: 15,
+                                }}>
+                                {item.name}
+                              </Text>
+                              <View style={{flexDirection: 'row'}}>
                                 <Text
-                                  numberOfLines={2}
-                                  ellipsizeMode={'tail'}
+                                  numberOfLines={1}
+                                  style={{fontSize: 15, color: '#ff6600'}}>
+                                  ¥ {item.retailPrice}
+                                </Text>
+                                <Text
+                                  numberOfLines={3}
                                   style={{
                                     fontSize: 15,
+                                    textDecorationLine: 'line-through',
+                                    color: 'gray',
+                                    paddingLeft: 10,
                                   }}>
-                                  {item.name}
+                                  ¥ {item.counterPrice}
                                 </Text>
-                                <View style={{flexDirection: 'row'}}>
-                                  <Text
-                                    numberOfLines={1}
-                                    style={{fontSize: 15, color: '#ff6600'}}>
-                                    ¥ {item.retailPrice}
-                                  </Text>
-                                  <Text
-                                    numberOfLines={3}
-                                    style={{
-                                      fontSize: 15,
-                                      textDecorationLine: 'line-through',
-                                      color: 'gray',
-                                      paddingLeft: 10,
-                                    }}>
-                                    ¥ {item.counterPrice}
-                                  </Text>
-                                </View>
                               </View>
                             </View>
-                          </TouchableHighlight>
-                        );
-                      })}
+                          </View>
+                        </TouchableHighlight>
+                      );
+                    })}
                   </View>
                 );
               })}
-              <View style={{justifyContent:'center',alignItems:'center',height:40,marginTop:10}}>
-                <Text style={{color: 'gray'}}>-----  我也是有底线的呢  -----</Text>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 40,
+                  marginTop: 10,
+                }}>
+                <Text style={{color: 'gray'}}>
+                  ----- 我也是有底线的呢 -----
+                </Text>
               </View>
             </View>
           </ScrollView>
         </SafeAreaView>
         <AlertDialogWithDevelop
-          showAnimationType='timing'
-          onPress={(isOK) => {
-          }} ref={ref => this.AlertDialog = ref} />
+          showAnimationType="timing"
+          onPress={isOK => {}}
+          ref={ref => (this.AlertDialog = ref)}
+        />
       </View>
     );
   }
 }
 
-
-
 function BottomMainCard(props) {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={{flex: 1,justifyContent:'center'}}
+      style={{flex: 1, justifyContent: 'center'}}
       onPress={() => {
         props.onCardClick(props.text, props.id);
       }}>
-      <View style={{flexDirection: 'column',alignItems:'center'}}>
+      <View style={{flexDirection: 'column', alignItems: 'center'}}>
         <Image
-          source={{uri: props.image?props.image: ' '}}
+          source={{uri: props.image ? props.image : ' '}}
           style={{
             width: 50,
             height: 50,
@@ -633,13 +736,11 @@ const styles = StyleSheet.create({
     // paddingTop: StatusBar.currentHeight,
     backgroundColor: 'white',
   },
-  scrollView: {
-
-  },
+  scrollView: {},
   wrapper: {
     height: 150,
-    marginLeft:5,
-    marginBottom:1,
+    marginLeft: 5,
+    marginBottom: 1,
   },
 
   slide: {
@@ -654,8 +755,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: width-10,
-    height:150
+    width: width - 10,
+    height: 150,
   },
   input: {
     height: 40,

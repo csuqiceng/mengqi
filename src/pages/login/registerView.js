@@ -69,8 +69,8 @@ export default class RegisterView extends React.Component {
     let url = '/wx/auth/register';
     const callback = e => {
       // navigation.goBack()
-      alert("注册成功！")
-      this.props.navigation.navigate('login')
+      alert('注册成功！');
+      this.props.navigation.navigate('login');
     };
     let data = {
       username: this.state.loginName,
@@ -105,7 +105,7 @@ export default class RegisterView extends React.Component {
           --maxTime;
           this.setState({
             verificationBool: true,
-            verificationtext: '重新获取' + maxTime +'秒',
+            verificationtext: '重新获取' + maxTime + '秒',
           });
         } else {
           this.setState({
@@ -121,7 +121,7 @@ export default class RegisterView extends React.Component {
     if (!this.state.verificationBool) {
       let url = '/wx/auth/regCaptcha';
       const callback = e => {
-         alert("验证码已发送，请注意查收！")
+        alert('验证码已发送，请注意查收！');
       };
       let param = {
         body: JSON.stringify(data), // must match 'Content-Type' header
@@ -133,7 +133,7 @@ export default class RegisterView extends React.Component {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
       };
       const errCallback = responseData => {
-         alert(responseData.errmsg);
+        alert(responseData.errmsg);
       };
       fetchData(url, param, callback, errCallback);
     }
@@ -149,7 +149,7 @@ export default class RegisterView extends React.Component {
       <KeyboardAvoidingView
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false} >
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{alignItems: 'center'}}>
             <Image
               resizeMode="stretch"
@@ -285,7 +285,7 @@ export default class RegisterView extends React.Component {
                 onPress={() => {
                   this.sendCode();
                 }}>
-                <Text style={{color: '#00BEAF',marginRight:5}}>
+                <Text style={{color: '#00BEAF', marginRight: 5}}>
                   {this.state.verificationtext}
                 </Text>
               </TouchableOpacity>
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
-    justifyContent:'center'
+    justifyContent: 'center',
   },
 
   tgIconStyle: {

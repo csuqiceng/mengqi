@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image,SafeAreaView} from 'react-native';
+import {Image, SafeAreaView} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -9,7 +9,7 @@ import MinePage from './myinfo/mine';
 import SearchPageView from './search/searchPage';
 import ShoppingCartPage from './shoppingcart/shoppingCartPage';
 import Classify from './classify/classify';
-import Videos from './Videos/videos';
+import VideosList from './Videos/videosList';
 import GuidePage from '../pages/guide/guidePage';
 import ServiceConfirmPage from './service/serviceConfirmPage';
 import ServiceOrderPage from './service/serviceOrderPage';
@@ -23,14 +23,13 @@ import MyBalanceView from './myinfo/membership/balance';
 import Changepassword from './myinfo/system/changepassword';
 import MyAddressView from './myinfo/servicetool/address';
 import MyNewAddressView from './myinfo/servicetool/newaddress';
-import Localstorage from "../common/localStorage";
-import CitySelect from "./home/CitySectionList";
-import ClassifyList from "./classify/classifyList";
-
+import Localstorage from '../common/localStorage';
+import CitySelect from './home/CitySectionList';
+import ClassifyList from './classify/classifyList';
+import VideoDetail from './Videos/videoDetail';
 
 //App 底部入口
-class MainTabPage extends React.Component
-{
+class MainTabPage extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -43,7 +42,6 @@ class MainTabPage extends React.Component
       return null;
     } else {
       return (
-
         <Tab.Navigator
           initialRouteName="Home"
           screenOptions={{
@@ -85,7 +83,7 @@ class MainTabPage extends React.Component
           />
           <Tab.Screen
             name="Video"
-            component={Videos}
+            component={VideosList}
             options={{
               tabBarLabel: '视频',
               tabBarIcon: ({focused, tintColor}) => (
@@ -140,7 +138,6 @@ class MainTabPage extends React.Component
   }
 }
 
-
 //APP 导航
 export default class MainPage extends React.Component {
   constructor() {
@@ -151,8 +148,8 @@ export default class MainPage extends React.Component {
   }
   componentDidMount() {
     const storage = Localstorage.get('token');
-    storage.then((token) => {
-      window.token = token
+    storage.then(token => {
+      window.token = token;
     });
   }
 
@@ -163,33 +160,86 @@ export default class MainPage extends React.Component {
     }
     return (
       <SafeAreaView style={{flex: 1}}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={initialRouteName}
-          headerMode="screen"
-          screenOptions={{
-            headerShown: false,
-          }}>
-          <Stack.Screen name="Guide" component={GuidePage} />
-          <Stack.Screen name="Home" component={MainTabPage} />
-          <Stack.Screen name="HomePage" options={{}} component={HomePage} />
-          <Stack.Screen name="ServiceOrderPage" options={({route}) => ({title: route.params.name})} component={ServiceOrderPage} />
-          <Stack.Screen name="ServiceConfirmPage" options={({route}) => ({title: route.params.name})} component={ServiceConfirmPage} />
-          <Stack.Screen name="ServicePayPage" options={({route}) => ({title: route.params.name})} component={ServicePayPage} />
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={initialRouteName}
+            headerMode="screen"
+            screenOptions={{
+              headerShown: false,
+            }}>
+            <Stack.Screen name="Guide" component={GuidePage} />
+            <Stack.Screen name="Home" component={MainTabPage} />
+            <Stack.Screen name="HomePage" options={{}} component={HomePage} />
+            <Stack.Screen
+              name="ServiceOrderPage"
+              options={({route}) => ({title: route.params.name})}
+              component={ServiceOrderPage}
+            />
+            <Stack.Screen
+              name="ServiceConfirmPage"
+              options={({route}) => ({title: route.params.name})}
+              component={ServiceConfirmPage}
+            />
+            <Stack.Screen
+              name="ServicePayPage"
+              options={({route}) => ({title: route.params.name})}
+              component={ServicePayPage}
+            />
 
-          <Stack.Screen name="system" options={{}} component={SystemPage} />
-          <Stack.Screen name="changepassword" options={{}} component={Changepassword} />
-          <Stack.Screen name="myorder" options={{}} component={MyOrderView} />
-          <Stack.Screen name="orderdetails" options={{}} component={MyOrderDetails} />
-          <Stack.Screen name="mybalance" options={{}} component={MyBalanceView} />
-          <Stack.Screen name="shippingaddress" options={{}} component={MyAddressView} />
-          <Stack.Screen name="search" options={{}} component={SearchPageView} />
-          <Stack.Screen name="newaddress" options={{}} component={MyNewAddressView} />
-          <Stack.Screen name="cityselect" options={{}} component={CitySelect} />
-          <Stack.Screen name="servicelist" options={{}} component={ServiceListPage} />
-          <Stack.Screen name="classifylist" options={{}} component={ClassifyList} />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen name="system" options={{}} component={SystemPage} />
+            <Stack.Screen
+              name="changepassword"
+              options={{}}
+              component={Changepassword}
+            />
+            <Stack.Screen name="myorder" options={{}} component={MyOrderView} />
+            <Stack.Screen
+              name="orderdetails"
+              options={{}}
+              component={MyOrderDetails}
+            />
+            <Stack.Screen
+              name="mybalance"
+              options={{}}
+              component={MyBalanceView}
+            />
+            <Stack.Screen
+              name="shippingaddress"
+              options={{}}
+              component={MyAddressView}
+            />
+            <Stack.Screen
+              name="search"
+              options={{}}
+              component={SearchPageView}
+            />
+            <Stack.Screen
+              name="newaddress"
+              options={{}}
+              component={MyNewAddressView}
+            />
+            <Stack.Screen
+              name="cityselect"
+              options={{}}
+              component={CitySelect}
+            />
+            <Stack.Screen
+              name="servicelist"
+              options={{}}
+              component={ServiceListPage}
+            />
+            <Stack.Screen
+              name="classifylist"
+              options={{}}
+              component={ClassifyList}
+            />
+            <Stack.Screen
+              name="videodetail"
+              options={{}}
+              component={VideoDetail}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
       </SafeAreaView>
     );
   }

@@ -6244,6 +6244,11 @@ react-native-date-picker@^3.4.1:
   resolved "https://registry.nlark.com/react-native-date-picker/download/react-native-date-picker-3.4.1.tgz#33a024d32e31f46f0914b913887b944ff8f96a44"
   integrity sha1-M6Ak0y4x9G8JFLkTiHuUT/j5akQ=
 
+react-native-fast-image@^8.5.8:
+  version "8.5.8"
+  resolved "https://registry.nlark.com/react-native-fast-image/download/react-native-fast-image-8.5.8.tgz#6f685ecbff5d8f74f33fc3c6b38c4eea9b33a6fd"
+  integrity sha1-b2hey/9dj3TzP8PGs4xO6pszpv0=
+
 react-native-gesture-handler@^1.10.3:
   version "1.10.3"
   resolved "https://registry.nlark.com/react-native-gesture-handler/download/react-native-gesture-handler-1.10.3.tgz#942bbf2963bbf49fa79593600ee9d7b5dab3cfc0"

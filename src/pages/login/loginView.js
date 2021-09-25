@@ -1,6 +1,6 @@
 //登录页面
 
-import React  from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,11 +14,10 @@ import {
   Platform,
 } from 'react-native';
 import {fetchData} from '../../common/fetch';
-import Localstorage from '../../common/localStorage'
+import Localstorage from '../../common/localStorage';
 
 var {width} = Dimensions.get('window');
 let maxTime = 60;
-
 
 export default class LoginView extends React.Component {
   constructor() {
@@ -43,7 +42,7 @@ export default class LoginView extends React.Component {
 
   onLoginCallback = () => {
     this.props.navigation.navigate('mainPgae', {
-      data: "",
+      data: '',
     });
   };
 
@@ -140,13 +139,12 @@ export default class LoginView extends React.Component {
   }
 }
 //账号密码登录
-class AccoutLoginView extends React.Component
-{
+class AccoutLoginView extends React.Component {
   constructor() {
     super();
     this.state = {
-      loginName: '',//lihonghao
-      passWord: '',//123456
+      loginName: '', //lihonghao
+      passWord: '', //123456
       token: 'xgcpx1kjt6xzz2tot2cppdv3ur467vkh',
     };
   }
@@ -184,7 +182,7 @@ class AccoutLoginView extends React.Component
     let url = '/wx/auth/login';
     const callback = responseData => {
       window.token = responseData.data.token;
-      console.log(responseData.data.token)
+      console.log(responseData.data.token);
       Localstorage.save('token', responseData.data.token);
       this.props.onLoginCallback();
     };
@@ -326,8 +324,7 @@ class AccoutLoginView extends React.Component
 }
 
 //验证码登录
-class VerificationcodeView extends React.Component
-{
+class VerificationcodeView extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -392,7 +389,7 @@ class VerificationcodeView extends React.Component
           --maxTime;
           this.setState({
             verificationBool: true,
-            verificationtext: '重新获取' + maxTime+'秒',
+            verificationtext: '重新获取' + maxTime + '秒',
           });
         } else {
           this.setState({

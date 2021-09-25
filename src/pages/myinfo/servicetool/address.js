@@ -92,10 +92,10 @@ export default class MyAddressView extends React.Component {
         break;
       }
     }
-    this.props.navigation.navigate('newaddress',{
+    this.props.navigation.navigate('newaddress', {
       data: data,
       refresh: this._refresh,
-    })
+    });
   };
   onDelAddress = e => {
     let data = {
@@ -124,7 +124,7 @@ export default class MyAddressView extends React.Component {
         },
         method: 'GET',
       };
-      let url = 'http://lhh.natapp1.cc/api/wx/address/list';
+      let url = '/wx/address/list';
       const callback = responseData => {
         this.setState({
           AddressData: responseData.data.list,
@@ -207,12 +207,16 @@ export default class MyAddressView extends React.Component {
     fetchData(url, param, callback, errCallback);
   };
   onSelectAddressCallback = e => {
-    if (this.props.route&&this.props.route.params&&this.props.route.params.onSelectAddress) {
+    if (
+      this.props.route &&
+      this.props.route.params &&
+      this.props.route.params.onSelectAddress
+    ) {
       this.props.navigation.goBack();
       this.props.route.params.onSelectAddress(e);
     }
   };
-  _refresh=()=>{
+  _refresh = () => {
     let param = {
       headers: {
         'X-Litemall-Token': window.token
@@ -235,27 +239,34 @@ export default class MyAddressView extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
   render() {
     console.log(window.token);
     const {AddressData} = this.state;
     if (AddressData.length > 0) {
-        return (
-          <View style={{flex: 1}}>
-            <NavBar
-              titleItem={() => this.renderTitleItem()}
-              leftItem={() => this.renderLeftItem()}
-            />
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={{flex: 1, backgroundColor: '#F1F1F1',marginTop:10}}>
-                {AddressData.map((item, i) => {
-                  return (
-                    <View key={i} style={{height: 120,marginLeft:10,marginRight:10,marginBottom:5}}>
-                      <TouchableOpacity
-                        activeOpacity={0.5}
-                        onPress={() => {
-                          this.onSelectAddressCallback(item);
-                        }}>
+      return (
+        <View style={{flex: 1}}>
+          <NavBar
+            titleItem={() => this.renderTitleItem()}
+            leftItem={() => this.renderLeftItem()}
+          />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{flex: 1, backgroundColor: '#F1F1F1', marginTop: 10}}>
+              {AddressData.map((item, i) => {
+                return (
+                  <View
+                    key={i}
+                    style={{
+                      height: 120,
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginBottom: 5,
+                    }}>
+                    <TouchableOpacity
+                      activeOpacity={0.5}
+                      onPress={() => {
+                        this.onSelectAddressCallback(item);
+                      }}>
                       <View
                         style={{
                           height: 80,
@@ -263,8 +274,8 @@ export default class MyAddressView extends React.Component {
                           padding: 15,
                           borderBottomWidth: 1,
                           borderBottomColor: 'lightgray',
-                          borderTopLeftRadius:10,
-                          borderTopRightRadius:10
+                          borderTopLeftRadius: 10,
+                          borderTopRightRadius: 10,
                         }}>
                         <View style={{flexDirection: 'row'}}>
                           <Text style={{fontSize: 15}}>{item.name}</Text>
@@ -279,95 +290,97 @@ export default class MyAddressView extends React.Component {
                             item.addressDetail}
                         </Text>
                       </View>
-                      </TouchableOpacity>
-                      <View
-                        style={{
-                          height: 40,
-                          flexDirection: 'row',
-                          backgroundColor: 'white',
-                          alignItems: 'center',
-                          paddingRight: 15,
-                          paddingLeft: 15,
-                          borderBottomLeftRadius:10,
-                          borderBottomRightRadius:10
+                    </TouchableOpacity>
+                    <View
+                      style={{
+                        height: 40,
+                        flexDirection: 'row',
+                        backgroundColor: 'white',
+                        alignItems: 'center',
+                        paddingRight: 15,
+                        paddingLeft: 15,
+                        borderBottomLeftRadius: 10,
+                        borderBottomRightRadius: 10,
+                      }}>
+                      <TouchableOpacity
+                        activeOpacity={0.5}
+                        onPress={() => {
+                          this.onChangeDefault(item.id);
                         }}>
+                        <View style={{flexDirection: 'row'}}>
+                          <CheckBox
+                            style={{flex: 1}}
+                            isChecked={item.isDefault}
+                            checkBoxColor={'#00BEAF'}
+                            onClick={() => {
+                              this.onChangeDefault(item.id);
+                            }}
+                          />
+                          <Text style={{marginLeft: 23, marginTop: 3}}>
+                            设为默认
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                      <View style={{flex: 1}} />
+                      <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity
                           activeOpacity={0.5}
                           onPress={() => {
-                            this.onChangeDefault(item.id);
+                            this.onEditAddress(item.id);
                           }}>
                           <View style={{flexDirection: 'row'}}>
-                            <CheckBox
-                              style={{flex: 1}}
-                              isChecked={item.isDefault}
-                              checkBoxColor={'#00BEAF'}
-                              onClick={()=>{this.onChangeDefault(item.id)}}
+                            <Image
+                              source={require('../../../assets/images/myinfo/icon_edit.png')}
+                              style={{width: 20, height: 20}}
                             />
-                            <Text style={{marginLeft: 23, marginTop: 3}}>
-                              设为默认
-                            </Text>
+                            <Text>编辑</Text>
                           </View>
                         </TouchableOpacity>
-                        <View style={{flex: 1}} />
-                        <View style={{flexDirection: 'row'}}>
-                          <TouchableOpacity
-                            activeOpacity={0.5}
-                            onPress={() => {
-                              this.onEditAddress(item.id);
-                            }}>
-                            <View style={{flexDirection: 'row'}}>
-                              <Image
-                                source={require('../../../assets/images/myinfo/icon_edit.png')}
-                                style={{width: 20, height: 20}}
-                              />
-                              <Text>编辑</Text>
-                            </View>
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            activeOpacity={0.5}
-                            onPress={() => {
-                              this.onDelAddress(item.id);
-                            }}>
-                            <View style={{flexDirection: 'row'}}>
-                              <Image
-                                source={require('../../../assets/images/myinfo/icon_delete.png')}
-                                style={{
-                                  width: 20,
-                                  height: 20,
-                                  marginLeft: 10,
-                                }}
-                              />
-                              <Text>删除</Text>
-                            </View>
-                          </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                          activeOpacity={0.5}
+                          onPress={() => {
+                            this.onDelAddress(item.id);
+                          }}>
+                          <View style={{flexDirection: 'row'}}>
+                            <Image
+                              source={require('../../../assets/images/myinfo/icon_delete.png')}
+                              style={{
+                                width: 20,
+                                height: 20,
+                                marginLeft: 10,
+                              }}
+                            />
+                            <Text>删除</Text>
+                          </View>
+                        </TouchableOpacity>
                       </View>
                     </View>
-                  );
-                })}
-              </View>
-            </ScrollView>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                this.props.navigation.navigate('newaddress',{
-                  refresh: this._refresh,
-                })
-              }}>
-              <View style={styles.tgLoginBtnStyle}>
-                <Text
-                  style={{
-                    color: 'black',
-                    textAlign: 'center',
-                    justifyContent: 'center',
-                    fontSize: 16,
-                  }}>
-                  {'添加新收货人'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )
+                  </View>
+                );
+              })}
+            </View>
+          </ScrollView>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              this.props.navigation.navigate('newaddress', {
+                refresh: this._refresh,
+              });
+            }}>
+            <View style={styles.tgLoginBtnStyle}>
+              <Text
+                style={{
+                  color: 'black',
+                  textAlign: 'center',
+                  justifyContent: 'center',
+                  fontSize: 16,
+                }}>
+                {'添加新收货人'}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
     } else {
       return (
         <View style={{flex: 1}}>
@@ -375,9 +388,15 @@ export default class MyAddressView extends React.Component {
             titleItem={() => this.renderTitleItem()}
             leftItem={() => this.renderLeftItem()}
           />
-            <View style={{flex: 1, backgroundColor: '#F1F1F1',alignItems: 'center',justifyContent:'center'}}>
-                <Text>请添加新的地址</Text>
-            </View>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: '#F1F1F1',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text>请添加新的地址</Text>
+          </View>
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {

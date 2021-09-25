@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {fetchData} from '../../../common/fetch';
-import LinearGradient from  'react-native-linear-gradient'
+import LinearGradient from 'react-native-linear-gradient';
 var {width} = Dimensions.get('window');
 
 export default class HeaderView extends React.Component {
@@ -17,7 +17,7 @@ export default class HeaderView extends React.Component {
     super(props);
     this.state = {
       info: '',
-      userName:''
+      userName: '',
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
@@ -34,7 +34,7 @@ export default class HeaderView extends React.Component {
     let url = '/wx/amount/info';
     const callback = responseData => {
       this.setState({
-        userName:responseData.data.userName,
+        userName: responseData.data.userName,
         info: responseData.data.info,
       });
     };
@@ -59,7 +59,7 @@ export default class HeaderView extends React.Component {
     let url = '/wx/amount/info';
     const callback = responseData => {
       this.setState({
-        userName:responseData.data.userName,
+        userName: responseData.data.userName,
         info: responseData.data.info,
       });
     };
@@ -74,25 +74,25 @@ export default class HeaderView extends React.Component {
   render() {
     const {userName} = this.state;
     const {type} = this.props;
-    if(type =='shop'){
+    if (type == 'shop') {
       return (
         <View style={styles.container}>
           {/*上部分*/}
           <ImageBackground
             style={{
-              height:220,
+              height: 220,
               opacity: 0.9,
               justifyContent: 'space-around',
             }}
-            source={require('../../../assets/images/myinfo/my_bg1.png')}
-          >
-            <View style={{
-              flex:1,
-              flexDirection:'row',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              marginTop:20
-            }}>
+            source={require('../../../assets/images/myinfo/my_bg1.png')}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                marginTop: 20,
+              }}>
               <Image
                 source={require('../../../assets/images/myinfo/my_icon_head.png')}
                 style={styles.leftIconStyle}
@@ -114,9 +114,9 @@ export default class HeaderView extends React.Component {
                     borderWidth: 1,
                     borderRadius: 10,
                     borderColor: '#CBA87B',
-                    width:50,
-                    textAlign:'center',
-                    marginLeft: 10
+                    width: 50,
+                    textAlign: 'center',
+                    marginLeft: 10,
                   }}>
                   优秀
                 </Text>
@@ -134,23 +134,33 @@ export default class HeaderView extends React.Component {
             </View>
 
             {/*底部*/}
-            <View style={{flex:1,flexDirection:'row',alignItems: 'center',justifyContent: 'space-around',paddingBottom:20
-            }}>
-              <TouchableOpacity >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                paddingBottom: 20,
+              }}>
+              <TouchableOpacity>
                 <View style={styles.bottomInnerViewStyle}>
                   <Text style={{color: 'white', fontSize: 20}}>200.00</Text>
                   <Text style={{color: 'white', fontSize: 15}}>我的余额</Text>
                 </View>
               </TouchableOpacity>
-              <View style={{borderWidth:1,height: 40,borderColor: 'white'}}/>
-              <TouchableOpacity >
+              <View
+                style={{borderWidth: 1, height: 40, borderColor: 'white'}}
+              />
+              <TouchableOpacity>
                 <View style={styles.bottomInnerViewStyle}>
                   <Text style={{color: 'white', fontSize: 20}}>1658.00</Text>
                   <Text style={{color: 'white', fontSize: 15}}>收益</Text>
                 </View>
               </TouchableOpacity>
-              <View style={{borderWidth:1,height: 40,borderColor: 'white'}}/>
-              <TouchableOpacity >
+              <View
+                style={{borderWidth: 1, height: 40, borderColor: 'white'}}
+              />
+              <TouchableOpacity>
                 <View style={styles.bottomInnerViewStyle}>
                   <Text style={{color: 'white', fontSize: 20}}>200</Text>
                   <Text style={{color: 'white', fontSize: 15}}>积分</Text>
@@ -158,74 +168,87 @@ export default class HeaderView extends React.Component {
               </TouchableOpacity>
             </View>
           </ImageBackground>
-          <View style={{
-            position:'absolute',
-            top:'74%',
-            left:15,
-            backgroundColor:'white',
-            shadowColor: '#000',
-            shadowOffset: { width: 4, height: 4 },
-            shadowOpacity: 0.8,
-            shadowRadius: 6,
-            elevation: 10,
-            width:width-30,
-            height:60,
-            justifyContent: 'space-around',
-            alignItems:'center',
-            flexDirection:'row',
-            borderRadius: 3
-          }}>
-            <View style={{flexDirection:'row'}}>
-              <Text style={{
-                fontSize: 15,
-                color: '#875C36',
-                textAlign:'center',
-                marginLeft: 10}}>亲爱的{userName}</Text>
-              <Text style={{
-                fontSize: 14,
-                color: 'gray',
-                textAlign:'center',
-                marginLeft: 10}}>您已经入驻{20}天</Text>
+          <View
+            style={{
+              position: 'absolute',
+              top: '74%',
+              left: 15,
+              backgroundColor: 'white',
+              shadowColor: '#000',
+              shadowOffset: {width: 4, height: 4},
+              shadowOpacity: 0.8,
+              shadowRadius: 6,
+              elevation: 10,
+              width: width - 30,
+              height: 60,
+              justifyContent: 'space-around',
+              alignItems: 'center',
+              flexDirection: 'row',
+              borderRadius: 3,
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: '#875C36',
+                  textAlign: 'center',
+                  marginLeft: 10,
+                }}>
+                亲爱的{userName}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: 'gray',
+                  textAlign: 'center',
+                  marginLeft: 10,
+                }}>
+                您已经入驻{20}天
+              </Text>
             </View>
-            <TouchableOpacity
-            >
-              <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#CFA25E', '#BB9B72', '#8D623C']}
-                              style={{justifyContent: 'center',borderRadius: 20}}>
-              <Text style={{
-                fontSize: 16,
-                color: 'white',
-                textAlign:'center',
-                marginLeft:8,
-                marginRight:8,
-                marginBottom:2,
-                marginTop:2
-                }}>我的权益</Text>
+            <TouchableOpacity>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                colors={['#CFA25E', '#BB9B72', '#8D623C']}
+                style={{justifyContent: 'center', borderRadius: 20}}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color: 'white',
+                    textAlign: 'center',
+                    marginLeft: 8,
+                    marginRight: 8,
+                    marginBottom: 2,
+                    marginTop: 2,
+                  }}>
+                  我的权益
+                </Text>
               </LinearGradient>
             </TouchableOpacity>
-
           </View>
-          <View style={{height:45}}></View>
+          <View style={{height: 45}} />
         </View>
       );
-    }else{
+    } else {
       return (
         <View style={styles.container}>
           {/*上部分*/}
           <ImageBackground
             style={{
-              height:210,
+              height: 210,
               opacity: 0.9,
               justifyContent: 'space-around',
             }}
-            source={require('../../../assets/images/myinfo/my_bg.png')}
-          >
-            <View style={{
-              flex:1,
-              flexDirection:'row',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-              marginTop:20
-            }}>
+            source={require('../../../assets/images/myinfo/my_bg.png')}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                marginTop: 20,
+              }}>
               <Image
                 source={require('../../../assets/images/myinfo/my_icon_head.png')}
                 style={styles.leftIconStyle}
@@ -254,16 +277,23 @@ export default class HeaderView extends React.Component {
             </View>
 
             {/*底部*/}
-            <View style={{flex:1,flexDirection:'row',alignItems: 'center',justifyContent: 'space-around'
-            }}>
-              <TouchableOpacity >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+              }}>
+              <TouchableOpacity>
                 <View style={styles.bottomInnerViewStyle}>
                   <Text style={{color: 'white', fontSize: 20}}>200.00</Text>
                   <Text style={{color: 'white', fontSize: 15}}>我的余额</Text>
                 </View>
               </TouchableOpacity>
-              <View style={{borderWidth:1,height: 40,borderColor: 'white'}}/>
-              <TouchableOpacity >
+              <View
+                style={{borderWidth: 1, height: 40, borderColor: 'white'}}
+              />
+              <TouchableOpacity>
                 <View style={styles.bottomInnerViewStyle}>
                   <Text style={{color: 'white', fontSize: 20}}>200</Text>
                   <Text style={{color: 'white', fontSize: 15}}>积分</Text>
@@ -277,20 +307,17 @@ export default class HeaderView extends React.Component {
   }
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: 'white',
   },
 
   centerViewStyle: {
     flexDirection: 'row',
     width: width * 0.72,
-    alignItems: 'center'
+    alignItems: 'center',
   },
-
 
   leftIconStyle: {
     width: 70,
@@ -311,7 +338,7 @@ const styles = StyleSheet.create({
   bottomInnerViewStyle: {
     width: width / 2,
     // height: 40,
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

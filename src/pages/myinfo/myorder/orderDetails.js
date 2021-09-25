@@ -57,7 +57,7 @@ export default class OrderDetails extends React.Component {
   };
 
   //取消订单
-  onCancelOrder=()=>{
+  onCancelOrder = () => {
     const {detailsInfo} = this.state;
     let data = {
       orderId: detailsInfo.orderInfo.id, //订单ID
@@ -74,8 +74,8 @@ export default class OrderDetails extends React.Component {
     };
     let url = '/wx/order/cancel';
     const callback = responseData => {
-      if (responseData.errno == 0){
-        alert("取消订单成功！")
+      if (responseData.errno == 0) {
+        alert('取消订单成功！');
         this.props.navigation.goBack();
         this.props.route.params.refresh();
         // let id = this.props.route.params.id;
@@ -112,7 +112,7 @@ export default class OrderDetails extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
 
   //提交订单
   onConfirmPay = () => {
@@ -126,11 +126,11 @@ export default class OrderDetails extends React.Component {
   };
 
   //确认收货
-  onServiceConfirm=()=>{
+  onServiceConfirm = () => {
     const {detailsInfo} = this.state;
     let data = {
       orderId: detailsInfo.orderInfo.id, //订单ID
-      sysUserId:'' //上门服务员工ID
+      sysUserId: '', //上门服务员工ID
     };
     let param = {
       body: JSON.stringify(data), // must match 'Content-Type' header
@@ -144,8 +144,8 @@ export default class OrderDetails extends React.Component {
     };
     let url = '/wx/order/confirm';
     const callback = responseData => {
-      if (responseData.errno == 0){
-        alert("确认收货成功！")
+      if (responseData.errno == 0) {
+        alert('确认收货成功！');
         this.props.navigation.goBack();
         this.props.route.params.refresh();
         // let id = this.props.route.params.id;
@@ -184,14 +184,14 @@ export default class OrderDetails extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
 
   //删除订单
-  onDeleteOrder=()=>{
+  onDeleteOrder = () => {
     const {detailsInfo} = this.state;
     let data = {
       orderId: detailsInfo.orderInfo.id, //订单ID
-      sysUserId:'' //上门服务员工ID
+      sysUserId: '', //上门服务员工ID
     };
     let param = {
       body: JSON.stringify(data), // must match 'Content-Type' header
@@ -205,8 +205,8 @@ export default class OrderDetails extends React.Component {
     };
     let url = '/wx/order/delete';
     const callback = responseData => {
-      if (responseData.errno == 0){
-        alert("订单已删除！");
+      if (responseData.errno == 0) {
+        alert('订单已删除！');
         this.props.navigation.goBack();
         this.props.route.params.refresh();
       }
@@ -218,7 +218,7 @@ export default class OrderDetails extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
 
   componentDidMount() {
     let id = this.props.route.params.id;
@@ -235,7 +235,7 @@ export default class OrderDetails extends React.Component {
     let url = `/wx/order/detail?orderId=${id}`;
     const callback = responseData => {
       if (responseData.errno == '0') {
-        console.log(JSON.stringify(responseData.data))
+        console.log(JSON.stringify(responseData.data));
         this.setState({
           detailsInfo: responseData.data,
         });
@@ -248,54 +248,51 @@ export default class OrderDetails extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
-  renderTopView=()=>{
+  renderTopView = () => {
     const {detailsInfo} = this.state;
-    if (detailsInfo.orderInfo){
+    if (detailsInfo.orderInfo) {
       let orderStatus = detailsInfo.orderInfo.orderStatus;
       let goodsType = detailsInfo.orderGoods[0].goodsType;
-      let msg =""
-      if (orderStatus == 102 ||orderStatus == 103||orderStatus == 202){
-        msg ="订单已取消";
-      }else if(orderStatus == 101){
-        msg ="等待买家付款";
-      }else if(orderStatus == 201){
-        msg ="待发货";
-      }else if(orderStatus == 401 ||orderStatus == 402){
-        msg ="订单已完成";
-      }else if(orderStatus == 301){
-        msg ="快递运输中";
+      let msg = '';
+      if (orderStatus == 102 || orderStatus == 103 || orderStatus == 202) {
+        msg = '订单已取消';
+      } else if (orderStatus == 101) {
+        msg = '等待买家付款';
+      } else if (orderStatus == 201) {
+        msg = '待发货';
+      } else if (orderStatus == 401 || orderStatus == 402) {
+        msg = '订单已完成';
+      } else if (orderStatus == 301) {
+        msg = '快递运输中';
       }
-      if (goodsType =='01'){
-          return(
+      if (goodsType == '01') {
+        return (
+          <View
+            style={{
+              flexDirection: 'row',
+              borderRadius: 5,
+              height: 80,
+              backgroundColor: '#007B73',
+              margin: 10,
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../../assets/images/myinfo/details_icon_pay.png')}
+              style={{width: 30, height: 30}}
+            />
             <View
               style={{
-                flexDirection: 'row',
-                borderRadius: 5,
-                height: 80,
-                backgroundColor: '#007B73',
-                margin: 10,
-                flex: 1,
-                justifyContent:'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: 10,
               }}>
-              <Image
-                source={require('../../../assets/images/myinfo/details_icon_pay.png')}
-                style={{width: 30, height: 30}}
-              />
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 10,
-                }}>
-                <Text style={{color: 'white', fontSize: 16}}>
-                  {msg}
-                </Text>
-              </View>
+              <Text style={{color: 'white', fontSize: 16}}>{msg}</Text>
             </View>
-          )
-      }
-      else {
+          </View>
+        );
+      } else {
         return (
           <View
             style={{
@@ -338,12 +335,12 @@ export default class OrderDetails extends React.Component {
               />
             </View>
           </View>
-        )
+        );
       }
     }
-  }
+  };
 
-  renderBottomView=()=>{
+  renderBottomView = () => {
     const {detailsInfo} = this.state;
     if (detailsInfo.orderInfo) {
       let orderStatus = detailsInfo.orderInfo.orderStatus;
@@ -365,22 +362,22 @@ export default class OrderDetails extends React.Component {
               onPress={() => {
                 alert('联系商家');
               }}>
-              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+              <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}} />
             <Button
               color="#00BEAF"
               title="取消订单"
               onPress={() => this.onCancelOrder()}
             />
-            <View style={{width:10}}/>
+            <View style={{width: 10}} />
             <Button
               color="#00BEAF"
               title="确认付款"
               onPress={() => this.onConfirmPay()}
             />
           </View>
-        )
+        );
       } else if (orderStatus == 201) {
         return (
           <View
@@ -397,22 +394,22 @@ export default class OrderDetails extends React.Component {
               onPress={() => {
                 alert('联系商家');
               }}>
-              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+              <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}} />
             <Button
               color="#00BEAF"
               title="取消订单"
               onPress={() => this.onCancelOrder()}
             />
-            <View style={{width:10}}/>
+            <View style={{width: 10}} />
             {/*<Button*/}
             {/*  color="#00BEAF"*/}
             {/*  title="申请退款"*/}
             {/*  onPress={() => alert('申请退款')}*/}
             {/*/>*/}
           </View>
-        )
+        );
       } else if (orderStatus == 401 || orderStatus == 402) {
         return (
           <View
@@ -429,22 +426,22 @@ export default class OrderDetails extends React.Component {
               onPress={() => {
                 alert('联系商家');
               }}>
-              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+              <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}} />
             <Button
               color="#00BEAF"
               title="删除订单"
               onPress={() => this.onDeleteOrder()}
             />
-            <View style={{width:10}}/>
+            <View style={{width: 10}} />
             {/*<Button*/}
             {/*  color="#00BEAF"*/}
             {/*  title="评价商品"*/}
             {/*  onPress={() => alert('评价商品')}*/}
             {/*/>*/}
           </View>
-        )
+        );
       } else if (orderStatus == 301) {
         return (
           <View
@@ -461,22 +458,22 @@ export default class OrderDetails extends React.Component {
               onPress={() => {
                 alert('联系商家');
               }}>
-              <Text style={{ marginLeft: 20 }}>联系商家</Text>
+              <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
-            <View style={{flex:1}}/>
+            <View style={{flex: 1}} />
             <Button
               color="#00BEAF"
               title="确认收货"
               onPress={() => this.onServiceConfirm()}
             />
           </View>
-        )
+        );
       }
     }
-  }
+  };
   render() {
     const {detailsInfo} = this.state;
-    let orderGoods = detailsInfo.orderGoods?detailsInfo.orderGoods:[];
+    let orderGoods = detailsInfo.orderGoods ? detailsInfo.orderGoods : [];
     return (
       <View style={styles.container}>
         <NavBar
@@ -493,9 +490,7 @@ export default class OrderDetails extends React.Component {
               borderRadius: 10,
               justifyContent: 'center',
             }}>
-            {
-              this.renderTopView()
-            }
+            {this.renderTopView()}
             <View
               style={{
                 flexDirection: 'row',
@@ -511,7 +506,7 @@ export default class OrderDetails extends React.Component {
                   style={{width: 35, height: 30}}
                 />
               </View>
-              <View style={{ justifyContent: 'center'}}>
+              <View style={{justifyContent: 'center'}}>
                 <Text style={{color: 'black', fontSize: 13, marginLeft: 5}}>
                   {detailsInfo.orderInfo
                     ? detailsInfo.orderInfo.consignee +
@@ -535,7 +530,7 @@ export default class OrderDetails extends React.Component {
           <View
             style={{
               flexDirection: 'column',
-              flex:1,
+              flex: 1,
               backgroundColor: 'white',
               margin: 10,
               borderRadius: 10,
@@ -577,9 +572,7 @@ export default class OrderDetails extends React.Component {
                   <View style={{flex: 1, marginLeft: 20}}>
                     <View style={{flexDirection: 'row'}}>
                       <Text style={{fontSize: 15, color: 'black'}}>
-                        {item
-                          ? item.goodsName
-                          : ''}
+                        {item ? item.goodsName : ''}
                       </Text>
                       <View style={{flex: 1}}>
                         <View
@@ -596,18 +589,13 @@ export default class OrderDetails extends React.Component {
                           <Text
                             numberOfLines={3}
                             style={{fontSize: 19, color: 'black'}}>
-                            {item
-                              ? item.price
-                              : ''}
+                            {item ? item.price : ''}
                           </Text>
                         </View>
                         <Text
                           numberOfLines={3}
                           style={{fontSize: 15, color: 'gray', marginTop: 10}}>
-                          ×
-                          {item
-                            ? item.number
-                            : ''}
+                          ×{item ? item.number : ''}
                         </Text>
                       </View>
                     </View>
@@ -643,7 +631,7 @@ export default class OrderDetails extends React.Component {
                 marginLeft: 10,
                 width: width,
                 paddingTop: 5,
-                marginBottom: 10
+                marginBottom: 10,
               }}>
               <Text style={{color: 'gray', fontSize: 14}}>
                 交易创建时间：
@@ -670,12 +658,8 @@ export default class OrderDetails extends React.Component {
             </View>
           </View>
         </ScrollView>
-        {
-          this.renderBottomView()
-        }
-
+        {this.renderBottomView()}
       </View>
-
     );
   }
 }

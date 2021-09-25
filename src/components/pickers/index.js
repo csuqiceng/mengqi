@@ -37,5 +37,5 @@ export {
   AlertDialog,
   DownloadDialog,
   ToastComponent,
-  AlertDialogWithDevelop
+  AlertDialogWithDevelop,
 };

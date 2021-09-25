@@ -9,20 +9,20 @@ import {
   TextInput,
   ScrollView,
   KeyboardAvoidingView,
-  Platform, TouchableHighlight,
-} from "react-native";
+  Platform,
+  TouchableHighlight,
+} from 'react-native';
 import NavBar from '../../common/navBar';
-import Localstorage from "../../common/localStorage";
-import { fetchData } from "../../common/fetch";
+import Localstorage from '../../common/localStorage';
+import {fetchData} from '../../common/fetch';
 const {width} = Dimensions.get('window');
-
 
 function group(array, subGroupLength) {
   var index = 0;
   var newArray = [];
 
-  while(index < array.length) {
-    newArray.push(array.slice(index, index += subGroupLength));
+  while (index < array.length) {
+    newArray.push(array.slice(index, (index += subGroupLength)));
   }
 
   return newArray;
@@ -38,34 +38,31 @@ export default class SearchPageView extends React.Component {
     };
   }
 
-
   // 返回中间按钮
   renderTitleItem = () => {
-    const {defaultKeyword} =this.state;
+    const {defaultKeyword} = this.state;
     return (
       <TouchableOpacity
         onPress={() => {
-          alert("")
+          alert('');
         }}
         style={{
           height: 30,
           flexDirection: 'row',
-          backgroundColor:'#F5F6F7',
-          width:width-100,
-          marginLeft:20,
-          marginTop:20,
+          backgroundColor: '#F5F6F7',
+          width: width - 100,
+          marginLeft: 20,
+          marginTop: 20,
           alignItems: 'center',
-          marginBottom:20
+          marginBottom: 20,
         }}>
         <Image
           source={require('../../assets/images/home_icon_search.png')}
-          style={{width: 15, height: 15,marginLeft:10}}
+          style={{width: 15, height: 15, marginLeft: 10}}
         />
 
-        <Text
-          style={{marginLeft: 10, width: 150,color: '#999999'}}
-        >
-          {defaultKeyword?defaultKeyword.keyword:请输入关键词}
+        <Text style={{marginLeft: 10, width: 150, color: '#999999'}}>
+          {defaultKeyword ? defaultKeyword.keyword : 请输入关键词}
         </Text>
       </TouchableOpacity>
     );
@@ -79,11 +76,7 @@ export default class SearchPageView extends React.Component {
         onPress={() => {
           this.props.navigation.goBack();
         }}>
-        <Text
-          style={{color: 'black',marginRight:10}}
-        >
-          取消
-        </Text>
+        <Text style={{color: 'black', marginRight: 10}}>取消</Text>
       </TouchableOpacity>
     );
   };
@@ -114,7 +107,7 @@ export default class SearchPageView extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
-  onClearhistory=()=>{
+  onClearhistory = () => {
     let param = {
       headers: {
         'X-Litemall-Token': window.token
@@ -126,35 +119,35 @@ export default class SearchPageView extends React.Component {
     };
     let url = '/wx/search/clearhistory';
     const callback = responseData => {
-          let param = {
-            headers: {
-              'X-Litemall-Token': window.token
-                ? window.token
-                : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
-              'content-type': 'application/json',
-            },
-            method: 'GET',
-          };
-          let url = '/wx/search/index';
-          const callback = responseData => {
-            this.setState({
-              defaultKeyword: responseData.data.defaultKeyword,
-              hotKeywordList: responseData.data.hotKeywordList,
-              historyKeywordList: responseData.data.historyKeywordList,
-            });
-          };
-          const errCallback = responseData => {
-            alert(responseData.errmsg);
-          };
-          fetchData(url, param, callback, errCallback);
+      let param = {
+        headers: {
+          'X-Litemall-Token': window.token
+            ? window.token
+            : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+          'content-type': 'application/json',
+        },
+        method: 'GET',
+      };
+      let url = '/wx/search/index';
+      const callback = responseData => {
+        this.setState({
+          defaultKeyword: responseData.data.defaultKeyword,
+          hotKeywordList: responseData.data.hotKeywordList,
+          historyKeywordList: responseData.data.historyKeywordList,
+        });
+      };
+      const errCallback = responseData => {
+        alert(responseData.errmsg);
+      };
+      fetchData(url, param, callback, errCallback);
     };
     const errCallback = responseData => {
       alert(responseData.errmsg);
     };
     fetchData(url, param, callback, errCallback);
-  }
+  };
   render() {
-    const {defaultKeyword,hotKeywordList,historyKeywordList} = this.state;
+    const {defaultKeyword, hotKeywordList, historyKeywordList} = this.state;
     let groupedHotKeywordList = group(hotKeywordList, 4);
     let groupedHistoryKeywordList = group(historyKeywordList, 4);
     return (
@@ -168,61 +161,82 @@ export default class SearchPageView extends React.Component {
           />
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{flex: 1, backgroundColor: '#F1F1F1'}}>
-              <Text style={{fontSize:18,padding:10,marginTop:10,fontWeight: 'bold'
-              }}>热门搜索</Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  padding: 10,
+                  marginTop: 10,
+                  fontWeight: 'bold',
+                }}>
+                热门搜索
+              </Text>
               {groupedHotKeywordList.map((item, i) => {
                 return (
-                  <View key={i} style={{flexDirection:'row',flex:1,marginLeft: 5}}>
-                    {
-                      item.map((item, i) => {
-                        return (
-                          <TouchableOpacity
-                            key={i}
-                            style={{backgroundColor:'white',margin:10,padding:5}}
-                            onPress={() => {
-                              alert("")
-                            }}>
-                            <Text>{item.keyword}</Text>
-                          </TouchableOpacity>
-
-                        );
-                      })}
+                  <View
+                    key={i}
+                    style={{flexDirection: 'row', flex: 1, marginLeft: 5}}>
+                    {item.map((item, i) => {
+                      return (
+                        <TouchableOpacity
+                          key={i}
+                          style={{
+                            backgroundColor: 'white',
+                            margin: 10,
+                            padding: 5,
+                          }}
+                          onPress={() => {
+                            alert('');
+                          }}>
+                          <Text>{item.keyword}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
                   </View>
                 );
               })}
             </View>
 
             <View style={{flex: 1, backgroundColor: '#F1F1F1'}}>
-              <View style={{flexDirection:'row',alignItems: 'center',justifyContent:'space-between'}}>
-                <Text style={{fontSize:18,padding:10,fontWeight: 'bold'
-                }}>搜索历史</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <Text style={{fontSize: 18, padding: 10, fontWeight: 'bold'}}>
+                  搜索历史
+                </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    this.onClearhistory()
+                    this.onClearhistory();
                   }}>
-                <Image
-                  source={require('../../assets/images/icon_delete.png')}
-                  style={{width: 25, height: 25,marginRight:10}}
-                />
+                  <Image
+                    source={require('../../assets/images/icon_delete.png')}
+                    style={{width: 25, height: 25, marginRight: 10}}
+                  />
                 </TouchableOpacity>
               </View>
               {groupedHistoryKeywordList.map((item, i) => {
                 return (
-                  <View key={i} style={{flexDirection:'row',flex:1,marginLeft: 5}}>
-                    {
-                      item.map((item, i) => {
-                        return (
-                          <TouchableOpacity
-                            key={i}
-                            style={{backgroundColor:'white',margin:10,padding:5}}
-                            onPress={() => {
-                              alert("")
-                            }}>
-                            <Text>{item.keyword}</Text>
-                          </TouchableOpacity>
-
-                        );
-                      })}
+                  <View
+                    key={i}
+                    style={{flexDirection: 'row', flex: 1, marginLeft: 5}}>
+                    {item.map((item, i) => {
+                      return (
+                        <TouchableOpacity
+                          key={i}
+                          style={{
+                            backgroundColor: 'white',
+                            margin: 10,
+                            padding: 5,
+                          }}
+                          onPress={() => {
+                            alert('');
+                          }}>
+                          <Text>{item.keyword}</Text>
+                        </TouchableOpacity>
+                      );
+                    })}
                   </View>
                 );
               })}
@@ -245,7 +259,6 @@ export default class SearchPageView extends React.Component {
           {/*    </Text>*/}
           {/*  </View>*/}
           {/*</TouchableOpacity>*/}
-
         </View>
       </KeyboardAvoidingView>
     );

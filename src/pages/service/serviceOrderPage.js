@@ -15,8 +15,6 @@ import {fetchData} from '../../common/fetch';
 import {DatePicker, SimpleItemsDialog} from '../../components/pickers';
 var {width} = Dimensions.get('window');
 
-
-
 export default class ServiceOrderPage extends React.Component {
   constructor() {
     super();
@@ -38,7 +36,6 @@ export default class ServiceOrderPage extends React.Component {
       distributionType: '01', //配送方式01送货02自提03快递
     };
   }
-
 
   // 返回中间按钮
   renderTitleItem = () => {
@@ -89,7 +86,7 @@ export default class ServiceOrderPage extends React.Component {
 
   //跳转地址选择
   onChooseAddress = () => {
-    this.props.navigation.navigate('address', {
+    this.props.navigation.navigate('shippingaddress', {
       onSelectAddress: this.onSelectAddress,
     });
   };
@@ -97,6 +94,10 @@ export default class ServiceOrderPage extends React.Component {
   //提交订单
   onConfirmPay = () => {
     let cartId = this.props.route.params.data;
+    if( !(this.state.address&&this.state.address.id.length >0) || !(this.state.serviceStaff&&this.state.serviceStaff.length >0)){
+      alert("请完善信息！")
+      return
+    }
     let data = {
       addressId: this.state.address.id, //地址
       cartId: cartId, //购物车
@@ -122,7 +123,7 @@ export default class ServiceOrderPage extends React.Component {
     };
     let url = '/wx/order/submit';
     const callback = responseData => {
-      console.log("ServicePayPage————"+JSON.stringify(responseData));
+      console.log('ServicePayPage————' + JSON.stringify(responseData));
       if (responseData.data) {
         this.props.navigation.navigate('ServicePayPage', {
           data: responseData.data,
@@ -138,7 +139,6 @@ export default class ServiceOrderPage extends React.Component {
     fetchData(url, param, callback, errCallback);
   };
 
-
   componentDidMount() {
     let param1 = {
       headers: {
@@ -151,7 +151,9 @@ export default class ServiceOrderPage extends React.Component {
     };
     let url1 = '/wx/address/list';
     const callback1 = responseData => {
-      let addressId = responseData.data.list[0]?responseData.data.list[0].id:'';
+      let addressId = responseData.data.list[0]
+        ? responseData.data.list[0].id
+        : '';
       let address = responseData.data.list[0];
 
       let cartId = this.props.route.params.data;
@@ -191,7 +193,9 @@ export default class ServiceOrderPage extends React.Component {
   render() {
     const {orderData, address, modalVisible, initItem, subscribeTime} =
       this.state;
-    let checkedGoodsList = orderData.checkedGoodsList?orderData.checkedGoodsList:[];
+    let checkedGoodsList = orderData.checkedGoodsList
+      ? orderData.checkedGoodsList
+      : [];
     return (
       <View
         style={styles.container}
@@ -216,7 +220,9 @@ export default class ServiceOrderPage extends React.Component {
                     borderBottomWidth: 1,
                     borderBottomColor: 'lightgray',
                   }}>
-                  <View style={{width: 2, height: 20, backgroundColor: 'black'}} />
+                  <View
+                    style={{width: 2, height: 20, backgroundColor: 'black'}}
+                  />
                   <Text style={{fontSize: 17, marginLeft: 10}}>商品信息</Text>
                 </View>
                 <View
@@ -240,13 +246,12 @@ export default class ServiceOrderPage extends React.Component {
                   <View style={{flex: 1, marginLeft: 20}}>
                     <View style={{flexDirection: 'row'}}>
                       <Text style={{fontSize: 15, color: 'black'}}>
-                        {item
-                          ? item.goodsName
-                          : ''}
+                        {item ? item.goodsName : ''}
                       </Text>
                       <View style={{flex: 1}} />
                       <View style={{flex: 1}}>
-                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
                           <Text
                             numberOfLines={3}
                             style={{fontSize: 19, color: '#ff6600'}}>
@@ -255,18 +260,13 @@ export default class ServiceOrderPage extends React.Component {
                           <Text
                             numberOfLines={3}
                             style={{fontSize: 19, color: '#ff6600'}}>
-                            {item
-                              ? item.price
-                              : ''}
+                            {item ? item.price : ''}
                           </Text>
                         </View>
                         <Text
                           numberOfLines={3}
                           style={{fontSize: 15, color: 'gray', marginTop: 10}}>
-                          ×
-                          {item
-                            ? item.number
-                            : ''}
+                          ×{item ? item.number : ''}
                         </Text>
                       </View>
                     </View>
@@ -310,8 +310,8 @@ export default class ServiceOrderPage extends React.Component {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text
                     style={{
-                      fontSize: address?18:15,
-                      color: address?'black':'lightgray',
+                      fontSize: address ? 18 : 15,
+                      color: address ? 'black' : 'lightgray',
                       marginLeft: 10,
                       marginTop: 5,
                     }}>

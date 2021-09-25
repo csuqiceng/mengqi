@@ -6,10 +6,10 @@ import RegisterView from '../login/registerView';
 import MyinfoPage from './mainpage/myinfoPage';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import Localstorage from "../../common/localStorage";
+import Localstorage from '../../common/localStorage';
 const MyinfoStack = createStackNavigator();
 
-export default class  MinePage extends React.Component {
+export default class MinePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,7 @@ export default class  MinePage extends React.Component {
   }
   componentDidMount() {
     const storage = Localstorage.get('token');
-    storage.then( (token) => {
+    storage.then(token => {
       window.token = token;
     });
   }
@@ -41,10 +41,7 @@ export default class  MinePage extends React.Component {
           options={{}}
           component={RegisterView}
         />
-        <MyinfoStack.Screen
-          name="mainPgae"
-          component={MyinfoPage}
-        />
+        <MyinfoStack.Screen name="mainPgae" component={MyinfoPage} />
       </MyinfoStack.Navigator>
     );
   }
@@ -56,4 +53,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
-

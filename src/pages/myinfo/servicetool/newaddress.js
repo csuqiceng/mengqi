@@ -14,7 +14,7 @@ import {
 import CheckBox from 'react-native-check-box';
 import NavBar from '../../../common/navBar';
 import {fetchData} from '../../../common/fetch';
-import { AreaPicker} from '../../../components/pickers';
+import {AreaPicker} from '../../../components/pickers';
 import AreaJson from '../../../components/pickers/Area.json';
 const {width} = Dimensions.get('window');
 
@@ -101,12 +101,12 @@ export default class MyNewAddressView extends React.Component {
       isDefault: this.state.isDefault,
       areaCode: this.state.areaCode,
     };
-    if (this.state.id){
+    if (this.state.id) {
       data.id = this.state.id;
     }
-    if (data.tel && data.tel.length !=11){
-       alert("手机格式不对");
-       return;
+    if (data.tel && data.tel.length != 11) {
+      alert('手机格式不对');
+      return;
     }
     console.log(JSON.stringify(data));
     let param = {
@@ -124,7 +124,11 @@ export default class MyNewAddressView extends React.Component {
     const callback = responseData => {
       console.log(responseData);
       if (responseData.errno == '0') {
-        if (this.props.route&&this.props.route.params&&this.props.route.params.refresh) {
+        if (
+          this.props.route &&
+          this.props.route.params &&
+          this.props.route.params.refresh
+        ) {
           this.props.navigation.goBack();
           this.props.route.params.refresh();
         }
@@ -139,7 +143,7 @@ export default class MyNewAddressView extends React.Component {
     fetchData(url, param, callback, errCallback);
   };
   render() {
-    const {province,city,county} = this.state;
+    const {province, city, county} = this.state;
     let address = province + city + county;
     return (
       <KeyboardAvoidingView
@@ -225,9 +229,12 @@ export default class MyNewAddressView extends React.Component {
                 <TouchableOpacity
                   activeOpacity={0.5}
                   onPress={() => {
-                    this.AreaPicker.show()
+                    this.AreaPicker.show();
                   }}>
-                  <Text style={{fontSize: 15,color: address?'black':'gray'}}>{address?address:'省市区县、乡镇等'}</Text>
+                  <Text
+                    style={{fontSize: 15, color: address ? 'black' : 'gray'}}>
+                    {address ? address : '省市区县、乡镇等'}
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View
@@ -289,11 +296,12 @@ export default class MyNewAddressView extends React.Component {
 
           <AreaPicker
             areaJson={AreaJson}
-            onPickerCancel={() => { }}
-            onPickerConfirm={(value) => {
-                this.onCityPickerCallback(value)
+            onPickerCancel={() => {}}
+            onPickerConfirm={value => {
+              this.onCityPickerCallback(value);
             }}
-            ref={ref => this.AreaPicker = ref} />
+            ref={ref => (this.AreaPicker = ref)}
+          />
         </View>
       </KeyboardAvoidingView>
     );
