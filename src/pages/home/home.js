@@ -52,6 +52,7 @@ export default class HomePage extends React.Component {
     super();
     this.state = {
       searchInput: '',
+      cityinfo:'荆州',
       dataSource: '',
       discountMallGoodsList: preferentialData,
       hoteServiceList: hotServerData,
@@ -138,7 +139,11 @@ export default class HomePage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
   }
-
+  _refresh = (cityinfo) => {
+    this.setState({
+      cityinfo:cityinfo
+    })
+  }
   // 渲染
   render() {
     const {
@@ -147,6 +152,7 @@ export default class HomePage extends React.Component {
       discountMallGoodsList,
       adList,
       specialOffer,
+      cityinfo
     } = this.state;
     var groupedBrandList = group(brandList, 5);
     var groupedDiscountMallGoodsList = group(discountMallGoodsList, 2);
@@ -168,7 +174,9 @@ export default class HomePage extends React.Component {
             <TouchableOpacity
               style={{marginLeft: 10, flexDirection: 'row'}}
               onPress={() => {
-                this.props.navigation.navigate('cityselect');
+                this.props.navigation.navigate('cityselect', {
+                  refresh: this._refresh,
+                });
               }}>
               <Image
                 source={require('../../assets/images/icon_position1.png')}
@@ -182,7 +190,7 @@ export default class HomePage extends React.Component {
                   includeFontPadding: false,
                   textAlignVertical: 'center',
                 }}>
-                荆州
+                {cityinfo}
               </Text>
             </TouchableOpacity>
             <Text

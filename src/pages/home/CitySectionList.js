@@ -251,6 +251,8 @@ class CitySelect extends Component {
    */
   _itemClick(item) {
     console.log(item.city);
+    this.props.navigation.pop();
+    this.props.route.params.refresh(item.city);
   }
 }
 
