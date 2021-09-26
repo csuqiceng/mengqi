@@ -33,6 +33,7 @@ export default class ServicePayPage extends React.Component {
           textAlign: 'center',
           justifyContent: 'center',
           marginLeft: -50,
+          fontWeight:'bold'
         }}>
         订单支付
       </Text>

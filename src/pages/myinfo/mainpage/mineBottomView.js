@@ -194,7 +194,7 @@ const participationData = [
     image: require('../../../assets/images/myinfo/my_icon_ykt.png'),
   },
   {
-    title: '梦琪公益',
+    title: '梦奇公益',
     key: 'mengqicharity',
     image: require('../../../assets/images/myinfo/my_icon_collect(1).png'),
   },

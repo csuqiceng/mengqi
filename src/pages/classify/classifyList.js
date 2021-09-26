@@ -49,7 +49,7 @@ export default class ClassifyList extends React.Component {
     return (
       <TouchableOpacity
         onPress={() => {
-          alert('');
+          this.props.navigation.navigate('search');
         }}
         style={{
           height: 30,

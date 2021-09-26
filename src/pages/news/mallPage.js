@@ -203,9 +203,10 @@ const styles = StyleSheet.create({
   },
 
   navbarTitleItemStyle: {
-    fontSize: 17,
+    fontSize: 15,
     color: 'black',
     marginLeft: 50,
+    fontWeight:'bold'
   },
   navbarRightItemStyle: {
     fontSize: 17,

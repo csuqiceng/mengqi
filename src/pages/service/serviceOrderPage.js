@@ -45,6 +45,7 @@ export default class ServiceOrderPage extends React.Component {
           textAlign: 'center',
           justifyContent: 'center',
           marginLeft: -50,
+          fontWeight:'bold'
         }}>
         确认订单
       </Text>

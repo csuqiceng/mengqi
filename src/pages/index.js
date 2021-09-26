@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, SafeAreaView} from 'react-native';
+import {Image, SafeAreaView,BackHandler} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -36,6 +36,26 @@ class MainTabPage extends React.Component {
       showMarket: false,
     };
   }
+  // componentDidMount() {
+  //   BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+  // }
+  //
+  // componentWillUnmount() {
+  //   BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+  // }
+  //
+  // onBackPress = () => {
+  //   this.lastBackPressed = Date.now(); //声明好变量
+  //   if (this.lastBackPressed && Date.now() - this.lastBackPressed <= 2000) {
+  //     console.log('间隔小于两秒');
+  //     BackHandler.exitApp();  //API封装好的退出App方法
+  //     return true;
+  //   }
+  //   // alert('再按一次退出应用')
+  //   // infoToast('再按一次退出应用'); //自己封装的吐司组件
+  //   this.lastBackPressed = Date.now(); //记录本次返回事件的时间戳
+  //   return true; //返回true就代表了拦截这次返回事件，false就代表了不拦截
+  // };
 
   render() {
     if (this.state.showMarket) {
@@ -70,6 +90,7 @@ class MainTabPage extends React.Component {
             options={{
               tabBarLabel: '分类',
               tabBarIcon: ({focused, tintColor}) => (
+
                 <Image
                   source={
                     focused

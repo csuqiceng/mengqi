@@ -1,7 +1,7 @@
 //分类
 
 import * as React from 'react';
-import {Text, View, Image, TouchableOpacity, Dimensions} from 'react-native';
+import {Text, View, Image, TouchableOpacity, Dimensions,DeviceEventEmitter} from 'react-native';
 import ClassifyPage from './classifyPage';
 import {fetchData} from '../../common/fetch';
 const {width} = Dimensions.get('window');
@@ -68,8 +68,39 @@ export default class Classify extends React.Component {
       }
     };
     fetchData(url, param, callback, errCallback);
-  }
 
+
+
+    this.listener = DeviceEventEmitter.addListener("recoverClassifyList", (e) => {
+      let id = '';
+      let param = {
+        headers: {
+          'X-Litemall-Token': window.token
+            ? window.token
+            : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+          'content-type': 'application/x-www-form-urlencoded',
+        },
+        method: 'GET',
+      };
+      let url = `/wx/catalog/getfirstcategory?brandId=${id}`;
+      const callback = responseData => {
+        this.setState({
+          categoryList: responseData.data,
+        });
+      };
+      const errCallback = responseData => {
+        if (responseData.errno == 501) {
+          alert(responseData.errmsg);
+        }
+      };
+      fetchData(url, param, callback, errCallback);
+
+    });
+  }
+  componentWillUnmount() {
+    // 移除监听
+    this.listener.remove();
+  }
   render() {
     const {categoryList} = this.state;
     return (

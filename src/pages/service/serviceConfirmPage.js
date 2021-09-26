@@ -38,7 +38,7 @@ export default class ServiceConfirmPage extends React.Component {
       serviceItemCount: 1,
       productList: '',
       info: '',
-      webHeight: 500,
+      webHeight: 1000,
       swiperData: swiperData,
       shoppingCount: 0,
     };
@@ -46,7 +46,7 @@ export default class ServiceConfirmPage extends React.Component {
   // 返回中间按钮
   renderTitleItem = () => {
     return (
-      <Text style={{textAlign: 'center', justifyContent: 'center'}}>
+      <Text style={{textAlign: 'center', justifyContent: 'center',fontSize:15,fontWeight:'bold'}}>
         {this.props.route.params.name}
       </Text>
     );
@@ -91,7 +91,6 @@ export default class ServiceConfirmPage extends React.Component {
     this.setState({modalVisible: visible});
   };
   onStepperChange = e => {
-    console.log(e);
     this.setState({
       serviceItemCount: e,
     });
@@ -128,7 +127,7 @@ export default class ServiceConfirmPage extends React.Component {
       productId: productId,
       number: this.state.serviceItemCount,
     };
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     let param = {
       body: JSON.stringify(data), // must match 'Content-Type' header
       headers: {
@@ -141,7 +140,7 @@ export default class ServiceConfirmPage extends React.Component {
     };
     let url = '/wx/cart/add';
     const callback = responseData => {
-      console.log(responseData);
+      // console.log(responseData);
       if (responseData.data) {
         this.setState({
           shoppingCount: responseData.data,
@@ -189,7 +188,7 @@ export default class ServiceConfirmPage extends React.Component {
     };
     let url = '/wx/cart/fastadd';
     const callback = responseData => {
-      console.log(responseData);
+      // console.log(responseData);
       if (responseData.data) {
         this.props.navigation.navigate('ServiceOrderPage', {
           data: responseData.data,
@@ -217,7 +216,7 @@ export default class ServiceConfirmPage extends React.Component {
     };
     let url = `/wx/goods/detail?id=${id}`;
     const callback = responseData => {
-      console.log(JSON.stringify(responseData));
+      // console.log(JSON.stringify(responseData));
       this.setState({
         productList: responseData.data.productList,
         info: responseData.data.info,
@@ -243,7 +242,7 @@ export default class ServiceConfirmPage extends React.Component {
     };
     let url1 = '/wx/cart/index';
     const callback1 = responseData => {
-      console.log(JSON.stringify(responseData));
+      // console.log(JSON.stringify(responseData));
       this.setState({
         shoppingCount: responseData.data.cartTotal.goodsCount,
       });
@@ -257,28 +256,10 @@ export default class ServiceConfirmPage extends React.Component {
     fetchData(url1, param1, callback1, errCallback1);
   }
   webViewLoaded = () => {
-    console.log('ddddd');
-    this.webView.injectJavaScript = `
-          let webHeight = document.body.scrollHeight;
-          alert(webHeight)
-          window.ReactNativeWebView.postMessage(webHeight);
-        `;
+    this.webView.injectJavaScript(`testReceiveMessage("RN向H5发送消息");true;`)
   };
-  onWebViewMessage = msg => {
-    if (msg.nativeEvent.data !== undefined && msg.nativeEvent.data !== null) {
-      this.setState({
-        webHeight: parseInt(msg.nativeEvent.data),
-      });
-    }
-  };
-  onMessage(event) {
-    console.log('On Message', event.nativeEvent.data);
-  }
 
-  sendPostMessage() {
-    console.log('Sending post message,this is RN');
-    this.webView.postMessage('Post message from react native ');
-  }
+
   renderShoppingTip = () => {
     if (this.state.shoppingCount > 0) {
       return (
@@ -300,41 +281,27 @@ export default class ServiceConfirmPage extends React.Component {
   render() {
     let INJECTEDJAVASCRIPT = `
           let webHeight = document.body.scrollHeight;
-          console.log(webHeight)
-          window.ReactNativeWebView.postMessage(webHeight);
-        `;
+          let webWidth = document.body.scrollWidth;
+          webHeight = (${width} /webWidth) * webHeight;
+          let imgs = document.body.getElementsByTagName("img");
+          let otherHeight = 0 ;
+          for (let i = 0; i <imgs.length ; i++) {
+              let width = imgs[i].width;
+              let height = imgs[i].height;
+              if(width&&height){
+                imgs[i].width = webWidth;
+                imgs[i].height = height *(webWidth/width);
+                otherHeight = otherHeight + (height *(webWidth/width) - height);
+              }
+          }
+          webHeight = webHeight+otherHeight;
+          testReceiveMessage = function(){
+             window.ReactNativeWebView.postMessage(webHeight);
+          }
+
+`;
     const {modalVisible, serviceItemCount, serviceItemName, productList, info} =
       this.state;
-
-    let scrollHeight = 0;
-    if (info.detail) {
-      // let detail = info.detail;
-      // detail = detail.replace(/"\"/g,"")
-      // console.log("detail"+detail)
-      // let arrdetail = detail.split("<img");
-      // console.log("arrdetail——————"+arrdetail)
-      // for (let i = 0; i < arrdetail.length; i++) {
-      //   let img = arrdetail[i];
-      //   console.log("img——————"+img)
-      //   if(img.indexOf("height") !=-1){
-      //       let arrimg = img.split(" ");
-      //       for (let i = 0; i < arrimg.length; i++) {
-      //         let str = arrimg[i];
-      //
-      //         if (str.indexOf("height") !=-1){
-      //           console.log(str.split("=")[1])
-      //           let height = str.split("=")[1];
-      //           height = height.replace(/'"'/g,"")
-      //           height ="300";
-      //           console.log(height.length)
-      //           // height =parseInt("300");
-      //           console.log(parseInt(height))
-      //           scrollHeight = scrollHeight + (height);
-      //         }
-      //       }
-      //   }
-      // }
-    }
 
     let chooseMeg = '请选择  服务项目';
     if (serviceItemName.length > 0 && serviceItemCount) {
@@ -366,7 +333,7 @@ export default class ServiceConfirmPage extends React.Component {
         <NavBar
           titleItem={() => this.renderTitleItem()}
           leftItem={() => this.renderLeftItem()}
-          rightItem={() => this.renderRightItem()}
+          // rightItem={() => this.renderRightItem()}
         />
         <SafeAreaView style={{flex: 1}}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -407,7 +374,6 @@ export default class ServiceConfirmPage extends React.Component {
               }}
               loop>
               {this.state.swiperData.map((item, i) => {
-                console.log(item);
                 return (
                   <View style={styles.slide} key={i}>
                     <Image
@@ -511,20 +477,10 @@ export default class ServiceConfirmPage extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={{marginTop: 10, backgroundColor: 'gray'}}>
-                {/*<Text*/}
-                {/*  style={{*/}
-                {/*    textAlign: 'center',*/}
-                {/*    fontWeight: 'bold',*/}
-                {/*    fontSize: 15,*/}
-                {/*    color: '#666666',*/}
-                {/*    backgroundColor: 'white',*/}
-                {/*  }}>*/}
-                {/*  {'---商品详情---'}*/}
-                {/*</Text>*/}
 
                 <WebView
                   ref={ref => (this.webView = ref)}
-                  style={{width: width, height: 3944}}
+                  style={{width: width, height: this.state.webHeight}}
                   scalesPageToFit={true} //布尔值，控制网页内容是否自动适配视图的大小，同时启用用户缩放功能。默认为true
                   scrollEnabled={true} //控制是否在 WebView中启用滑动。默认为 true
                   javaScriptEnabled={true} //布尔值，控制是否启用 JavaScript。仅在安卓下使用，因为 IOS 默认为启用 JavaScript。默认值为true
@@ -551,50 +507,22 @@ export default class ServiceConfirmPage extends React.Component {
                                             </style>
                                         </head>
                                         <body>
-                                          <div>${info.detail}</div>
-<!--                                <div>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/mlbixirlehaptzexch38.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/ccla21pq7smhmejzfptr.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/yq534s4m4ar1s8cuca7r.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/g601lf9l76pocnjio40a.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/k7fsu4ckx4ktrsa81ick.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/c4sj0ug9te27evgx4oc4.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                -->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/wsnv8ggb2aug8tnncmq1.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/icamolla0mu9fhq0hrj3.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                <p>-->
-<!--                                <img src="https://mengqi-storg.oss-accelerate.aliyuncs.com/j7fai34p58euezywpxx1.png" width=100% height=100% </>-->
-<!--                                </p>-->
-<!--                                </div>-->
+                                          <p>${info.detail}</p>
                                         </body>
                                         </html>`,
                   }}
                   injectedJavaScript={INJECTEDJAVASCRIPT} //设置 js 字符串，在网页加载之前注入的一段 JS 代码
-                  onLoadEnd={this.webViewLoaded} // webview加载完毕后执行
+                  onLoadEnd={()=>{this.webViewLoaded()}} // webview加载完毕后执行
                   onMessage={event => {
                     console.log(
                       '测试onMessage参数列表' +
                         JSON.stringify(event.nativeEvent.data),
                     );
-                    this.setState({
-                      webHeight: parseInt(event.nativeEvent.data),
-                    });
+                    if (event.nativeEvent.data !== undefined && event.nativeEvent.data !== null) {
+                      this.setState({
+                        webHeight: parseInt(event.nativeEvent.data),
+                      });
+                    }
                   }}
                 />
               </View>

@@ -48,8 +48,9 @@ export default class MyOrderView extends React.Component {
         style={{
           textAlign: 'center',
           justifyContent: 'center',
-          fontSize: 20,
+          fontSize: 15,
           marginLeft: -20,
+          fontWeight:'bold'
         }}>
         我的订单
       </Text>

@@ -5,7 +5,9 @@ import {
   Text,
   View,
   StyleSheet,
-  Dimensions, Image,
+  Dimensions,
+  Image,
+  DeviceEventEmitter
 } from "react-native";
 
 import React from 'react';
@@ -69,41 +71,15 @@ export default class VideosList extends React.Component {
       alert(responseData)
     };
     fetchData(url, param, callback, errCallback);
+    //监听点击tab事件 充值分类
+    this.unsubscribe = this.props.navigation.addListener('tabPress', e => {
+      DeviceEventEmitter.emit('recoverClassifyList')
+    });
   }
-  // onRefreshing = () => {
-  //   this.setState({
-  //     refreshing: true,
-  //   })
-  //   const { api } = this.props;
-  //   fetch(api(this.state.np))
-  //     .then((response) => response.json())
-  //     .then((jsonData) => {
-  //       this.setState({
-  //         refreshing: false,
-  //         data: jsonData.list,
-  //         np: jsonData.info.np || 0,
-  //
-  //       })
-  //     });
-  // }
-  //
-  // _onEndReached = () => {
-  //   const { api } = this.props;
-  //   fetch(api(this.state.np))
-  //     .then((response) => response.json())
-  //     .then((jsonData) => {
-  //       this.setState({
-  //         data: [...this.state.data, ...jsonData.list],
-  //         np: jsonData.info.np,
-  //       })
-  //     });
-  // }
-  //
-  // _keyExtractor = (item, index) => {
-  //   return item.text + index;
-  // }
 
-
+  componentWillUnmount(){
+    this.unsubscribe ();
+  }
 
   renderItem = ({item}) => {
     return (
@@ -115,11 +91,13 @@ export default class VideosList extends React.Component {
         <PlacehoderImage
           source={{uri: item.picUrl}}
           placeholder={{uri: 'placeholder'}}
-          style={{width: itemWidth, height: itemWidth + 30, borderRadius: 4}}
+          style={{width: itemWidth, height: itemWidth + 30}}
         />
         <View style={styles.itemText}>
           <Text style={{color: '#fff'}}>▶ {item.videoClickNum}</Text>
-          <Text style={{color: '#fff'}}>{item.videoTitle}</Text>
+        </View>
+        <View style={{height: 40,justifyContent: 'center',marginLeft:10}}>
+          <Text numberOfLines={1} ellipsizeMode={'tail'}style={{color: 'black',fontSize:15}}>{item.videoTitle}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -147,7 +125,7 @@ export default class VideosList extends React.Component {
         }}>
         <Image
           resizeMode="stretch"
-          source={require('../../assets/images/home_icon_search.png')}
+          source={require('../../assets/images/icon_search1.png')}
           style={{height: 22, width: 22,marginRight:10}}
         />
       </TouchableOpacity>
@@ -186,7 +164,7 @@ const styles = StyleSheet.create({
   },
   item: {
     // margin: 4,
-    backgroundColor: 'black'
+    backgroundColor: 'white'
   },
   itemText: {
     flexDirection: 'row',
@@ -196,7 +174,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 40,
     height: 30,
     backgroundColor: '#0002',
     borderBottomLeftRadius: 4,
