@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import { AppRegistry, StyleSheet, Text, View, ScrollView, DeviceEventEmitter } from "react-native";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  DeviceEventEmitter,
+} from 'react-native';
 //导入外部组件
 import LoginView from '../login/loginView';
 import RegisterView from '../login/registerView';
@@ -23,14 +30,13 @@ export default class MinePage extends React.Component {
     });
 
     this.unsubscribe = this.props.navigation.addListener('tabPress', e => {
-      DeviceEventEmitter.emit('recoverClassifyList')
+      DeviceEventEmitter.emit('recoverClassifyList');
     });
   }
 
-
-componentWillUnmount(){
-  this.unsubscribe ();
-}
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
   render() {
     let loginType = this.state.loginType;
     if (window.token) {

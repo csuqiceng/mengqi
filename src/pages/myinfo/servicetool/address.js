@@ -37,7 +37,7 @@ export default class MyAddressView extends React.Component {
           justifyContent: 'center',
           fontSize: 15,
           marginLeft: -20,
-          fontWeight:'bold'
+          fontWeight: 'bold',
         }}>
         我的地址
       </Text>

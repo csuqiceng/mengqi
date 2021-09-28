@@ -10,9 +10,8 @@ import {
   FlatList,
   StatusBar,
   ScrollView,
-} from 'react-native'
+} from 'react-native';
 import cityData from '../../components/city-data.json';
-
 
 const {width, height} = Dimensions.get('window');
 const touchDownBGColor = '#999999';
@@ -33,7 +32,7 @@ class CitySelect extends Component {
       sections: [],
       isTouchDown: false, //触摸事件开始,类型android的onTouchDown
       canTouch: false, //等待界面渲染完,不然会报错
-      selectText: '',//当前选择的字母
+      selectText: '', //当前选择的字母
     };
     this.responderGrant = this.responderGrant.bind(this);
     this.responderMove = this.responderMove.bind(this);
@@ -72,7 +71,8 @@ class CitySelect extends Component {
       sectionTextView = (
         <View style={cityStyle.selectView}>
           <Text style={cityStyle.selectTv}>{this.state.selectText}</Text>
-        </View>)
+        </View>
+      );
     }
     return (
       <View>
@@ -150,7 +150,7 @@ class CitySelect extends Component {
         (touch.pageY - sectionTopBottomHeight - headerHeight) /
         sectionItemHeight;
       console.log('index' + index);
-      if (Math.round(index) >= 0 && Math.round(index) <= 25){
+      if (Math.round(index) >= 0 && Math.round(index) <= 25) {
         this.setState({
           selectText: this.state.sections[Math.round(index)].key,
         });
@@ -214,7 +214,7 @@ class CitySelect extends Component {
   renderSectionHeader = info => {
     let section = info.section.key;
     if (section === '热') {
-      section = '热门城市'
+      section = '热门城市';
     }
     return <Text style={cityStyle.sectionStyle}>{section}</Text>;
   };

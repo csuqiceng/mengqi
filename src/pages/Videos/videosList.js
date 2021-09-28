@@ -7,15 +7,15 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  DeviceEventEmitter
-} from "react-native";
+  DeviceEventEmitter,
+} from 'react-native';
 
 import React from 'react';
 
 import PlacehoderImage from '../../components/WaterFlow/PlacehoderImage';
 import MasonryList from '@react-native-seoul/masonry-list';
 import {fetchData} from '../../common/fetch';
-import NavBar from "../../common/navBar";
+import NavBar from '../../common/navBar';
 import {AlertDialogWithDevelop} from '../../components/pickers';
 
 const {width} = Dimensions.get('window');
@@ -68,17 +68,17 @@ export default class VideosList extends React.Component {
       });
     };
     const errCallback = responseData => {
-      alert(responseData)
+      alert(responseData);
     };
     fetchData(url, param, callback, errCallback);
     //监听点击tab事件 充值分类
     this.unsubscribe = this.props.navigation.addListener('tabPress', e => {
-      DeviceEventEmitter.emit('recoverClassifyList')
+      DeviceEventEmitter.emit('recoverClassifyList');
     });
-  }
+  };
 
-  componentWillUnmount(){
-    this.unsubscribe ();
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   renderItem = ({item}) => {
@@ -96,8 +96,13 @@ export default class VideosList extends React.Component {
         <View style={styles.itemText}>
           <Text style={{color: '#fff'}}>▶ {item.videoClickNum}</Text>
         </View>
-        <View style={{height: 40,justifyContent: 'center',marginLeft:10}}>
-          <Text numberOfLines={1} ellipsizeMode={'tail'}style={{color: 'black',fontSize:15}}>{item.videoTitle}</Text>
+        <View style={{height: 40, justifyContent: 'center', marginLeft: 10}}>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode={'tail'}
+            style={{color: 'black', fontSize: 15}}>
+            {item.videoTitle}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -112,7 +117,11 @@ export default class VideosList extends React.Component {
 
   // 返回中间按钮
   renderTitleItem() {
-    return <Text style={{fontSize: 15, marginRight: -50,fontWeight:'bold'}}>视频</Text>;
+    return (
+      <Text style={{fontSize: 15, marginRight: -50, fontWeight: 'bold'}}>
+        视频
+      </Text>
+    );
   }
 
   // 右边
@@ -121,12 +130,12 @@ export default class VideosList extends React.Component {
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={() => {
-          this.AlertDialog.show()
+          this.AlertDialog.show();
         }}>
         <Image
           resizeMode="stretch"
           source={require('../../assets/images/icon_search1.png')}
-          style={{height: 22, width: 22,marginRight:10}}
+          style={{height: 22, width: 22, marginRight: 10}}
         />
       </TouchableOpacity>
     );
@@ -134,7 +143,7 @@ export default class VideosList extends React.Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={{flex: 1}}>
         <NavBar
           titleItem={() => this.renderTitleItem()}
           rightItem={() => this.renderRightItem()}
@@ -164,7 +173,7 @@ const styles = StyleSheet.create({
   },
   item: {
     // margin: 4,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   itemText: {
     flexDirection: 'row',

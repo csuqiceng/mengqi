@@ -13,8 +13,9 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableHighlight,
-  ImageBackground, DeviceEventEmitter,
-} from "react-native";
+  ImageBackground,
+  DeviceEventEmitter,
+} from 'react-native';
 import {
   hotServerData,
   preferentialData,
@@ -52,7 +53,7 @@ export default class HomePage extends React.Component {
     super();
     this.state = {
       searchInput: '',
-      cityinfo:'荆州',
+      cityinfo: '荆州',
       dataSource: '',
       discountMallGoodsList: preferentialData,
       hoteServiceList: hotServerData,
@@ -139,20 +140,19 @@ export default class HomePage extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
 
-
     this.unsubscribe = this.props.navigation.addListener('tabPress', e => {
-      DeviceEventEmitter.emit('recoverClassifyList')
+      DeviceEventEmitter.emit('recoverClassifyList');
     });
   }
 
-  componentWillUnmount(){
-    this.unsubscribe ();
+  componentWillUnmount() {
+    this.unsubscribe();
   }
-  _refresh = (cityinfo) => {
+  _refresh = cityinfo => {
     this.setState({
-      cityinfo:cityinfo
-    })
-  }
+      cityinfo: cityinfo,
+    });
+  };
   // 渲染
   render() {
     const {
@@ -161,7 +161,7 @@ export default class HomePage extends React.Component {
       discountMallGoodsList,
       adList,
       specialOffer,
-      cityinfo
+      cityinfo,
     } = this.state;
     var groupedBrandList = group(brandList, 5);
     var groupedDiscountMallGoodsList = group(discountMallGoodsList, 2);
@@ -414,9 +414,8 @@ export default class HomePage extends React.Component {
                     flex: 1,
                     justifyContent: 'flex-end',
                   }}
-                  imageStyle={{flex:1,backgroundColor:'black',opacity: 0.7}}
-                  source={require('../../assets/images/home_plate1.png')}
-                >
+                  imageStyle={{flex: 1, backgroundColor: 'black', opacity: 0.7}}
+                  source={require('../../assets/images/home_plate1.png')}>
                   <Text
                     numberOfLines={1}
                     ellipsizeMode={'tail'}
@@ -426,11 +425,16 @@ export default class HomePage extends React.Component {
                       fontWeight: 'bold',
                       backgroundColor: 'rgba(255,255,255,0.5)',
                       width: 85,
-                      marginLeft: 10
+                      marginLeft: 10,
                     }}>
                     今日特价
                   </Text>
-                  <View style={{flexDirection: 'row', marginBottom: 10,marginLeft:10}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      marginBottom: 10,
+                      marginLeft: 10,
+                    }}>
                     <Text
                       numberOfLines={1}
                       ellipsizeMode={'tail'}
@@ -445,7 +449,7 @@ export default class HomePage extends React.Component {
                         fontSize: 13,
                         backgroundColor: '#FF5400',
                       }}>
-                      { Math.floor(Math.random()* 30)}
+                      {Math.floor(Math.random() * 30)}
                     </Text>
                     <Text
                       numberOfLines={1}
@@ -502,7 +506,11 @@ export default class HomePage extends React.Component {
                       justifyContent: 'flex-end',
                       borderRadius: 5,
                     }}
-                    imageStyle={{flex:1,backgroundColor:'black',opacity: 0.7}}
+                    imageStyle={{
+                      flex: 1,
+                      backgroundColor: 'black',
+                      opacity: 0.7,
+                    }}
                     source={require('../../assets/images/home_plate3.png')}>
                     <Text
                       numberOfLines={1}

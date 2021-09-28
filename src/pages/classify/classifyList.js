@@ -66,7 +66,7 @@ export default class ClassifyList extends React.Component {
         />
 
         <Text style={{marginLeft: 10, width: 150, color: '#999999'}}>
-          {defaultKeyword ? defaultKeyword : "请输入关键词"}
+          {defaultKeyword ? defaultKeyword : '请输入关键词'}
         </Text>
       </TouchableOpacity>
     );

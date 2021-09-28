@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "lint-fix": "eslint src/**/*.* --fix"
+    "lint-fix": "eslint . --fix"
   },
   "dependencies": {
     "@ant-design/icons-react-native": "^2.3.1",

@@ -11,8 +11,9 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  ScrollView, DeviceEventEmitter,
-} from "react-native";
+  ScrollView,
+  DeviceEventEmitter,
+} from 'react-native';
 import NavBar from '../../common/navBar';
 import {fetchData} from '../../common/fetch';
 import CheckBox from 'react-native-check-box';
@@ -35,7 +36,11 @@ export default class ShoppingCartPage extends React.Component {
 
   // 返回中间按钮
   renderTitleItem() {
-    return <Text style={{fontSize: 15, marginRight: -50,fontWeight:'bold'}}>购物车</Text>;
+    return (
+      <Text style={{fontSize: 15, marginRight: -50, fontWeight: 'bold'}}>
+        购物车
+      </Text>
+    );
   }
   onShoppingCartEdit = () => {
     this.setState({
@@ -267,14 +272,14 @@ export default class ShoppingCartPage extends React.Component {
     }, 1000);
 
     this.unsubscribe = this.props.navigation.addListener('tabPress', e => {
-      DeviceEventEmitter.emit('recoverClassifyList')
+      DeviceEventEmitter.emit('recoverClassifyList');
     });
   }
 
-  componentWillUnmount(){
-    this.unsubscribe ();
+  componentWillUnmount() {
+    this.unsubscribe();
   }
-  
+
   renderEditButton = item => {
     if (this.state.shoppingCartEdit) {
       return (

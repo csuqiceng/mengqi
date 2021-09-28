@@ -45,7 +45,7 @@ export default class ServiceOrderPage extends React.Component {
           textAlign: 'center',
           justifyContent: 'center',
           marginLeft: -50,
-          fontWeight:'bold'
+          fontWeight: 'bold',
         }}>
         确认订单
       </Text>
@@ -95,9 +95,12 @@ export default class ServiceOrderPage extends React.Component {
   //提交订单
   onConfirmPay = () => {
     let cartId = this.props.route.params.data;
-    if( !(this.state.address&&this.state.address.id.length >0) || !(this.state.serviceStaff&&this.state.serviceStaff.length >0)){
-      alert("请完善信息！")
-      return
+    if (
+      !(this.state.address && this.state.address.id.length > 0) ||
+      !(this.state.serviceStaff && this.state.serviceStaff.length > 0)
+    ) {
+      alert('请完善信息！');
+      return;
     }
     let data = {
       addressId: this.state.address.id, //地址
@@ -240,16 +243,18 @@ export default class ServiceOrderPage extends React.Component {
                         : 'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
                     }}
                     style={{
-                      width: 60,
-                      height: 60,
+                      width: 100,
+                      height: 80,
                     }}
                   />
                   <View style={{flex: 1, marginLeft: 20}}>
                     <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontSize: 15, color: 'black'}}>
-                        {item ? item.goodsName : ''}
-                      </Text>
-                      <View style={{flex: 1}} />
+                      <View style={{flex: 2}}>
+                        <Text style={{fontSize: 15, color: 'black'}}>
+                          {item ? item.goodsName : ''}
+                        </Text>
+
+                      </View>
                       <View style={{flex: 1}}>
                         <View
                           style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -311,7 +316,7 @@ export default class ServiceOrderPage extends React.Component {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text
                     style={{
-                      fontSize: address ? 18 : 15,
+                      fontSize: address ? 15 : 13,
                       color: address ? 'black' : 'lightgray',
                       marginLeft: 10,
                       marginTop: 5,
@@ -320,7 +325,7 @@ export default class ServiceOrderPage extends React.Component {
                   </Text>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: 13,
                       color: 'black',
                       marginLeft: 10,
                       marginTop: 5,
@@ -330,7 +335,7 @@ export default class ServiceOrderPage extends React.Component {
                 </View>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontSize: 13,
                     color: 'black',
                     marginLeft: 10,
                     marginTop: 5,
@@ -378,7 +383,7 @@ export default class ServiceOrderPage extends React.Component {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: 13,
                       color: 'black',
                       marginLeft: 10,
                       marginTop: 5,

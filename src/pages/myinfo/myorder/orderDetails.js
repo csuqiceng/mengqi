@@ -16,6 +16,7 @@ import {
 import NavBar from '../../../common/navBar';
 const {width, height} = Dimensions.get('window');
 import {fetchData} from '../../../common/fetch';
+import { AlertDialogWithDevelop } from "../../../components/pickers";
 
 export default class OrderDetails extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ export default class OrderDetails extends React.Component {
           justifyContent: 'center',
           fontSize: 15,
           marginLeft: -20,
-          fontWeight:'bold'
+          fontWeight: 'bold',
         }}>
         订单详情
       </Text>
@@ -361,7 +362,7 @@ export default class OrderDetails extends React.Component {
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                alert('联系商家');
+                this.AlertDialog.show()
               }}>
               <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
@@ -393,7 +394,7 @@ export default class OrderDetails extends React.Component {
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                alert('联系商家');
+                this.AlertDialog.show()
               }}>
               <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
@@ -425,7 +426,7 @@ export default class OrderDetails extends React.Component {
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                alert('联系商家');
+                this.AlertDialog.show()
               }}>
               <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
@@ -457,7 +458,7 @@ export default class OrderDetails extends React.Component {
             <TouchableOpacity
               activeOpacity={0.5}
               onPress={() => {
-                alert('联系商家');
+                this.AlertDialog.show()
               }}>
               <Text style={{marginLeft: 20}}>联系商家</Text>
             </TouchableOpacity>
@@ -539,7 +540,7 @@ export default class OrderDetails extends React.Component {
             <Text
               style={{
                 color: 'black',
-                fontSize: 14,
+                fontSize: 15,
                 marginTop: 10,
                 marginLeft: 5,
                 width: width,
@@ -548,6 +549,7 @@ export default class OrderDetails extends React.Component {
               订单号：
               {detailsInfo.orderInfo ? detailsInfo.orderInfo.orderSn : ''}
             </Text>
+            <View style={{height:1,backgroundColor:'lightgray',marginBottom: 20,marginRight:5,marginLeft:5}}/>
             {orderGoods.map((item, i) => {
               return (
                 <View
@@ -566,30 +568,33 @@ export default class OrderDetails extends React.Component {
                         : 'https://mengqi-storg.oss-accelerate.aliyuncs.com/tg9w8fgi287hwwxb9ke5.png',
                     }}
                     style={{
-                      width: 70,
-                      height: 70,
+                      width: 100,
+                      height: 60,
                     }}
                   />
                   <View style={{flex: 1, marginLeft: 20}}>
                     <View style={{flexDirection: 'row'}}>
-                      <Text style={{fontSize: 15, color: 'black'}}>
-                        {item ? item.goodsName : ''}
-                      </Text>
-                      <View style={{flex: 1}}>
+                      <View style={{flex:2}}>
+                        <View style={{flex:1,height:40}}>
+                          <Text  numberOfLines={1} ellipsizeMode={'tail'} style={{fontSize: 15, color: 'black'}}>
+                            {item ? item.goodsName : ''}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={{flex:1}}>
                         <View
                           style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            marginLeft: 20,
                           }}>
                           <Text
                             numberOfLines={3}
-                            style={{fontSize: 19, color: 'black'}}>
+                            style={{fontSize: 15, color: 'black'}}>
                             ¥{' '}
                           </Text>
                           <Text
                             numberOfLines={3}
-                            style={{fontSize: 19, color: 'black'}}>
+                            style={{fontSize: 15, color: 'black'}}>
                             {item ? item.price : ''}
                           </Text>
                         </View>
@@ -600,22 +605,38 @@ export default class OrderDetails extends React.Component {
                         </Text>
                       </View>
                     </View>
+                    {/*<TouchableOpacity*/}
+                    {/*  activeOpacity={0.5}*/}
+                    {/*  style={{flex:1,height:25,flexDirection:'row',width:100,borderWidth:1,borderColor:'gray',textAlign:'center',borderRadius:2,marginTop:10}}*/}
+                    {/*  onPress={() => {*/}
+                    {/*    this.AlertDialog.show()*/}
+                    {/*  }}>*/}
+                    {/*  <Image*/}
+                    {/*    source={require('../../../assets/images/details_icon_t.png')}*/}
+                    {/*    style={{width: 13, height: 13, marginLeft: 10,marginTop:5}}*/}
+                    {/*  />*/}
+                    {/*  <Text style={{textAlign:'center',textAlignVertical:'center',marginLeft:5}}>申请售后</Text>*/}
+                    {/*</TouchableOpacity>*/}
                   </View>
                 </View>
               );
             })}
+            <View style={{height:1,backgroundColor:'lightgray',marginTop: 10,marginRight:5,marginLeft:5}}/>
 
-            <View style={{height: 70, marginLeft: 10, marginTop: 20}}>
+            <View style={{height: 70, marginLeft: 10, marginTop: 10}}>
               <Text style={{color: 'gray', fontSize: 14}}>
                 商品总价： ¥
-                {detailsInfo.orderInfo ? detailsInfo.orderInfo.goodsPrice : ''}
+                   {detailsInfo.orderInfo ? detailsInfo.orderInfo.goodsPrice : ''}
               </Text>
-              <Text style={{color: 'gray', fontSize: 13}}>运费： ¥{'无'}</Text>
+              <Text style={{color: 'gray', fontSize: 13}}>运费：   ¥{'无'}</Text>
               <Text style={{color: 'gray', fontSize: 16}}>
-                实付款： ¥{' '}
+                实付款：   ¥{' '}
                 {detailsInfo.orderInfo ? detailsInfo.orderInfo.actualPrice : ''}
               </Text>
             </View>
+
+            <View style={{height:1,backgroundColor:'lightgray',marginTop: 10,marginRight:5,marginLeft:5}}/>
+
             <Text
               style={{
                 color: 'black',
@@ -660,6 +681,13 @@ export default class OrderDetails extends React.Component {
           </View>
         </ScrollView>
         {this.renderBottomView()}
+
+        <AlertDialogWithDevelop
+          showAnimationType="timing"
+          onPress={isOK => {}}
+          ref={ref => (this.AlertDialog = ref)}
+        />
+
       </View>
     );
   }

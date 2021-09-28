@@ -1,7 +1,14 @@
 //分类
 
 import * as React from 'react';
-import {Text, View, Image, TouchableOpacity, Dimensions,DeviceEventEmitter} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  DeviceEventEmitter,
+} from 'react-native';
 import ClassifyPage from './classifyPage';
 import {fetchData} from '../../common/fetch';
 const {width} = Dimensions.get('window');
@@ -69,9 +76,7 @@ export default class Classify extends React.Component {
     };
     fetchData(url, param, callback, errCallback);
 
-
-
-    this.listener = DeviceEventEmitter.addListener("recoverClassifyList", (e) => {
+    this.listener = DeviceEventEmitter.addListener('recoverClassifyList', e => {
       let id = '';
       let param = {
         headers: {
@@ -94,7 +99,6 @@ export default class Classify extends React.Component {
         }
       };
       fetchData(url, param, callback, errCallback);
-
     });
   }
   componentWillUnmount() {

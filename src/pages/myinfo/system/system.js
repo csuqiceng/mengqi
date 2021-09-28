@@ -55,7 +55,7 @@ export default class SystemPage extends React.Component {
           justifyContent: 'center',
           fontSize: 15,
           marginLeft: -20,
-          fontWeight:'bold'
+          fontWeight: 'bold',
         }}>
         设置
       </Text>

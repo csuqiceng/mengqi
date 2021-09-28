@@ -6,12 +6,14 @@ import {
   TouchableOpacity,
   View,
   Button,
-  BackHandler, Image,
-} from "react-native";
+  BackHandler,
+  Image,
+} from 'react-native';
 
 import Video from 'react-native-video';
-import { fetchData } from "../../common/fetch";
-import NavBar from "../../common/navBar";
+import {fetchData} from '../../common/fetch';
+import NavBar from '../../common/navBar';
+import {AlertDialogWithDevelop} from '../../components/pickers';
 
 // function formatTime(second) {
 //   let h = 0,
@@ -33,19 +35,17 @@ import NavBar from "../../common/navBar";
 export default class VideoDetail extends Component {
   constructor() {
     super();
-    this.state =
-      {
-        rate: 1,
-        volume: 1,
-        muted: false,
-        resizeMode: 'contain',
-        duration: 0.0,
-        currentTime: 0.0,
-        paused: false,
-        videoInfo:{}
-      };
+    this.state = {
+      rate: 1,
+      volume: 1,
+      muted: false,
+      resizeMode: 'contain',
+      duration: 0.0,
+      currentTime: 0.0,
+      paused: false,
+      videoInfo: {},
+    };
   }
-
 
   // componentWillMount() {
   //   console.log('ccccsdd')
@@ -76,9 +76,7 @@ export default class VideoDetail extends Component {
         videoInfo: responseData.data.video,
       });
     };
-    const errCallback = responseData => {
-
-    };
+    const errCallback = responseData => {};
     fetchData(url, param, callback, errCallback);
   }
 

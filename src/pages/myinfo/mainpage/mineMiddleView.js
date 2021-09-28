@@ -25,11 +25,11 @@ const InnerViewData = [
     id: 'receive',
     img: require('../../../assets/images/myinfo/my_icon_receive.png'),
   },
-  {
-    title: '待评价',
-    id: 'evaluate',
-    img: require('../../../assets/images/myinfo/my_icon_evaluate.png'),
-  },
+  // {
+  //   title: '待评价',
+  //   id: 'evaluate',
+  //   img: require('../../../assets/images/myinfo/my_icon_evaluate.png'),
+  // },
   {
     title: '已完成',
     id: 'accomplish',

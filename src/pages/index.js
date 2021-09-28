@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Image, SafeAreaView,BackHandler} from 'react-native';
+import {Image, SafeAreaView, BackHandler} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -64,6 +64,9 @@ class MainTabPage extends React.Component {
       return (
         <Tab.Navigator
           initialRouteName="Home"
+          tabBarOptions={{
+            labelStyle: {fontSize: 12},
+          }}
           screenOptions={{
             headerShown: false,
           }}>
@@ -90,7 +93,6 @@ class MainTabPage extends React.Component {
             options={{
               tabBarLabel: '分类',
               tabBarIcon: ({focused, tintColor}) => (
-
                 <Image
                   source={
                     focused

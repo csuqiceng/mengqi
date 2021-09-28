@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'black',
     marginLeft: 50,
-    fontWeight:'bold'
+    fontWeight: 'bold',
   },
   navbarRightItemStyle: {
     fontSize: 17,

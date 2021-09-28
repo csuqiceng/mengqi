@@ -46,7 +46,13 @@ export default class ServiceConfirmPage extends React.Component {
   // 返回中间按钮
   renderTitleItem = () => {
     return (
-      <Text style={{textAlign: 'center', justifyContent: 'center',fontSize:15,fontWeight:'bold'}}>
+      <Text
+        style={{
+          textAlign: 'center',
+          justifyContent: 'center',
+          fontSize: 15,
+          fontWeight: 'bold',
+        }}>
         {this.props.route.params.name}
       </Text>
     );
@@ -256,9 +262,8 @@ export default class ServiceConfirmPage extends React.Component {
     fetchData(url1, param1, callback1, errCallback1);
   }
   webViewLoaded = () => {
-    this.webView.injectJavaScript(`testReceiveMessage("RN向H5发送消息");true;`)
+    this.webView.injectJavaScript('testReceiveMessage("RN向H5发送消息");true;');
   };
-
 
   renderShoppingTip = () => {
     if (this.state.shoppingCount > 0) {
@@ -477,7 +482,6 @@ export default class ServiceConfirmPage extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={{marginTop: 10, backgroundColor: 'gray'}}>
-
                 <WebView
                   ref={ref => (this.webView = ref)}
                   style={{width: width, height: this.state.webHeight}}
@@ -512,13 +516,18 @@ export default class ServiceConfirmPage extends React.Component {
                                         </html>`,
                   }}
                   injectedJavaScript={INJECTEDJAVASCRIPT} //设置 js 字符串，在网页加载之前注入的一段 JS 代码
-                  onLoadEnd={()=>{this.webViewLoaded()}} // webview加载完毕后执行
+                  onLoadEnd={() => {
+                    this.webViewLoaded();
+                  }} // webview加载完毕后执行
                   onMessage={event => {
                     console.log(
                       '测试onMessage参数列表' +
                         JSON.stringify(event.nativeEvent.data),
                     );
-                    if (event.nativeEvent.data !== undefined && event.nativeEvent.data !== null) {
+                    if (
+                      event.nativeEvent.data !== undefined &&
+                      event.nativeEvent.data !== null
+                    ) {
                       this.setState({
                         webHeight: parseInt(event.nativeEvent.data),
                       });
@@ -539,7 +548,6 @@ export default class ServiceConfirmPage extends React.Component {
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            style={{flex: 1}}
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -622,6 +630,14 @@ export default class ServiceConfirmPage extends React.Component {
                   服务项目
                 </Text>
                 <View style={{flexDirection: 'row', marginTop: 10}}>
+                  <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    style={{
+                      paddingTop: 10,
+                      paddingLeft: 10,
+                      backgroundColor: 'white',
+                    }}>
                   {defaultproductList.map((item, i) => {
                     return (
                       <TouchableOpacity
@@ -650,6 +666,7 @@ export default class ServiceConfirmPage extends React.Component {
                       </TouchableOpacity>
                     );
                   })}
+                  </ScrollView>
                   {/*<Text style={{width:100,height:30,borderColor:this.state.choose?'#00BEAF':'gray',color: 'black',borderRadius:2,borderWidth:1,textAlign: 'center',textAlignVertical: 'center'}}>{productList?productList[0].specifications[0]:0.00}</Text>*/}
                   {/*/!*<Text style={{width:100,height:30,borderColor:'gray',color: 'black',borderRadius:2,borderWidth:1,textAlign: 'center',marginLeft: 10,textAlignVertical: 'center',}}>新居开荒</Text>*!/*/}
                 </View>
