@@ -10,6 +10,8 @@ import {
 //导入外部组件
 import NavBar from '../../../common/navBar';
 import Localstorage from '../../../common/localStorage';
+import {AlertDialogWithDevelop} from '../../../components/pickers';
+
 let {width} = Dimensions.get('window');
 
 const SystemData = [
@@ -84,6 +86,18 @@ export default class SystemPage extends React.Component {
     Localstorage.save('token', '');
     this.props.navigation.navigate('login');
   };
+
+  onSystemChange=(item)=>{
+    if (item.id == 'changepassword' ){
+      this.props.navigation.navigate(item.id);
+    }else if(item.id == 'delete'){
+      alert('清除成功！')
+    }else if(item.id == 'update'|| item.id == 'opinion'){
+      this.AlertDialog.show()
+    }else if(item.id == 'about'){
+
+    }
+  }
   render() {
     return (
       <View style={{flex: 1}}>
@@ -98,7 +112,7 @@ export default class SystemPage extends React.Component {
                 key={i}
                 activeOpacity={0.5}
                 onPress={() => {
-                  this.props.navigation.navigate(item.id);
+                   this.onSystemChange(item)
                 }}>
                 <View style={{...styles.systemListStyle}}>
                   <Image source={item.img} style={{width: 22, height: 22}} />
@@ -138,6 +152,11 @@ export default class SystemPage extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
+        <AlertDialogWithDevelop
+          showAnimationType="timing"
+          onPress={isOK => {}}
+          ref={ref => (this.AlertDialog = ref)}
+        />
       </View>
     );
   }

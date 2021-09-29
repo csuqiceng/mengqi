@@ -315,7 +315,8 @@ export default class HomePage extends React.Component {
                       key={i}
                       activeOpacity={0.6}
                       underlayColor="#DDDDDD"
-                      onPress={() => alert(item.content)}>
+                      // onPress={() => alert(item.content)}
+                    >
                       <View style={styles.slide} key={i}>
                         <Image
                           resizeMode="stretch"

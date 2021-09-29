@@ -220,9 +220,10 @@ export default class MyBalanceView extends React.Component {
             height: 200,
             backgroundColor: 'white',
             margin: 10,
-            marginTop: 25,
+            // marginTop: 25,
             borderRadius: 10,
             padding: 40,
+            justifyContent: 'center'
           }}>
           <Text style={{color: 'black', fontSize: 17}}>请选择充值金额</Text>
           {/*<View style={{flexDirection: 'row', marginTop: 15}}>*/}
@@ -284,7 +285,7 @@ export default class MyBalanceView extends React.Component {
                       onPress={() => {
                         this.onBalanceChanged(item.value);
                       }}>
-                      <Text style={{color: 'black'}}>{item.name}</Text>
+                      <Text style={{color: this.state.balanceValue == item.value ? 'white': 'black'}}>{item.name}</Text>
                     </TouchableOpacity>
                   );
                 })}
@@ -330,7 +331,7 @@ export default class MyBalanceView extends React.Component {
                   width: 110,
                   height: 40,
                   borderWidth: 1,
-                  borderColor: 'gray',
+                  borderColor: '#00BEAF',
                   borderRadius: 5,
                   alignItems: 'center',
                   marginLeft: 20,
@@ -375,6 +376,7 @@ export default class MyBalanceView extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

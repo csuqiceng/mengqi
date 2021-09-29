@@ -18,6 +18,8 @@ export default class HeaderView extends React.Component {
     this.state = {
       info: '',
       userName: '',
+      totalAmount:0,
+      totalIntegral:0,
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps, nextContext) {
@@ -68,11 +70,36 @@ export default class HeaderView extends React.Component {
         this.props.navigation.navigate('login');
       }
     };
-    fetchData(url, param, callback, errCallback);
+    fetchData(url, param, callback, errCallback)
+
+
+    let param1 = {
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'X-Litemall-Token': window.token
+          ? window.token
+          : 'otfdtvohut0r30unlxl8fwqwrt1na9iz',
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    };
+    let url1 = '/wx/user/index';
+    const callback1 = responseData => {
+      this.setState({
+        totalAmount: responseData.data.totalAmount,
+        totalIntegral: responseData.data.totalIntegral,
+      });
+    };
+    const errCallback1 = responseData => {
+      if (responseData.errno == 501) {
+        this.props.navigation.navigate('login');
+      }
+    };
+    fetchData(url1, param1, callback1, errCallback1);
   }
 
   render() {
-    const {userName} = this.state;
+    const {userName,totalIntegral,totalAmount} = this.state;
     const {type} = this.props;
     if (type == 'shop') {
       return (
@@ -286,7 +313,7 @@ export default class HeaderView extends React.Component {
               }}>
               <TouchableOpacity>
                 <View style={styles.bottomInnerViewStyle}>
-                  <Text style={{color: 'white', fontSize: 20}}>200.00</Text>
+                  <Text style={{color: 'white', fontSize: 20}}>{totalAmount}</Text>
                   <Text style={{color: 'white', fontSize: 15}}>我的余额</Text>
                 </View>
               </TouchableOpacity>
@@ -295,7 +322,7 @@ export default class HeaderView extends React.Component {
               />
               <TouchableOpacity>
                 <View style={styles.bottomInnerViewStyle}>
-                  <Text style={{color: 'white', fontSize: 20}}>200</Text>
+                  <Text style={{color: 'white', fontSize: 20}}>{totalIntegral}</Text>
                   <Text style={{color: 'white', fontSize: 15}}>积分</Text>
                 </View>
               </TouchableOpacity>

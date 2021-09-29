@@ -13,18 +13,16 @@ import {
 //导入外部组件
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NavBar from '../../../common/navBar';
-import { fetchData } from "../../../common/fetch";
 var {width, height} = Dimensions.get('window');
-let maxTime = 60;
-export default class Changepassword extends React.Component {
+
+export default class Opinion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobile:'',
+      loginType: 'login',
+      oldpassWord:'',
       newpassWord:'',
-      code: '',
-      verificationtext: '获取验证码',
-      verificationBool: false,
+      confirmpassWord:''
     };
   }
   // 返回中间按钮
@@ -59,98 +57,31 @@ export default class Changepassword extends React.Component {
     );
   };
 
+  onLoginOut = () => {
+    alert('退出成功');
+    AsyncStorage.setItem('loginType', 'login')
+      .then(() => console.log('update'))
+      .catch(e => console.log('e: ', e));
 
-  //密码
-  onMobileChanged = mobile => {
-    this.setState({
-      mobile: mobile,
-    });
-  };
-  onNewPasswordChanged=newpasswprd=>{
-    this.setState({
-      newpassWord: newpasswprd,
-    });
-  }
-  //登录名
-  onCodeChanged = code => {
-    this.setState({
-      code: code,
-    });
-  };
-  //发送验证码
-  sendCode = () => {
-    let data = {
-      mobile: this.state.mobile,
-    };
-    if (this.state.mobile.length > 0) {
-      setInterval(() => {
-        if (maxTime > 0) {
-          --maxTime;
-          this.setState({
-            verificationBool: true,
-            verificationtext: '重新获取' + maxTime + '秒',
-          });
-        } else {
-          this.setState({
-            verificationBool: false,
-            verificationtext: '获取验证码',
-          });
-        }
-      }, 1000);
-    } else {
-      alert('输入正确手机号码');
-      return;
-    }
-    if (!this.state.verificationBool) {
-      let url = '/wx/auth/regCaptcha';
-      const callback = e => {
-        // navigation.goBack()
-      };
-      let param = {
-        body: JSON.stringify(data), // must match 'Content-Type' header
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        headers: {
-          'X-Litemall-Token': this.state.token,
-          'content-type': 'application/json',
-        },
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      };
-      const errCallback = responseData => {
-        if (responseData.errno == 501) {
-          console.log(responseData.errmsg);
-        }
-      };
-      fetchData(url, param, callback, errCallback);
-    }
+    this.props.navigation.navigate('login');
   };
 
-  onConfirm=()=>{
-    const {code,newpassWord,mobile} = this.state;
-    let data = {
-      password:newpassWord,
-      mobile:mobile,
-      code:code,
-    };
-    let url = '/wx/auth/reset';
-    const callback = e => {
-      this.props.navigation.navigate('login');
-    };
-    let param = {
-      body: JSON.stringify(data), // must match 'Content-Type' header
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      headers: {
-        'X-Litemall-Token': this.state.token,
-        'content-type': 'application/json',
-      },
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    };
-    const errCallback = responseData => {
-      if (responseData.errno) {
-        aler(responseData.errmsg);
-      }
-    };
-    fetchData(url, param, callback, errCallback);
-  }
+  onOldPasswordChanged = e => {
+    this.setState({
+      oldpassWord: e,
+    });
+  };
+  onNewPasswordChanged = e => {
+    this.setState({
+      newpassWord: e,
+    });
+  };
+  onConfirmPasswordChanged = e => {
+    this.setState({
+      confirmpassWord: e,
+    });
+  };
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -168,78 +99,70 @@ export default class Changepassword extends React.Component {
               height: 40,
               borderWidth: 1,
               borderColor: 'lightgray',
-              marginTop:10
+              marginTop: 10,
+              paddingLeft: 10,
             }}>
-            <Image
-              source={require('../../../assets/images/myinfo/login_icon_name.png')}
-              style={{width: 22, height: 22, marginLeft: 15,marginRight:5}}
-            />
             <TextInput
-              underlineColorAndroid="transparent"
-              placeholder={'  请输入手机号码'}
-              onChangeText={this.onMobileChanged} //添加值改变事件
-              style={{...styles.tgTextInputStyle}}
-            />
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: '#fff',
-              width: width,
-              height: 40,
-              borderWidth: 1,
-              borderColor: 'lightgray',
-              marginTop: 5,
-            }}>
-            <Image
-              source={require('../../../assets/images/myinfo/login_icon_password.png')}
-              style={{width: 22, height: 22, marginLeft: 15,marginRight:5}}
-            />
-            <TextInput
-              onChangeText={this.onCodeChanged} //添加值改变事件
-              style={{...styles.tgTextInputStyle, width: width * 0.6}}
-              autoCapitalize="none" //设置首字母不自动大写
-              underlineColorAndroid={'transparent'} //将下划线颜色改为透明
-              secureTextEntry={false} //设置为密码输入框
-              placeholderTextColor={'#ccc'} //设置占位符颜色
-              placeholder={'  请输入验证码'} //设置占位符
-            />
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => {
-                this.sendCode();
-              }}>
-              <Text style={{color: '#00BEAF',width: width * 0.4,marginRight:20}}>
-                {this.state.verificationtext}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: '#fff',
-              width: width,
-              height: 40,
-              borderWidth: 1,
-              borderColor: 'lightgray',
-              marginTop:5
-            }}>
-            <Image
-              source={require('../../../assets/images/myinfo/login_icon_yz.png')}
-              style={{width: 22, height: 22, marginLeft: 15,marginRight:5}}
-            />
-            <TextInput
-              onChangeText={this.onNewPasswordChanged} //添加值改变事件
-              // onFocus={this.props.onfocusCallback} //获取焦点
+              onChangeText={this.onOldPasswordChanged}  //添加值改变事件
+              // onFocus={this.props.onfocusCallback}//获取焦点
+              // onBlur={this.props.onBlurCallback}//失去焦点
               style={styles.tgTextInputStyle}
               autoCapitalize="none" //设置首字母不自动大写
               underlineColorAndroid={'transparent'} //将下划线颜色改为透明
               secureTextEntry={true} //设置为密码输入框
               placeholderTextColor={'#ccc'} //设置占位符颜色
-              placeholder={'  请输入新密码'} //设置占位符
+              placeholder={'请输入旧密码'} //设置占位符
+              value={this.state.oldpassWord}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: '#fff',
+              width: width,
+              height: 40,
+              borderWidth: 1,
+              borderColor: 'lightgray',
+              marginTop: 10,
+              paddingLeft: 10,
+            }}>
+            <TextInput
+              onChangeText={this.onNewPasswordChanged} //添加值改变事件
+              // onFocus={this.props.onfocusCallback} //获取焦点
+              // onBlur={this.props.onBlurCallback} //失去焦点
+              style={styles.tgTextInputStyle}
+              autoCapitalize="none" //设置首字母不自动大写
+              underlineColorAndroid={'transparent'} //将下划线颜色改为透明
+              secureTextEntry={true} //设置为密码输入框
+              placeholderTextColor={'#ccc'} //设置占位符颜色
+              placeholder={'请输入新密码'} //设置占位符
               value={this.state.newpassWord}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              backgroundColor: '#fff',
+              width: width,
+              height: 40,
+              borderWidth: 1,
+              borderColor: 'lightgray',
+              marginTop: 10,
+              paddingLeft: 10,
+            }}>
+            <TextInput
+              onChangeText={this.onConfirmPasswordChanged} //添加值改变事件
+              onFocus={this.props.onfocusCallback} //获取焦点
+              onBlur={this.props.onBlurCallback} //失去焦点
+              style={styles.tgTextInputStyle}
+              autoCapitalize="none" //设置首字母不自动大写
+              underlineColorAndroid={'transparent'} //将下划线颜色改为透明
+              secureTextEntry={true} //设置为密码输入框
+              placeholderTextColor={'#ccc'} //设置占位符颜色
+              placeholder={'请再次确认密码'} //设置占位符
+              value={this.state.confirmpassWord}
             />
           </View>
           <Text
@@ -254,7 +177,7 @@ export default class Changepassword extends React.Component {
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => {
-              this.onConfirm();
+              this.onLoginOut();
             }}>
             <View
               style={{...styles.tgLoginBtnStyle, backgroundColor: '#00BEAF'}}>
