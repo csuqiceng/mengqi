@@ -45,6 +45,9 @@ export default class LoginView extends React.Component {
       data: '',
     });
   };
+  onPrivacySettingsCallback=()=>{
+    this.props.navigation.navigate('privacysettings')
+  }
 
   renderPage = () => {
     switch (this.state.selectItem) {
@@ -53,6 +56,7 @@ export default class LoginView extends React.Component {
           <AccoutLoginView
             onRegisterCallback={this.onRegisterCallback}
             onLoginCallback={this.onLoginCallback}
+            onPrivacySettingsCallback={this.onPrivacySettingsCallback}
           />
         );
       case 'verificationcode':
@@ -60,6 +64,7 @@ export default class LoginView extends React.Component {
           <VerificationcodeView
             onRegisterCallback={this.onRegisterCallback}
             onLoginCallback={this.onLoginCallback}
+            onPrivacySettingsCallback={this.onPrivacySettingsCallback}
           />
         );
       default:
@@ -67,6 +72,7 @@ export default class LoginView extends React.Component {
           <AccoutLoginView
             onRegisterCallback={this.onRegisterCallback}
             onLoginCallback={this.onLoginCallback}
+            onPrivacySettingsCallback={this.onPrivacySettingsCallback}
           />
         );
     }
@@ -292,17 +298,19 @@ class AccoutLoginView extends React.Component {
               <Text style={{fontSize: 13}}>登录代表你已经同意</Text>
               <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => alert('用户协议')}>
+                onPress={() => {this.props.onPrivacySettingsCallback('dd')}}
+              >
                 <Text style={{fontSize: 13, color: '#FA5700'}}>
                   {'《用户协议》'}
                 </Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              onPress={() => alert('忘记密码')}>
-              <Text style={{fontSize: 13}}>忘记密码？</Text>
-            </TouchableOpacity>
+            {/*<TouchableOpacity*/}
+            {/*  activeOpacity={0.5}*/}
+            {/*  onPress={() => this.props.navigation.navigate('changepassword')}*/}
+            {/*>*/}
+            {/*  <Text style={{fontSize: 13}}>忘记密码？</Text>*/}
+            {/*</TouchableOpacity>*/}
           </View>
 
           {/*<View*/}
@@ -527,7 +535,8 @@ class VerificationcodeView extends React.Component {
               <Text style={{fontSize: 13}}>登录代表你已经同意</Text>
               <TouchableOpacity
                 activeOpacity={0.5}
-                onPress={() => alert('用户协议')}>
+                onPress={() => {this.props.onPrivacySettingsCallback('dd')}}
+              >
                 <Text style={{fontSize: 13, color: '#FA5700'}}>
                   {'《用户协议》'}
                 </Text>

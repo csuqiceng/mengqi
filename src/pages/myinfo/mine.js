@@ -14,6 +14,7 @@ import MyinfoPage from './mainpage/myinfoPage';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import Localstorage from '../../common/localStorage';
+import PrivacySettingsView from "../login/privacySettings";
 const MyinfoStack = createStackNavigator();
 
 export default class MinePage extends React.Component {
@@ -56,6 +57,12 @@ export default class MinePage extends React.Component {
           component={RegisterView}
         />
         <MyinfoStack.Screen name="mainPgae" component={MyinfoPage} />
+
+        <MyinfoStack.Screen
+          name="privacysettings"
+          options={{}}
+          component={PrivacySettingsView}
+        />
       </MyinfoStack.Navigator>
     );
   }

@@ -41,7 +41,7 @@ class CitySelect extends Component {
   }
 
   componentDidMount() {
-    this.setCurrentLocation('深圳');
+    this.setCurrentLocation('当前定位失败');
     setTimeout(() => {
       this.setState({
         sections: cityData,

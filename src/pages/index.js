@@ -28,6 +28,7 @@ import CitySelect from './home/CitySectionList';
 import ClassifyList from './classify/classifyList';
 import VideoDetail from './Videos/videoDetail';
 import Opinion from "./myinfo/system/opinion";
+import PrivacySettingsView from "./login/privacySettings";
 
 //App 底部入口
 class MainTabPage extends React.Component {
@@ -267,6 +268,12 @@ export default class MainPage extends React.Component {
               options={{}}
               component={Opinion}
             />
+            <Stack.Screen
+              name="privacysettings"
+              options={{}}
+              component={PrivacySettingsView}
+            />
+
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
